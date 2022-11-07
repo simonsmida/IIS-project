@@ -1,4 +1,5 @@
 # IS pre Zvířecí útulek
+![img](https://149625707.v2.pressablecdn.com/wp-content/uploads/Dog-cat-banner-img.png)
 ---
 
 ## Popis
