@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<a href="{% url "animals:animal-list" %}">All Animals</a>
+
+{% for instance in object_list %}
+     <p>{{ instance.id_pecovatel }} - <a href='{{ instance.get_absolute_url }}'>{{ instance.meno }}</a></p>
+{% endfor %}
+
+{% endblock %}
