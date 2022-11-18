@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<a href="{% url "reservation:reservation-create" %}">New Reservation</a>
+
+{% for instance in object_list %}
+     <p><a href='{{ instance.get_absolute_url }}'>Rezervácia {{ instance.id_rezervacie }}</a></p>
+{% endfor %}
+
+{% endblock %}

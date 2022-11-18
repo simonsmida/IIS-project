@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<p><a href='{{object.get_absolute_url}}delete'>Delete</a></p>
+<p><a href='{{object.get_absolute_url}}update'>Update</a></p>
+
+<h1>Od:         {{ object.rezervovany_od }}</h1>
+<h1>Do:         {{ object.rezervovany_od }}</h1>
+<h1>Pre Zviera: {{ object.zvieraid.meno }}</h1>
+<h1>Stav:       {{ object.stav }}</h1>
+{% endblock %}

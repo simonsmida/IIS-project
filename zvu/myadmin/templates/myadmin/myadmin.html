@@ -7,7 +7,9 @@
 {% comment %} {% for instance in object_list %}
      <p>{{ instance.id_pecovatel }} - <a href='{{ instance.get_absolute_url }}'>{{ instance.meno }}</a></p>
 {% endfor %} {% endcomment %}
+<h1>Admin</h1>
 
 <p><a href="{% url "caregiver_edit:caregiver-list" %}">Caregivers</a></p>
-<p><a href="{% url "caregiver_edit:caregiver-list" %}">Veterinarians</a></p>
+<p><a href="{% url "volunteer_edit:volunteer-list" %}">Volunteers</a></p>
+<p><a href="{% url "volunteer_edit:volunteer-list" %}">Veterinarians</a></p>
 {% endblock %}

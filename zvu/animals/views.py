@@ -8,6 +8,7 @@ def animal_create_view(request):
     if form.is_valid():
         form.save()
         form = AnimalForm()
+        return redirect('../')
     context = {
         'form': form
     }
@@ -19,6 +20,7 @@ def animal_update_view(request, id=id):
     form = AnimalForm(request.POST or None, instance=obj)
     if form.is_valid():
         form.save()
+        return redirect('../')
     context = {
         'form': form
     }

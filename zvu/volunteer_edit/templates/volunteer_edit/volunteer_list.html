@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<a href="{% url "volunteer_edit:volunteer-create" %}">New Volunteer</a>
+
+{% for instance in object_list %}
+     <p>{{ instance.id_dobrovolnik }} - <a href='{{ instance.get_absolute_url }}'>{{ instance.meno }}</a></p>
+{% endfor %}
+
+{% endblock %}

@@ -32,11 +32,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'shelter.apps.ShelterConfig',
     'myadmin.apps.MyadminConfig',
+    'shelter.apps.ShelterConfig',
+    'volunteer.apps.VolunteerConfig',
+    'volunteer_edit.apps.Volunteer_editConfig',
     'caregiver.apps.CaregiverConfig',
     'caregiver_edit.apps.Caregiver_editConfig',
     'animals.apps.AnimalsConfig',
+    'reservation.apps.ReservationConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

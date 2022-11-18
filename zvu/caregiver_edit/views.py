@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import CaregiverForm
-from .models import Caregiver
+from shelter.models import Caregiver
 
 
 def caregiver_create_view(request):
@@ -8,6 +8,7 @@ def caregiver_create_view(request):
     if form.is_valid():
         form.save()
         form = CaregiverForm()
+        return redirect('../')
     context = {
         'form': form
     }
@@ -19,6 +20,7 @@ def caregiver_update_view(request, id=id):
     form = CaregiverForm(request.POST or None, instance=obj)
     if form.is_valid():
         form.save()
+        return redirect('../')
     context = {
         'form': form
     }
