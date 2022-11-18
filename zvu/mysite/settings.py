@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'shelter.apps.ShelterConfig',
     'myadmin.apps.MyadminConfig',
     'caregiver.apps.CaregiverConfig',
+    'caregiver_edit.apps.Caregiver_editConfig',
     'animals.apps.AnimalsConfig',
     'django.contrib.admin',
     'django.contrib.auth',

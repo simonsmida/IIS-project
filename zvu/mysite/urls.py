@@ -18,6 +18,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path('shelter/', include('shelter.urls')),
+    path('caregiver_edit/', include('caregiver_edit.urls')),
     path('caregiver/', include('caregiver.urls')),
     path('animals/', include('animals.urls')),
     path('myadmin/', include('myadmin.urls')),

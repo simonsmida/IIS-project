@@ -1,11 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
 <p><a href='{{object.get_absolute_url}}delete'>Delete {{ object.meno }}</a></p>
 <p><a href='{{object.get_absolute_url}}update'>Update {{ object.meno }}</a></p>
 
-<h2>Meno: {{ object.meno }}</h2>
-<h2>Druh: {{ object.druh }}</h2>
-<h2>Vek:  {{ object.vek }}</h2>
+<h1>Meno:       {{ object.meno }}</h1>
+<h1>Priezvisko: {{ object.priezvisko }}</h1>
 {% endblock %}

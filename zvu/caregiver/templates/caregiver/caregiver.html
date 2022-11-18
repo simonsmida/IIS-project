@@ -7,7 +7,12 @@
 {% comment %} {% for instance in object_list %}
      <p>{{ instance.id_pecovatel }} - <a href='{{ instance.get_absolute_url }}'>{{ instance.meno }}</a></p>
 {% endfor %} {% endcomment %}
+<h1>Caregiver</h1>
 
-<p><a href="{% url "caregiver_edit:caregiver-list" %}">Caregivers</a></p>
-<p><a href="{% url "caregiver_edit:caregiver-list" %}">Veterinarians</a></p>
+<p>
+     <a href="{% url "animals:animal-list" %}">All Animals</a><br>
+     <a href="{% url "animals:animal-list" %}">Volunteers</a><br>
+     <a href="{% url "animals:animal-list" %}">Vypsat požadavek</a><br>
+     <a href="{% url "animals:animal-list" %}">Venčenia</a>
+</p>
 {% endblock %}

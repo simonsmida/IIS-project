@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<a href="{% url "animals:animal-list" %}">All Animals</a>
+<a href="{% url "caregiver_edit:caregiver-create" %}">New Caregiver</a>
 
 {% for instance in object_list %}
      <p>{{ instance.id_pecovatel }} - <a href='{{ instance.get_absolute_url }}'>{{ instance.meno }}</a></p>
