@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    path('shelter/', include('shelter.urls')),
+    path('', include('shelter.urls')),
     path('volunteer_edit/', include('volunteer_edit.urls')),
     path('volunteer/', include('volunteer.urls')),
     path('caregiver_edit/', include('caregiver_edit.urls')),
@@ -25,5 +25,6 @@ urlpatterns = [
     path('animals/', include('animals.urls')),
     path('reservation/', include('reservation.urls')),
     path('myadmin/', include('myadmin.urls')),
+    path('', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
 ] 

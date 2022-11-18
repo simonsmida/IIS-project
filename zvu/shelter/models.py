@@ -37,9 +37,9 @@ class VetRequest(models.Model):
     datum_vytvorenia = models.DateField()
     obsah = models.CharField(max_length=255)
     stav = models.CharField(max_length=255)
-    pecovatelid = models.ForeignKey('Caregiver', models.DO_NOTHING, db_column='PecovatelID')
-    veterinarid = models.ForeignKey('Vet', models.DO_NOTHING, db_column='VeterinarID')
-    zvieraid = models.ForeignKey('Animal', models.DO_NOTHING, db_column='ZvieraID')
+    pecovatelid = models.ForeignKey('Caregiver', models.CASCADE, db_column='PecovatelID')
+    veterinarid = models.ForeignKey('Vet', models.CASCADE, db_column='VeterinarID')
+    zvieraid = models.ForeignKey('Animal', models.CASCADE, db_column='ZvieraID')
 
     class Meta:
         managed = False
@@ -53,8 +53,8 @@ class Reservation(models.Model):
     rezervovany_do = models.DateField()
     schvalenie = models.IntegerField(blank=True, null=True)
     stav = models.CharField(max_length=255, blank=True, null=True)
-    zvieraid = models.ForeignKey('Animal', models.DO_NOTHING, db_column='ZvieraID')
-    dobrovolnikid = models.ForeignKey('Volunteer', models.DO_NOTHING, db_column='DobrovolnikID')
+    zvieraid = models.ForeignKey('Animal', models.CASCADE, db_column='ZvieraID')
+    dobrovolnikid = models.ForeignKey('Volunteer', models.CASCADE, db_column='DobrovolnikID')
     
     def get_absolute_url(self):
         return reverse("reservation:reservation-detail", kwargs={"id": self.id_rezervacie}) #f"/products/{self.id}/"
@@ -106,6 +106,7 @@ class Animal(models.Model):
     vek = models.PositiveIntegerField()
     datum_registracie = models.DateField()
     obrazok = models.CharField(max_length=255, db_collation='utf8mb4_unicode_520_ci', blank=True, null=True)
+    # TODO: ImageField?
 
     class Meta:
         managed = False
