@@ -1,9 +1,9 @@
 {% extends 'shelter/base.html' %}
 
 {% block content %}
-<p><a href='{{object.get_absolute_url}}delete'>Delete {{ object.meno }}</a></p>
-<p><a href='{{object.get_absolute_url}}update'>Update {{ object.meno }}</a></p>
+<p><a href='{{object.get_absolute_url}}delete'>Delete {{ object.username }}</a></p>
+<p><a href='{{object.get_absolute_url}}update'>Update {{ object.username }}</a></p>
 
-<h1>Meno:       {{ object.meno }}</h1>
-<h1>Priezvisko: {{ object.priezvisko }}</h1>
+<h1>Meno:       {{ object.first_name }}</h1>
+<h1>Priezvisko: {{ object.last_name }}</h1>
 {% endblock %}

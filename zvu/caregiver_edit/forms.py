@@ -1,16 +1,24 @@
 from django import forms
 from shelter.models import Caregiver
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 
-class CaregiverForm(forms.ModelForm):
-    meno            = forms.CharField()
-    priezvisko      = forms.CharField()
-    datum_narodenia = forms.DateField()
-    
+class CaregiverForm(UserCreationForm):
+
     class Meta:
-        model = Caregiver
-        fields = [
-            'meno',
-            'priezvisko',
-            'datum_narodenia'
-        ]
+        model = User
+        fields = ["username", "first_name", "last_name", "password1", "password2"]
+
+# class CaregiverForm(forms.ModelForm):
+#     meno            = forms.CharField()
+#     priezvisko      = forms.CharField()
+#     datum_narodenia = forms.DateField()
+    
+#     class Meta:
+#         model = Caregiver
+#         fields = [
+#             'meno',
+#             'priezvisko',
+#             'datum_narodenia'
+#         ]
