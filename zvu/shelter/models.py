@@ -1,6 +1,6 @@
 from django.db import models
 from django.urls import reverse
-
+from django.conf import settings
 
 # Create your models here.
 class Volunteer(models.Model):
@@ -54,7 +54,7 @@ class Reservation(models.Model):
     schvalenie = models.IntegerField(blank=True, null=True)
     stav = models.CharField(max_length=255, blank=True, null=True)
     zvieraid = models.ForeignKey('Animal', models.CASCADE, db_column='ZvieraID')
-    dobrovolnikid = models.ForeignKey('Volunteer', models.CASCADE, db_column='DobrovolnikID')
+    dobrovolnikid = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, db_column='DobrovolnikID')
     
     def get_absolute_url(self):
         return reverse("reservation:reservation-detail", kwargs={"id": self.id_rezervacie}) #f"/products/{self.id}/"
@@ -64,18 +64,18 @@ class Reservation(models.Model):
         db_table = 'Rezervacia'
 
 
-class User(models.Model):
-    id_uzivatel = models.AutoField(primary_key=True)
-    typ = models.CharField(max_length=11)
-    email = models.CharField(unique=True, max_length=255, db_collation='utf8mb4_unicode_520_ci')
-    heslo = models.CharField(max_length=255, db_collation='utf8mb4_unicode_520_ci')
-    aktivni = models.IntegerField()
-    zamestnanec_id = models.PositiveIntegerField(blank=True, null=True)
-    klient_id = models.PositiveIntegerField(blank=True, null=True)
+# class User(models.Model):
+#     id_uzivatel = models.AutoField(primary_key=True)
+#     typ = models.CharField(max_length=11)
+#     email = models.CharField(unique=True, max_length=255, db_collation='utf8mb4_unicode_520_ci')
+#     heslo = models.CharField(max_length=255, db_collation='utf8mb4_unicode_520_ci')
+#     aktivni = models.IntegerField()
+#     zamestnanec_id = models.PositiveIntegerField(blank=True, null=True)
+#     klient_id = models.PositiveIntegerField(blank=True, null=True)
 
-    class Meta:
-        managed = False
-        db_table = 'Uzivatel'
+#     class Meta:
+#         managed = False
+#         db_table = 'Uzivatel'
 
 
 class Walk(models.Model):

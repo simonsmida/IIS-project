@@ -1,5 +1,6 @@
 from django import forms
 from shelter.models import Reservation, Animal, Volunteer
+# from django.contrib.auth.models import User
 
 class MyModelChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, obj):
@@ -18,11 +19,7 @@ class ReservationForm(forms.ModelForm):
         queryset=Animal.objects.all(),
         label='Zviera'
     )
-    dobrovolnikid = MyModelChoiceField(
-        queryset=Volunteer.objects.all(),
-        label='Dobrovolnik'
-    )
-           
+               
     class Meta:
         model = Reservation
         fields = [
@@ -31,6 +28,5 @@ class ReservationForm(forms.ModelForm):
             'rezervovany_do',
             'schvalenie',
             'stav',
-            'zvieraid',
-            'dobrovolnikid'
+            'zvieraid'
         ]
