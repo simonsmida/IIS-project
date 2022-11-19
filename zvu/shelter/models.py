@@ -13,10 +13,6 @@ class Volunteer(models.Model):
     def get_absolute_url(self):
         return reverse("volunteer_edit:volunteer-detail", kwargs={"id": self.id_dobrovolnik})
     
-    class Meta:
-        managed = False
-        db_table = 'Dobrovolnik'
-
 
 class Caregiver(models.Model):
     id_pecovatel = models.AutoField(primary_key=True)
@@ -27,11 +23,6 @@ class Caregiver(models.Model):
     def get_absolute_url(self):
         return reverse("caregiver_edit:caregiver-detail", kwargs={"id": self.id_pecovatel}) #f"/products/{self.id}/"
 
-    class Meta:
-        managed = False
-        db_table = 'Pecovatel'
-
-
 class VetRequest(models.Model):
     id_poziadavky = models.AutoField(primary_key=True)
     datum_vytvorenia = models.DateField()
@@ -40,11 +31,6 @@ class VetRequest(models.Model):
     pecovatelid = models.ForeignKey('Caregiver', models.CASCADE, db_column='PecovatelID')
     veterinarid = models.ForeignKey('Vet', models.CASCADE, db_column='VeterinarID')
     zvieraid = models.ForeignKey('Animal', models.CASCADE, db_column='ZvieraID')
-
-    class Meta:
-        managed = False
-        db_table = 'Poziadavka'
-
 
 class Reservation(models.Model):
     id_rezervacie = models.AutoField(primary_key=True)
@@ -59,10 +45,6 @@ class Reservation(models.Model):
     def get_absolute_url(self):
         return reverse("reservation:reservation-detail", kwargs={"id": self.id_rezervacie}) #f"/products/{self.id}/"
     
-    class Meta:
-        managed = False
-        db_table = 'Rezervacia'
-
 
 # class User(models.Model):
 #     id_uzivatel = models.AutoField(primary_key=True)
@@ -83,20 +65,11 @@ class Walk(models.Model):
     venceny_od = models.DateField()
     venceny_do = models.DateField()
 
-    class Meta:
-        managed = False
-        db_table = 'Vencenie'
-
-
 class Vet(models.Model):
     id_veterinar = models.AutoField(primary_key=True)
     meno = models.CharField(max_length=255)
     priezvisko = models.CharField(max_length=255)
     datum_narodenia = models.DateField()
-
-    class Meta:
-        managed = False
-        db_table = 'Veterinar'
 
 
 class Animal(models.Model):
@@ -105,12 +78,6 @@ class Animal(models.Model):
     meno = models.CharField(max_length=255)
     vek = models.PositiveIntegerField()
     datum_registracie = models.DateField()
-    obrazok = models.CharField(max_length=255, db_collation='utf8mb4_unicode_520_ci', blank=True, null=True)
-    # TODO: ImageField?
-
-    class Meta:
-        managed = False
-        db_table = 'Zviera'
-    
+    obrazok = models.CharField(max_length=255, blank=True, null=True)
     def get_absolute_url(self):
         return reverse("animals:animal-detail", kwargs={"id": self.id_zviera})
