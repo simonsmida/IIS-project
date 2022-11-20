@@ -4064,7 +4064,7 @@ textarea.form-control-lg {
 }
 .navbar-nav {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   padding-left: 0;
   margin-bottom: 0;
   list-style: none;
