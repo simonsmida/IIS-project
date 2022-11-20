@@ -23,14 +23,18 @@ class Caregiver(models.Model):
     def get_absolute_url(self):
         return reverse("caregiver_edit:caregiver-detail", kwargs={"id": self.id_pecovatel}) #f"/products/{self.id}/"
 
+
 class VetRequest(models.Model):
     id_poziadavky = models.AutoField(primary_key=True)
     datum_vytvorenia = models.DateField()
     obsah = models.CharField(max_length=255)
     stav = models.CharField(max_length=255)
-    pecovatelid = models.ForeignKey('Caregiver', models.CASCADE, db_column='PecovatelID')
-    veterinarid = models.ForeignKey('Vet', models.CASCADE, db_column='VeterinarID')
+    pecovatelid = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, related_name='pecovatel_req',
+                                    db_column='PecovatelID')
+    veterinarid = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE,related_name='vet_req',
+                                    db_column='VeterinarID')
     zvieraid = models.ForeignKey('Animal', models.CASCADE, db_column='ZvieraID')
+    
 
 class Reservation(models.Model):
     id_rezervacie = models.AutoField(primary_key=True)
@@ -64,6 +68,7 @@ class Walk(models.Model):
     id_vencenia = models.AutoField(primary_key=True)
     venceny_od = models.DateField()
     venceny_do = models.DateField()
+
 
 class Vet(models.Model):
     id_veterinar = models.AutoField(primary_key=True)
