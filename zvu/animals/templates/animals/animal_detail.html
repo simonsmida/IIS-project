@@ -9,6 +9,15 @@
     <p><a href='{{object.get_absolute_url}}update'>Update {{ object.meno }}</a></p>
 {% endif %}
 
+{% if user|has_group:'volunteer' %}
+    {% comment %} <p><a href={% url 'reservation:reservation-create' %}>Zarezervuj {{ object.meno }}</a></p> {% endcomment %}
+    <form  action="{% url 'reservation:reservation-create'%}" method="POST" class="form">
+        <input type="hidden" name="zvieraid" value="{{object.id_zviera}}" />
+        {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Zarezervuj</button>
+      </form>
+{% endif %}
+
 <h2>Meno: {{ object.meno }}</h2>
 <h2>Druh: {{ object.druh }}</h2>
 <h2>Vek:  {{ object.vek }}</h2>

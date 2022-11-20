@@ -34,7 +34,7 @@ class VetRequest(models.Model):
     veterinarid = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE,related_name='vet_req',
                                     db_column='VeterinarID')
     zvieraid = models.ForeignKey('Animal', models.CASCADE, db_column='ZvieraID')
-
+    
 
 class Reservation(models.Model):
     id_rezervacie = models.AutoField(primary_key=True)
