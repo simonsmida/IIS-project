@@ -1,8 +1,10 @@
 {% extends 'shelter/base.html' %} {% block title %}Sign Up{% endblock %} 
 {% load crispy_forms_tags %} {% block content %}
-<form method="post">
-  {% csrf_token %}{{form|crispy}}
-  <p><a href="/login">Login instead</a></p>
-  <button type="submit" class="btn btn-success">Register</button>
-</form>
+<div class="form-wrapper">
+  <form method="post">
+    {% csrf_token %}{{form|crispy}}
+    <p><a href="/login">Login instead</a></p>
+    <button type="submit" class="btn btn-success">Register</button>
+  </form>
+</div>
 {% endblock %}
