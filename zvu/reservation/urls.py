@@ -19,4 +19,4 @@ urlpatterns = [
     path('<int:id>/update/', reservation_update_view, name='reservation-update'),
     path('<int:id>/delete/', reservation_delete_view, name='reservation-delete'),
     # path('animals/', animal_list_view, name='animal-list'),
-]
+] 

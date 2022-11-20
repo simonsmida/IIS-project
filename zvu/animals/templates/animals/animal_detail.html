@@ -1,9 +1,13 @@
 {% extends 'shelter/base.html' %}
 
+{% load animals_extras %}
+
 {% block content %}
 
-<p><a href='{{object.get_absolute_url}}delete'>Delete {{ object.meno }}</a></p>
-<p><a href='{{object.get_absolute_url}}update'>Update {{ object.meno }}</a></p>
+{% if user|has_group:'caregiver' %} 
+    <p><a href='{{object.get_absolute_url}}delete'>Delete {{ object.meno }}</a></p>
+    <p><a href='{{object.get_absolute_url}}update'>Update {{ object.meno }}</a></p>
+{% endif %}
 
 <h2>Meno: {{ object.meno }}</h2>
 <h2>Druh: {{ object.druh }}</h2>
