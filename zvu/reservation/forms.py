@@ -10,18 +10,15 @@ class ReservationForm(forms.ModelForm):
     datum_vytvorenia = forms.DateField()
     rezervovany_od = forms.DateField()
     rezervovany_od = forms.DateField()
-    zvieraid = MyModelChoiceField(
-        queryset=Animal.objects.all(),
-        label='Zviera'
-    )
+    zvieraid = forms.CharField()
                
     class Meta:
         model = Reservation
         fields = [
             'datum_vytvorenia',
             'rezervovany_od',
-            'rezervovany_do',
-            'zvieraid'
+            'rezervovany_do'    
+            # 'zvieraid'
         ]
     
     
