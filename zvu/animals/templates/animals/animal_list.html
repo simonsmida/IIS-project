@@ -39,7 +39,8 @@
         {% if user|has_group:'caregiver' %} 
             <button type="button">Edit</button>
         {% endif %}
-        <button type="button" action='/reservation/'>Reserve</button>
+        <a href={% url 'reservation:reservation-create' %} class="btn btn-secondary btn-sm btn-block">Reserve</a>
+
         <p>{{ instance.id_zviera }} - <a href='{{ instance.get_absolute_url }}'>{{ instance.meno }}</a></p> 
         <p>{{ instance.id_zviera }} - <a href='/reservation/'>{{ instance.meno }}</a></p> 
 
