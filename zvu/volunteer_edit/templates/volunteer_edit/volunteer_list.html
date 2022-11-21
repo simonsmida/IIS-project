@@ -4,8 +4,13 @@
 
 <a href="{% url "volunteer_edit:volunteer-create" %}">New Volunteer</a>
 
-{% for instance in object_list %}
-     <p>{{ instance.id_dobrovolnik }} - <a href='{{ instance.get_absolute_url }}'>{{ instance.meno }}</a></p>
+<h1>Trusted</h1>
+{% for instance in object_list1 %}
+     <p>{{ instance.id }} - <a href='{{ instance.get_absolute_url }}'>{{ instance.username }}</a></p>
+{% endfor %}
+<h1>Not Trusted</h1>
+{% for instance in object_list2 %}
+     <p>{{ instance.id }} - <a href='{{ instance.get_absolute_url }}'>{{ instance.username }}</a></p>
 {% endfor %}
 
 {% endblock %}

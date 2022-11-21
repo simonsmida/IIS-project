@@ -1,8 +1,12 @@
 {% extends 'shelter/base.html' %}
 
+{% load animals_extras %}
+     
 {% block content %}
 
+{% if user|has_group:'caregiver' %} 
 <a href="{% url "animals:animal-create" %}">New Animal</a>
+{% endif %}
 
 {% for instance in object_list %}
      <p>{{ instance.id_zviera }} - <a href='{{ instance.get_absolute_url }}'>{{ instance.meno }}</a></p>

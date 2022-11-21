@@ -4,7 +4,9 @@ from shelter.models import Reservation
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponseForbidden           
 
-@login_required(login_url="/login")
+
+@login_required(login_url="login")
+@permission_required("shelter.delete_reservation", login_url="login", raise_exception=True)
 def reservation_create_view(request):
     form = ReservationForm(request.POST or None)
     if form.is_valid():
@@ -18,9 +20,11 @@ def reservation_create_view(request):
     return render(request, "reservation/reservation_create.html", context)
 
 
+@login_required(login_url="login")
+@permission_required("shelter.change_reservation", login_url="login", raise_exception=True)
 def reservation_update_view(request, id=id):
     obj = get_object_or_404(Reservation, id_rezervacie=id)
-    if obj.dobrovolnikid == request.user:
+    if obj.dobrovolnikid == request.user or request.user.is_superuser:
         form = ReservationForm(request.POST or None, instance=obj)
         if form.is_valid():
             form.save()
@@ -32,18 +36,23 @@ def reservation_update_view(request, id=id):
     return HttpResponseForbidden()
     
 
-@login_required(login_url="/login")
+@login_required(login_url="login")
+@permission_required("shelter.view_reservation", login_url="login", raise_exception=True)
 def reservation_list_view(request):
     queryset = Reservation.objects.filter(dobrovolnikid=request.user) # list of objects
+    if request.user.is_superuser:
+        queryset = Reservation.objects.all() # list of objects
     context = {
         "object_list": queryset
     }
     return render(request, "reservation/reservation_list.html", context)
 
-# @login_required(login_url="/login")
+
+@login_required(login_url="login")
+@permission_required("shelter.view_reservation", login_url="login", raise_exception=True)
 def reservation_detail_view(request, id):
     obj = get_object_or_404(Reservation, id_rezervacie=id)
-    if obj.dobrovolnikid == request.user:
+    if obj.dobrovolnikid == request.user or request.user.is_superuser:
         context = {
             "object": obj
         }
@@ -51,9 +60,11 @@ def reservation_detail_view(request, id):
     return HttpResponseForbidden()
 
 
+@login_required(login_url="login")
+@permission_required("shelter.delete_reservation", login_url="login", raise_exception=True)
 def reservation_delete_view(request, id):
     obj = get_object_or_404(Reservation, id_rezervacie=id)
-    if obj.dobrovolnikid == request.user:
+    if obj.dobrovolnikid == request.user or request.user.is_superuser:
         if request.method == "POST":
             obj.delete()
             return redirect('../../')

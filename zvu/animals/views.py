@@ -4,6 +4,8 @@ from shelter.models import Animal
 from django.contrib.auth.decorators import login_required, permission_required
 from reservation.views import reservation_create_view
 
+
+@login_required(login_url="login")
 @permission_required("shelter.add_animal", login_url="/login", raise_exception=True)
 def animal_create_view(request):
     form = AnimalForm(request.POST or None)     
@@ -16,6 +18,8 @@ def animal_create_view(request):
     }
     return render(request, "animals/animal_create.html", context)
 
+
+@login_required(login_url="login")
 @permission_required("shelter.change_animal", login_url="/login", raise_exception=True)
 def animal_update_view(request, id=id):
     obj = get_object_or_404(Animal, id_zviera=id)
@@ -45,6 +49,7 @@ def animal_detail_view(request, id):
     return render(request, "animals/animal_detail.html", context)
 
 
+@login_required(login_url="login")
 @permission_required("shelter.delete_animal", login_url="/login", raise_exception=True)
 def animal_delete_view(request, id):
     obj = get_object_or_404(Animal, id_zviera=id)

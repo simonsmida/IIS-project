@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required, permission_required
 
+
+@login_required(login_url="login")
 @permission_required("auth.add_user", login_url="/login", raise_exception=True)
 def caregiver_create_view(request):
     my_group = Group.objects.get(name="caregiver")
@@ -20,6 +22,7 @@ def caregiver_create_view(request):
     return render(request, "caregiver_edit/caregiver_create.html", context)
 
 
+@login_required(login_url="login")
 @permission_required("auth.change_user", login_url="/login", raise_exception=True)
 def caregiver_update_view(request, id=id):
     obj = get_object_or_404(User, id=id)
@@ -32,6 +35,8 @@ def caregiver_update_view(request, id=id):
     }
     return render(request, "caregiver_edit/caregiver_create.html", context)
 
+
+@login_required(login_url="login")
 @permission_required("auth.view_user", login_url="/login", raise_exception=True)
 def caregiver_list_view(request):
     queryset = User.objects.filter(groups__name='caregiver') # list of objects
@@ -41,6 +46,7 @@ def caregiver_list_view(request):
     return render(request, "caregiver_edit/caregiver_list.html", context)
 
 
+@login_required(login_url="login")
 @permission_required("auth.view_user", login_url="/login", raise_exception=True)
 def caregiver_detail_view(request, id):
     obj = get_object_or_404(User, id=id)
@@ -49,6 +55,7 @@ def caregiver_detail_view(request, id):
     }
     return render(request, "caregiver_edit/caregiver_detail.html", context)
 
+@login_required(login_url="login")
 @permission_required("auth.delete_user", login_url="/login", raise_exception=True)
 def caregiver_delete_view(request, id):
     obj = get_object_or_404(User, id=id)
