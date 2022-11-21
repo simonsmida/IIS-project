@@ -9,7 +9,7 @@ from django.http import HttpResponseForbidden
 # @permission_required(perm='shelter.view_animal', raise_exception=True)
 def caregiver_view(request):
     user = request.user
-    if user.groups.filter(name='caregiver').exists():
+    if user.groups.filter(name='caregiver').exists() or user.is_superuser:
         #exists
         return render(request, "caregiver/caregiver.html", {})
     # raise PermissionDenied

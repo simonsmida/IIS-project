@@ -1,11 +1,26 @@
 {% extends 'shelter/base.html' %}
 
+{% load animals_extras %}
+
 {% block content %}
 
 <a href="{% url "reservation:reservation-create" %}">New Reservation</a>
 
-{% for instance in object_list %}
-     <p><a href='{{ instance.get_absolute_url }}'>Rezervácia {{ instance.id_rezervacie }}</a></p>
-{% endfor %}
+{% if user|has_group:'caregiver' or user.is_superuser %}
+     <h1>Unapproved</h1>
+     {% for instance in object_list1 %}
+          <p><a href='{{ instance.get_absolute_url }}'>Rezervácia {{ instance.id_rezervacie }}</a></p>
+     {% endfor %}
+   
+     <h1>Approved</h1>
+     {% for instance in object_list2 %}
+          <p><a href='{{ instance.get_absolute_url }}'>Rezervácia {{ instance.id_rezervacie }}</a></p>
+     {% endfor %}
+
+{% else %}
+     {% for instance in object_list1 %}
+          <p><a href='{{ instance.get_absolute_url }}'>Rezervácia {{ instance.id_rezervacie }}</a></p>
+     {% endfor %}
+{% endif %}
 
 {% endblock %}
