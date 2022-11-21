@@ -55,4 +55,3 @@ class ReservationManageForm(forms.ModelForm):
             'zvieraid',
             'dobrovolnikid'
         ]
-
