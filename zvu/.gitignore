@@ -1,0 +1,8 @@
+../Pipfile
+../Pipfile.lock
+../node_modules/
+../package-lock.json
+../package.json
+db.sqlite3
+__pycache__/
+*.pyc
