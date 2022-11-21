@@ -7,7 +7,7 @@ from animals.templatetags.animals_extras import has_group
 
 
 @login_required(login_url="login")
-@permission_required("shelter.add _reservation", login_url="login", raise_exception=True)
+@permission_required("shelter.add_reservation", login_url="login", raise_exception=True)
 def reservation_create_view(request):
     form = ReservationForm(request.POST or None)
     if request.user.is_superuser:

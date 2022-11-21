@@ -8,8 +8,42 @@
 <a href="{% url "animals:animal-create" %}">New Animal</a>
 {% endif %}
 
+<!-- Pet list -->
+<div class="container" style="margin-bottom: 5rem;">
+     <div class="row">
+         <div class="col-md-12">
+             <h1 class="text-center">Pet List</h1>
+         </div>
+     </div>
+     <!-- Horizontal line as a separator -->
+     <hr>
+     <div class="row">
+         <div class="col-md-4 text-center" style="padding-bottom: 10px;">
+            <a id="dog-filter" href="/pet_list/dogs" class="btn btn-primary btn-lg btn-block" style="width: 100px;">Dogs</a>
+         </div>
+         <div class="col-md-4 text-center" style="padding-bottom: 10px;">
+             <a id="cat-filter" href="/pet_list/cats" class="btn btn-primary btn-lg btn-block" style="width: 100px;">Cats</a>
+         </div>
+         <div class="col-md-4 text-center" style="padding-bottom: 10px;">
+             <a id="rab-filter" href="/pet_list/rabbits" class="btn btn-primary btn-lg btn-block" style="width: 100px;">Rabbits</a>
+         </div>
+     </div>
+ </div>
 {% for instance in object_list %}
-     <p>{{ instance.id_zviera }} - <a href='{{ instance.get_absolute_url }}'>{{ instance.meno }}</a></p>
+    <div>
+        <div class="animal-breed">{{instance.druh}}</div>
+        <div class="animal-name"> {{instance.meno}} </div>
+        <div class="animal-age">  {{instance.vek}}</div>
+        <div class="animal-reg">  {{instance.datum_registracie}}</div>
+        <div class="animal-img">  {{instance.obrazok}}</div>
+        {% if user|has_group:'caregiver' %} 
+            <button type="button">Edit</button>
+        {% endif %}
+        <button type="button" action='/reservation/'>Reserve</button>
+        <p>{{ instance.id_zviera }} - <a href='{{ instance.get_absolute_url }}'>{{ instance.meno }}</a></p> 
+        <p>{{ instance.id_zviera }} - <a href='/reservation/'>{{ instance.meno }}</a></p> 
+
+    </div>     
 {% endfor %}
 
 {% endblock %}
