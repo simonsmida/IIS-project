@@ -1,0 +1,11 @@
+{% extends 'shelter/base.html' %}
+
+{% block content %}
+
+<a href="{% url "vet_edit:vet-create" %}">New Veterinarian</a>
+
+{% for instance in object_list %}
+     <p>{{ instance.id }} - <a href='{{ instance.get_absolute_url }}'>{{ instance.username }}</a></p>
+{% endfor %}
+
+{% endblock %}

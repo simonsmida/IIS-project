@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'volunteer_edit.apps.Volunteer_editConfig',
     'caregiver.apps.CaregiverConfig',
     'caregiver_edit.apps.Caregiver_editConfig',
+    # 'vet.apps.VetConfig',
+    'vet_edit.apps.Vet_editConfig',
     'animals.apps.AnimalsConfig',
     'reservation.apps.ReservationConfig',
     'crispy_forms',

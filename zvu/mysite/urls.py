@@ -22,6 +22,8 @@ urlpatterns = [
     path('volunteer/', include('volunteer.urls')),
     path('caregiver_edit/', include('caregiver_edit.urls')),
     path('caregiver/', include('caregiver.urls')),
+    path('vet_edit/', include('vet_edit.urls')),
+    # path('vet/', include('vet.urls')),
     path('animals/', include('animals.urls')),
     path('reservation/', include('reservation.urls')),
     path('myadmin/', include('myadmin.urls')),
