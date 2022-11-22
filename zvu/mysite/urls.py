@@ -29,4 +29,5 @@ urlpatterns = [
     path('myadmin/', include('myadmin.urls')),
     path('', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
+    path('vet/', include('vet.urls')),
 ] 
