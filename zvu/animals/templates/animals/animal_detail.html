@@ -9,12 +9,16 @@
     <p><a href='{{object.get_absolute_url}}update'>Update {{ object.name }}</a></p>
 {% endif %}
 
-{% if user|has_group:'volunteer' %}
+{% if user|has_group:'volunteer' or user|has_group:'volunteer_notrust' or not user.is_authenticated %}
     <form  action="{% url 'reservation:reservation-create'%}" method="POST" class="form">
         <input type="hidden" name="animalid" value="{{object.id}}" />
         <input type="hidden" name="zviera" value="{{object.name}}" />
         {% csrf_token %}
-        <button type="submit" class="btn btn-primary">Reserve</button>
+        {% if user|has_group:'volunteer_notrust' %}
+            <button type="submit" class="btn btn-primary" style="width: 100px" disabled>Reserve</button>
+        {% else %}
+            <button type="submit" class="btn btn-primary" style="width: 100px">Reserve</button>
+        {% endif %}
     </form>
 {% endif %}
 

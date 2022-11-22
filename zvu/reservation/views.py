@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import ReservationForm, ReservationManageForm, ReservationUpdateForm
 from shelter.models import Reservation, Animal
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.http import HttpResponseForbidden   
 from animals.templatetags.animals_extras import has_group
+from reservation.decorators import my_login_required
 
 
 # @login_required(login_url="login")
@@ -38,7 +39,9 @@ from animals.templatetags.animals_extras import has_group
 #     }
 #     return render(request, "reservation/reservation_create.html", context)
 
-@login_required(login_url="login")
+# @user_passes_test(lambda u: u.is_authenticated, login_url='/login/?next=/animals/')
+
+@my_login_required
 @permission_required("shelter.add_reservation", login_url="login", raise_exception=True)
 def reservation_create_view(request):
     form = ReservationForm(request.POST or None)

@@ -53,12 +53,16 @@
             <div class="card-block">   
                 <!-- Create reservation directly -->   
                 <div style="margin: 10px">                
-                {% if user|has_group:'volunteer' %}
+                {% if user|has_group:'volunteer' or user|has_group:'volunteer_notrust' or not user.is_authenticated %}
                 <form  action="{% url 'reservation:reservation-create'%}" method="POST" class="form">
                     <input type="hidden" name="animalid" value="{{instance.id}}" />
                     <input type="hidden" name="zviera" value="{{instance.name}}" />
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-primary" style="width: 100px">Reserve</button>
+                    {% if user|has_group:'volunteer_notrust' %}
+                        <button type="submit" class="btn btn-primary" style="width: 100px" disabled>Reserve</button>
+                    {% else %}
+                        <button type="submit" class="btn btn-primary" style="width: 100px">Reserve</button>
+                    {% endif %}
                 </form>
                 {% endif %}
                 </div>
