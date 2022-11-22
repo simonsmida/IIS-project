@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'vet.apps.VetConfig',
     'myadmin.apps.MyadminConfig',
     'shelter.apps.ShelterConfig',
     'volunteer.apps.VolunteerConfig',
