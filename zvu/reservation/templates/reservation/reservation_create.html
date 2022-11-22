@@ -6,6 +6,8 @@
     <h3>{{ zviera }}</h3>
 {% endif %}
 
+{% comment %} <h3>{{ form.zvieraid.name }}</h3> {% endcomment %}
+
 <form action='.' method='POST'>{% csrf_token %}
     {{ form.as_p }}
     <input type='submit' name='save' value='Save' />

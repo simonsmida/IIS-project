@@ -23,11 +23,11 @@ urlpatterns = [
     path('caregiver_edit/', include('caregiver_edit.urls')),
     path('caregiver/', include('caregiver.urls')),
     path('vet_edit/', include('vet_edit.urls')),
-    # path('vet/', include('vet.urls')),
+    path('vet/', include('vet.urls')),
+    path('vetrequest/', include('vetrequest.urls')),
     path('animals/', include('animals.urls')),
     path('reservation/', include('reservation.urls')),
     path('myadmin/', include('myadmin.urls')),
     path('', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
-    path('vet/', include('vet.urls')),
 ] 

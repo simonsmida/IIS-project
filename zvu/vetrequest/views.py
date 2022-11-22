@@ -1,0 +1,86 @@
+from django.shortcuts import render, get_object_or_404, redirect
+from .forms import VetrequestForm
+from shelter.models import Vetrequest, Animal
+from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
+from django.http import HttpResponseForbidden   
+from animals.templatetags.animals_extras import has_group
+from reservation.decorators import my_login_required
+
+@my_login_required
+@permission_required("shelter.add_vetrequest", login_url="login", raise_exception=True)
+def vetrequest_create_view(request):
+    form = VetrequestForm(request.POST or None)
+    
+    if form.is_valid():
+        vetrequest = form.save(commit=False)
+        vetrequest.caregiverid = request.user
+        vetrequest.save()
+        return redirect('../')
+    
+    context = {
+        'form': form
+    }
+    return render(request, "vetrequest/vetrequest_create.html", context)
+
+
+@login_required(login_url="login")
+@permission_required("shelter.change_vetrequest", login_url="login", raise_exception=True)
+def vetrequest_update_view(request, id=id):
+    user = request.user
+    obj = get_object_or_404(Vetrequest, id=id)
+    
+    if obj.vetid == user or obj.caregiverid == user or user.is_superuser:
+        form = VetrequestForm(request.POST or None, instance=obj)
+            
+        if form.is_valid():
+            form.save()
+            return redirect('../../')
+        
+        context = {
+            'form': form
+        }
+        return render(request, "vetrequest/vetrequest_create.html", context)
+    return HttpResponseForbidden()
+    
+
+@login_required(login_url="login")
+@permission_required("shelter.view_vetrequest", login_url="login", raise_exception=True)
+def vetrequest_list_view(request):
+    queryset1 = Vetrequest.objects.filter(vetid=request.user) # list of objects
+    # queryset2 = []
+    # if request.user.is_superuser or has_group(request.user, 'caregiver'):
+    #     queryset1 = Vetrequest.objects.filter(state='pending') # list of objects
+    #     queryset2 = Vetrequest.objects.filter(state='finished')
+    
+    context = {
+        "object_list1": queryset1
+        # "object_list2": queryset2   
+    }
+    return render(request, "vetrequest/vetrequest_list.html", context)
+
+
+@login_required(login_url="login")
+@permission_required("shelter.view_vetrequest", login_url="login", raise_exception=True)
+def vetrequest_detail_view(request, id):
+    obj = get_object_or_404(Vetrequest, id=id)
+    if obj.vetid == request.user or obj.caregiverid == request.user or request.user.is_superuser:
+        context = {
+            "object": obj
+        }
+        return render(request, "vetrequest/vetrequest_detail.html", context)
+    return HttpResponseForbidden()
+
+
+@login_required(login_url="login")
+@permission_required("shelter.delete_vetrequest", login_url="login", raise_exception=True)
+def vetrequest_delete_view(request, id):
+    obj = get_object_or_404(Vetrequest, id=id)
+    if obj.vetid == request.user or obj.caregiverid == request.user or request.user.is_superuser:
+        if request.method == "POST":
+            obj.delete()
+            return redirect('../../')
+        context = {
+            "object": obj
+        }
+        return render(request, "vetrequest/vetrequest_delete.html", context)
+    return HttpResponseForbidden()

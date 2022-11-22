@@ -3,17 +3,19 @@ from django.urls import reverse
 from django.conf import settings
 
 
-class VetRequest(models.Model):
+class Vetrequest(models.Model):
     id = models.AutoField(primary_key=True)
     creation_date = models.DateField()
     content = models.CharField(max_length=255)
-    state = models.CharField(max_length=255)
+    state = models.CharField(max_length=255, default='pending')
     caregiverid = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, related_name='caregiver_req',
                                     db_column='CaregiverID')
     vetid = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE,related_name='vet_req',
                                     db_column='VetID')
     animalid = models.ForeignKey('Animal', models.CASCADE, db_column='AnimalID')
     
+    def get_absolute_url(self):
+        return reverse("vetrequest:vetrequest-detail", kwargs={"id": self.id})
 
 class Reservation(models.Model):
     id = models.AutoField(primary_key=True)

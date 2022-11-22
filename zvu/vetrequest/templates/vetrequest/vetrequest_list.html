@@ -1,0 +1,30 @@
+{% extends 'shelter/base.html' %}
+
+{% load animals_extras %}
+
+{% block content %}
+
+{% if user|has_group:'caregiver' or user.is_superuser %}
+     <a href="{% url "vetrequest:vetrequest-create" %}">New Request</a>
+{% endif %}
+
+{% comment %} {% if user|has_group:'caregiver' or user.is_superuser %}
+     <h1>Unapproved</h1>
+     {% for instance in object_list1 %}
+          <p><a href='{{ instance.get_absolute_url }}'>Reservation {{ instance.id }}</a></p>
+     {% endfor %}
+   
+     <h1>Approved</h1>
+     {% for instance in object_list2 %}
+          <p><a href='{{ instance.get_absolute_url }}'>Reservation {{ instance.id }}</a></p>
+     {% endfor %}
+
+{% else %} {% endcomment %}
+
+{% for instance in object_list1 %}
+     <p><a href='{{ instance.get_absolute_url }}'>Request {{ instance.id }}</a></p>
+{% endfor %}
+
+{% comment %} {% endif %} {% endcomment %}
+
+{% endblock %}

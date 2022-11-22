@@ -32,15 +32,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'vet.apps.VetConfig',
     'myadmin.apps.MyadminConfig',
     'shelter.apps.ShelterConfig',
     'volunteer.apps.VolunteerConfig',
     'volunteer_edit.apps.Volunteer_editConfig',
     'caregiver.apps.CaregiverConfig',
     'caregiver_edit.apps.Caregiver_editConfig',
-    # 'vet.apps.VetConfig',
+    'vet.apps.VetConfig',
     'vet_edit.apps.Vet_editConfig',
+    'vetrequest.apps.VetrequestConfig',
     'animals.apps.AnimalsConfig',
     'reservation.apps.ReservationConfig',
     'crispy_forms',

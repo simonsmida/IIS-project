@@ -1,0 +1,11 @@
+{% extends 'shelter/base.html' %}
+
+{% block content %}
+<p><a href='{{object.get_absolute_url}}delete'>Delete</a></p>
+<p><a href='{{object.get_absolute_url}}update'>Update</a></p>
+
+<h1>Date:        {{ object.creation_date }}</h1>
+<h1>For Animal:  {{ object.animalid.name }}</h1>
+<h1>Veterinarian: {{ object.vetid.username }}</h1>
+<h1>State:       {{ object.state }}</h1>
+{% endblock %}
