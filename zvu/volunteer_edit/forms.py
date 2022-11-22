@@ -1,5 +1,4 @@
 from django import forms
-from shelter.models import Volunteer
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
@@ -7,7 +6,7 @@ class VolunteerCreateForm(UserCreationForm):
     # meno            = forms.CharField()
     # priezvisko      = forms.CharField()
     # datum_narodenia = forms.DateField()
-    trust = forms.ChoiceField(choices=[('0','neschválený'),('1','schválený')],required=False)
+    trust = forms.ChoiceField(choices=[('0','unapproved'),('1','approved')],required=False)
     
     class Meta:
         model = User
@@ -17,7 +16,7 @@ class VolunteerChangeForm(UserChangeForm):
     # meno            = forms.CharField()
     # priezvisko      = forms.CharField()
     # datum_narodenia = forms.DateField()
-    trust = forms.ChoiceField(choices=[('0','neschválený'),('1','schválený')],required=False)
+    trust = forms.ChoiceField(choices=[('0','unapproved'),('1','approved')],required=False)
     
     class Meta:
         model = User

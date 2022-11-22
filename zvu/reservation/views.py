@@ -49,7 +49,7 @@ def reservation_create_view(request):
             form.save()
             return redirect('../')
     else:
-        zviera = "Rezervacia pre "
+        zviera = "Reservation for "
     if form.is_valid():
         reservation = form.save(commit=False)
         reservation.dobrovolnikid = request.user
@@ -68,7 +68,7 @@ def reservation_create_view(request):
 @permission_required("shelter.change_reservation", login_url="login", raise_exception=True)
 def reservation_update_view(request, id=id):
     user = request.user
-    obj = get_object_or_404(Reservation, id_rezervacie=id)
+    obj = get_object_or_404(Reservation, id=id)
     
     if obj.dobrovolnikid == user or user.is_superuser or has_group(request.user, 'caregiver'):
         form = ReservationUpdateForm(request.POST or None, instance=obj)
@@ -93,8 +93,8 @@ def reservation_list_view(request):
     queryset1 = Reservation.objects.filter(dobrovolnikid=request.user) # list of objects
     queryset2 = []
     if request.user.is_superuser or has_group(request.user, 'caregiver'):
-        queryset1 = Reservation.objects.filter(schvalenie=0) # list of objects
-        queryset2 = Reservation.objects.filter(schvalenie=1)
+        queryset1 = Reservation.objects.filter(approval=0) # list of objects
+        queryset2 = Reservation.objects.filter(approval=1)
     
     context = {
         "object_list1": queryset1,
@@ -106,7 +106,7 @@ def reservation_list_view(request):
 @login_required(login_url="login")
 @permission_required("shelter.view_reservation", login_url="login", raise_exception=True)
 def reservation_detail_view(request, id):
-    obj = get_object_or_404(Reservation, id_rezervacie=id)
+    obj = get_object_or_404(Reservation, id=id)
     if obj.dobrovolnikid == request.user or request.user.is_superuser or has_group(request.user, 'caregiver'):
         context = {
             "object": obj
@@ -118,7 +118,7 @@ def reservation_detail_view(request, id):
 @login_required(login_url="login")
 @permission_required("shelter.delete_reservation", login_url="login", raise_exception=True)
 def reservation_delete_view(request, id):
-    obj = get_object_or_404(Reservation, id_rezervacie=id)
+    obj = get_object_or_404(Reservation, id=id)
     if obj.dobrovolnikid == request.user or request.user.is_superuser or has_group(request.user, 'caregiver'):
         if request.method == "POST":
             obj.delete()

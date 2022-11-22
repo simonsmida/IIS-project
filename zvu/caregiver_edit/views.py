@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import CaregiverForm
-from shelter.models import Caregiver
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required, permission_required
