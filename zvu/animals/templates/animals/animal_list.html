@@ -29,21 +29,51 @@
          </div>
      </div>
  </div>
-{% for instance in object_list %}
-    <div>
-        <div class="animal-breed">{{instance.druh}}</div>
-        <div class="animal-name"> {{instance.meno}} </div>
-        <div class="animal-age">  {{instance.vek}}</div>
-        <div class="animal-reg">  {{instance.datum_registracie}}</div>
-        <div class="animal-img">  {{instance.obrazok}}</div>
-        {% if user|has_group:'caregiver' %} 
-            <button type="button">Edit</button>
-        {% endif %}
-        <button type="button" action='/reservation/'>Reserve</button>
-        <p>{{ instance.id_zviera }} - <a href='{{ instance.get_absolute_url }}'>{{ instance.meno }}</a></p> 
-        <p>{{ instance.id_zviera }} - <a href='/reservation/'>{{ instance.meno }}</a></p> 
 
-    </div>     
+
+{% for instance in object_list %}
+<div class="container">
+<div class="card" style="max-width: 900px; margin: auto;">
+    <div class="row g-0" style="padding: 20px;">
+        <!-- Image -->
+        <div class="col-md-2 position-relative">
+            <img src="https://via.placeholder.com/150" class="card-img fit-cover" alt="placeholder image">
+        </div>
+        <!-- Text -->
+        <div class="col-md-8" style="padding-left: 20px;">
+            <div class="card-block px-4">
+                <h4 class="card-title">{{ instance.meno }}</h4>
+                <p class="card-text"><b>Breed:</b> {{ instance.druh }}</p>
+                <p class="card-text"><b>Age:</b> {{ instance.vek }}</p>
+                <p class="card-text"><b>Registered:</b> {{ instance.datum_registracie }}</p>
+            </div>
+        </div>
+        <!-- Buttons -->
+        <div class="col-md-2">
+            <div class="card-block">   
+                <!-- Create reservation directly -->   
+                <div style="margin: 10px">                
+                {% if user|has_group:'volunteer' %}
+                <form  action="{% url 'reservation:reservation-create' %}" method="POST" class="form">
+                    <input type="hidden" name="zvieraid" value="{{instance.id_zviera}}" />
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary" style="width: 100px">Reserve</button>
+                </form>
+                {% endif %}
+                </div>
+                <!-- Go to detail view -->
+                <div style="margin: 10px">
+                    <a href="{% url 'animals:animal-detail' instance.id_zviera %}" class="btn btn-primary" style="width: 100px">More info</a>
+                    <!-- <a href='{{ instance.get_absolute_url }}' class="btn btn-secondary btn-sm btn-block">Detail</a> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- add margin below the card -->
+<div class="row" style="margin-bottom: 10px;"></div>
 {% endfor %}
+
 
 {% endblock %}

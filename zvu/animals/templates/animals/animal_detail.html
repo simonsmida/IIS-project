@@ -10,13 +10,12 @@
 {% endif %}
 
 {% if user|has_group:'volunteer' %}
-    {% comment %} <p><a href={% url 'reservation:reservation-create' %}>Zarezervuj {{ object.meno }}</a></p> {% endcomment %}
-    <form  action="{% url 'reservation:reservation-create'%}" method="POST" class="form" enctype="multipart/form-data">
+    <form  action="{% url 'reservation:reservation-create'%}" method="POST" class="form">
         <input type="hidden" name="zvieraid" value="{{object.id_zviera}}" />
         <input type="hidden" name="zviera" value="{{object.meno}}" />
         {% csrf_token %}
-            <button type="submit" class="btn btn-primary">Zarezervuj</button>
-      </form>
+        <button type="submit" class="btn btn-primary">Reserve</button>
+    </form>
 {% endif %}
 
 <h2>Meno: {{ object.meno }}</h2>
