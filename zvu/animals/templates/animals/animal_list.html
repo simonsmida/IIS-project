@@ -9,7 +9,7 @@
 {% endif %}
 
 <!-- Pet list -->
-<div class="container" style="margin-bottom: 5rem;">
+<div class="container" style="margin-bottom: 5rem; margin-top: 2rem;">
      <div class="row">
          <div class="col-md-12">
              <h1 class="text-center">Pet List</h1>
@@ -54,8 +54,9 @@
                 <!-- Create reservation directly -->   
                 <div style="margin: 10px">                
                 {% if user|has_group:'volunteer' %}
-                <form  action="{% url 'reservation:reservation-create' %}" method="POST" class="form">
+                <form  action="{% url 'reservation:reservation-create'%}" method="POST" class="form">
                     <input type="hidden" name="zvieraid" value="{{instance.id_zviera}}" />
+                    <input type="hidden" name="zviera" value="{{instance.meno}}" />
                     {% csrf_token %}
                     <button type="submit" class="btn btn-primary" style="width: 100px">Reserve</button>
                 </form>
