@@ -5,14 +5,14 @@
 {% block content %}
 
 {% if user|has_group:'caregiver' or user.is_superuser %} 
-    <p><a href='{{object.get_absolute_url}}delete'>Delete {{ object.meno }}</a></p>
-    <p><a href='{{object.get_absolute_url}}update'>Update {{ object.meno }}</a></p>
+    <p><a href='{{object.get_absolute_url}}delete'>Delete {{ object.name }}</a></p>
+    <p><a href='{{object.get_absolute_url}}update'>Update {{ object.name }}</a></p>
 {% endif %}
 
 {% if user|has_group:'volunteer' %}
     <form  action="{% url 'reservation:reservation-create'%}" method="POST" class="form">
-        <input type="hidden" name="zvieraid" value="{{object.id_zviera}}" />
-        <input type="hidden" name="zviera" value="{{object.meno}}" />
+        <input type="hidden" name="zvieraid" value="{{object.id}}" />
+        <input type="hidden" name="zviera" value="{{object.name}}" />
         {% csrf_token %}
         <button type="submit" class="btn btn-primary">Reserve</button>
     </form>

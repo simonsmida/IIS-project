@@ -42,10 +42,10 @@
         <!-- Text -->
         <div class="col-md-8" style="padding-left: 20px;">
             <div class="card-block px-4">
-                <h4 class="card-title">{{ instance.meno }}</h4>
-                <p class="card-text"><b>Breed:</b> {{ instance.druh }}</p>
-                <p class="card-text"><b>Age:</b> {{ instance.vek }}</p>
-                <p class="card-text"><b>Registered:</b> {{ instance.datum_registracie }}</p>
+                <h4 class="card-title">{{ instance.name }}</h4>
+                <p class="card-text"><b>Breed:</b> {{ instance.breed }}</p>
+                <p class="card-text"><b>Age:</b> {{ instance.age }}</p>
+                <p class="card-text"><b>Registered:</b> {{ instance.registration_date }}</p>
             </div>
         </div>
         <!-- Buttons -->
@@ -55,8 +55,8 @@
                 <div style="margin: 10px">                
                 {% if user|has_group:'volunteer' %}
                 <form  action="{% url 'reservation:reservation-create'%}" method="POST" class="form">
-                    <input type="hidden" name="zvieraid" value="{{instance.id_zviera}}" />
-                    <input type="hidden" name="zviera" value="{{instance.meno}}" />
+                    <input type="hidden" name="zvieraid" value="{{instance.id}}" />
+                    <input type="hidden" name="zviera" value="{{instance.name}}" />
                     {% csrf_token %}
                     <button type="submit" class="btn btn-primary" style="width: 100px">Reserve</button>
                 </form>
@@ -64,7 +64,7 @@
                 </div>
                 <!-- Go to detail view -->
                 <div style="margin: 10px">
-                    <a href="{% url 'animals:animal-detail' instance.id_zviera %}" class="btn btn-primary" style="width: 100px">More info</a>
+                    <a href="{% url 'animals:animal-detail' instance.id %}" class="btn btn-primary" style="width: 100px">More info</a>
                     <!-- <a href='{{ instance.get_absolute_url }}' class="btn btn-secondary btn-sm btn-block">Detail</a> -->
                 </div>
             </div>
