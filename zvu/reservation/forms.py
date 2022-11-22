@@ -12,7 +12,8 @@ class ReservationForm(forms.ModelForm):
     rezervovany_od = forms.DateField()
     zvieraid = MyModelChoiceField(
         queryset=Animal.objects.all(),
-        label='Zviera'
+        label='Zviera',
+        widget=forms.HiddenInput()
     )
                
     class Meta:
@@ -23,7 +24,25 @@ class ReservationForm(forms.ModelForm):
             'rezervovany_do',
             'zvieraid'
         ]
-    
+        
+class ReservationUpdateForm(forms.ModelForm):
+    datum_vytvorenia = forms.DateField()
+    rezervovany_od = forms.DateField()
+    rezervovany_od = forms.DateField()
+    zvieraid = MyModelChoiceField(
+        queryset=Animal.objects.all(),
+        label='Zviera',
+    )
+               
+    class Meta:
+        model = Reservation
+        fields = [
+            'datum_vytvorenia',
+            'rezervovany_od',
+            'rezervovany_do',
+            'zvieraid'
+        ]
+            
     
 class ReservationManageForm(forms.ModelForm):
     datum_vytvorenia = forms.DateField()

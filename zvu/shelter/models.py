@@ -41,7 +41,7 @@ class Reservation(models.Model):
     datum_vytvorenia = models.DateField()
     rezervovany_od = models.DateField()
     rezervovany_do = models.DateField()
-    schvalenie = models.PositiveIntegerField(default=0)
+    schvalenie = models.IntegerField(default=0)
     stav = models.CharField(max_length=255, default='pending')
     zvieraid = models.ForeignKey('Animal', models.CASCADE, db_column='ZvieraID')
     dobrovolnikid = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, db_column='DobrovolnikID')
