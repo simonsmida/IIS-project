@@ -1,76 +1,76 @@
 from django import forms
-from shelter.models import Reservation, Animal, Volunteer
+from shelter.models import Reservation, Animal
 from django.contrib.auth.models import User
 
 class MyModelChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, obj):
-        return obj.meno
+        return obj.name
 
 class ReservationForm(forms.ModelForm):
-    datum_vytvorenia = forms.DateField()
-    rezervovany_od = forms.DateField()
-    rezervovany_od = forms.DateField()
-    zvieraid = MyModelChoiceField(
+    creation_date = forms.DateField()
+    reserved_from = forms.DateField()
+    reserved_to = forms.DateField()
+    animalid = MyModelChoiceField(
         queryset=Animal.objects.all(),
-        label='Zviera',
+        label='Animal',
         widget=forms.HiddenInput()
     )
                
     class Meta:
         model = Reservation
         fields = [
-            'datum_vytvorenia',
-            'rezervovany_od',
-            'rezervovany_do',
-            'zvieraid'
+            'creation_date',
+            'reserved_from',
+            'reserved_to',
+            'animalid'
         ]
         
 class ReservationUpdateForm(forms.ModelForm):
-    datum_vytvorenia = forms.DateField()
-    rezervovany_od = forms.DateField()
-    rezervovany_od = forms.DateField()
-    zvieraid = MyModelChoiceField(
+    creation_date = forms.DateField()
+    reserved_from = forms.DateField()
+    reserved_to = forms.DateField()
+    animalid = MyModelChoiceField(
         queryset=Animal.objects.all(),
-        label='Zviera',
+        label='Animal',
     )
                
     class Meta:
         model = Reservation
         fields = [
-            'datum_vytvorenia',
-            'rezervovany_od',
-            'rezervovany_do',
-            'zvieraid'
+            'creation_date',
+            'reserved_from',
+            'reserved_to',
+            'animalid'
         ]
             
     
 class ReservationManageForm(forms.ModelForm):
-    datum_vytvorenia = forms.DateField()
-    rezervovany_od = forms.DateField()
-    rezervovany_od = forms.DateField()
-    # schvalenie = forms.ChoiceField(choices=[(0,'neschválená'),(1,'schválená')],required=False)
-    schvalenie = forms.IntegerField()
-    stav = forms.ChoiceField(choices=[('čakajúca','čakajúca'),
+    creation_date = forms.DateField()
+    reserved_from = forms.DateField()
+    reserved_to = forms.DateField()
+    # approval = forms.ChoiceField(choices=[(0,'neschválená'),(1,'schválená')],required=False)
+    approval = forms.IntegerField()
+    state = forms.ChoiceField(choices=[('čakajúca','čakajúca'),
                                       ('prebihajúca','prebihajúca'),
                                       ('dokončená','dokončená')],
                              required=False)
-    zvieraid = MyModelChoiceField(
+    animalid = MyModelChoiceField(
         queryset=Animal.objects.all(),
-        label='Zviera'
+        label='Animal'
     )
-    dobrovolnikid = forms.ModelChoiceField(
-        queryset=User.objects.filter(groups__name='volunteer')
-        # label='User'
+    volunteerid = forms.ModelChoiceField(
+        queryset=User.objects.filter(groups__name='volunteer'),
+        label='Volunteer'
     )
                
     class Meta:
         model = Reservation
         fields = [
-            'datum_vytvorenia',
-            'rezervovany_od',
-            'rezervovany_do',
-            'schvalenie',
-            'stav',
-            'zvieraid',
-            'dobrovolnikid'
+            'creation_date',
+            'reserved_from',
+            'reserved_to',
+            'approval',
+            'state',
+            'animalid',
+            'volunteerid'
         ]

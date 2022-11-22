@@ -1,5 +1,4 @@
 from django import forms
-from shelter.models import Caregiver
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 

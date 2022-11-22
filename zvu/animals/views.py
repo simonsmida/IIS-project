@@ -22,7 +22,7 @@ def animal_create_view(request):
 @login_required(login_url="login")
 @permission_required("shelter.change_animal", login_url="/login", raise_exception=True)
 def animal_update_view(request, id=id):
-    obj = get_object_or_404(Animal, id_zviera=id)
+    obj = get_object_or_404(Animal, id=id)
     form = AnimalForm(request.POST or None, instance=obj)
     if form.is_valid():
         form.save()
@@ -64,7 +64,7 @@ def animal_list_view(request):
 
 
 def animal_detail_view(request, id):
-    obj = get_object_or_404(Animal, id_zviera=id)
+    obj = get_object_or_404(Animal, id=id)
     context = {
         "object": obj
     }
@@ -74,7 +74,7 @@ def animal_detail_view(request, id):
 @login_required(login_url="login")
 @permission_required("shelter.delete_animal", login_url="/login", raise_exception=True)
 def animal_delete_view(request, id):
-    obj = get_object_or_404(Animal, id_zviera=id)
+    obj = get_object_or_404(Animal, id=id)
     if request.method == "POST":
         obj.delete()
         return redirect('../../')
