@@ -14,7 +14,7 @@ def volunteer_create_view(request):
     if form.is_valid():
         user = form.save()
         if(form.cleaned_data['trust'] == '1'):
-            my_group1.user_set.add(user)
+            my_group1.user_set.add(user) 
         else:
             my_group2.user_set.add(user)
         # user.save()

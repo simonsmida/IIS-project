@@ -4,15 +4,16 @@
 
 {% block content %}
 
-{% if user|has_group:'caregiver' %} 
+{% if user|has_group:'caregiver' or user.is_superuser %} 
     <p><a href='{{object.get_absolute_url}}delete'>Delete {{ object.meno }}</a></p>
     <p><a href='{{object.get_absolute_url}}update'>Update {{ object.meno }}</a></p>
 {% endif %}
 
 {% if user|has_group:'volunteer' %}
     {% comment %} <p><a href={% url 'reservation:reservation-create' %}>Zarezervuj {{ object.meno }}</a></p> {% endcomment %}
-    <form  action="{% url 'reservation:reservation-create'%}" method="POST" class="form">
+    <form  action="{% url 'reservation:reservation-create'%}" method="POST" class="form" enctype="multipart/form-data">
         <input type="hidden" name="zvieraid" value="{{object.id_zviera}}" />
+        <input type="hidden" name="zviera" value="{{object.meno}}" />
         {% csrf_token %}
             <button type="submit" class="btn btn-primary">Zarezervuj</button>
       </form>

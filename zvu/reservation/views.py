@@ -1,24 +1,65 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .forms import ReservationForm, ReservationManageForm
-from shelter.models import Reservation
+from .forms import ReservationForm, ReservationManageForm, ReservationUpdateForm
+from shelter.models import Reservation, Animal
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponseForbidden   
-from animals.templatetags.animals_extras import has_group        
+from animals.templatetags.animals_extras import has_group
 
+
+# @login_required(login_url="login")
+# @permission_required("shelter.add_reservation", login_url="login", raise_exception=True)
+# def reservation_create_view(request):
+#     zvieraid1 = request.POST.get('zvieraid', False)
+#     if zvieraid1 == False:
+#         # form.save()
+#         kokot = "dsadas"
+#         print(kokot)
+#         # return redirect('../')
+#         # reservation_update_view(request, int(zvieraid1))
+#     print("cicina")
+#     form = ReservationForm(request.POST or None)
+#     obj = get_object_or_404(Animal, id_zviera=int(zvieraid1))
+#     # print(zvieraid1)
+    
+#     # if request.user.is_superuser:
+#     #     form = ReservationManageForm(request.POST or None)
+#     #     return render(request, "reservation/reservation_create.html", form)
+#     if form.is_valid():
+#         print("here")
+#         reservation = form.save(commit=False)
+#         reservation.dobrovolnikid = request.user
+#         reservation.zvieraid = int(zvieraid1)
+#         reservation.save()
+#         return redirect('../')
+#     zviera = obj.meno
+#     context = {
+#         'form': form,
+#         'zviera': zviera
+#     }
+#     return render(request, "reservation/reservation_create.html", context)
 
 @login_required(login_url="login")
 @permission_required("shelter.add_reservation", login_url="login", raise_exception=True)
 def reservation_create_view(request):
     form = ReservationForm(request.POST or None)
     if request.user.is_superuser:
+        zviera = ""
         form = ReservationManageForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+            return redirect('../')
+    else:
+        zviera = "Rezervacia pre "
     if form.is_valid():
         reservation = form.save(commit=False)
         reservation.dobrovolnikid = request.user
         reservation.save()
         return redirect('../')
+    
+    zviera = f"{zviera} \"{request.POST.get('zviera', False)}\"" 
     context = {
-        'form': form
+        'form': form,
+        'zviera': zviera
     }
     return render(request, "reservation/reservation_create.html", context)
 
@@ -28,13 +69,17 @@ def reservation_create_view(request):
 def reservation_update_view(request, id=id):
     user = request.user
     obj = get_object_or_404(Reservation, id_rezervacie=id)
+    
     if obj.dobrovolnikid == user or user.is_superuser or has_group(request.user, 'caregiver'):
-        form = ReservationForm(request.POST or None, instance=obj)
+        form = ReservationUpdateForm(request.POST or None, instance=obj)
+        
         if user.is_superuser or has_group(request.user, 'caregiver'):
             form = ReservationManageForm(request.POST or None, instance=obj)
+            
         if form.is_valid():
             form.save()
             return redirect('../../')
+        
         context = {
             'form': form
         }
