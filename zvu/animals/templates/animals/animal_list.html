@@ -55,7 +55,7 @@
                 <div style="margin: 10px">                
                 {% if user|has_group:'volunteer' %}
                 <form  action="{% url 'reservation:reservation-create'%}" method="POST" class="form">
-                    <input type="hidden" name="zvieraid" value="{{instance.id}}" />
+                    <input type="hidden" name="animalid" value="{{instance.id}}" />
                     <input type="hidden" name="zviera" value="{{instance.name}}" />
                     {% csrf_token %}
                     <button type="submit" class="btn btn-primary" style="width: 100px">Reserve</button>

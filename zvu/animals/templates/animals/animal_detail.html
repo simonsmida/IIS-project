@@ -11,14 +11,14 @@
 
 {% if user|has_group:'volunteer' %}
     <form  action="{% url 'reservation:reservation-create'%}" method="POST" class="form">
-        <input type="hidden" name="zvieraid" value="{{object.id}}" />
+        <input type="hidden" name="animalid" value="{{object.id}}" />
         <input type="hidden" name="zviera" value="{{object.name}}" />
         {% csrf_token %}
         <button type="submit" class="btn btn-primary">Reserve</button>
     </form>
 {% endif %}
 
-<h2>Meno: {{ object.name }}</h2>
-<h2>Druh: {{ object.breed }}</h2>
-<h2>Vek:  {{ object.age }}</h2>
+<h2>Name: {{ object.name }}</h2>
+<h2>Breed: {{ object.breed }}</h2>
+<h2>Age:  {{ object.age }}</h2>
 {% endblock %}
