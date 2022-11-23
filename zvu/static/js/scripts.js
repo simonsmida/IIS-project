@@ -32,3 +32,17 @@ window.addEventListener('DOMContentLoaded', event => {
     });
 
 });
+
+/**
+ * Caregiver side bar 
+ */
+// $(document).ready(function () {
+//     $('#sidebar > ul > li').click(function() {
+//         //1. Remove currently active class
+//         $('#sidebar > ul > li.active').removeClass('active');
+
+//         //2. Set new active class to the currently clicked object
+//         var index = $(this).index();
+//         $("#sidebar > ul > li:nth-child("+(index+1)+")").addClass('active');
+//     });
+// });
