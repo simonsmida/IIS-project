@@ -47,15 +47,17 @@ class MyModelChoiceField(forms.ModelChoiceField):
 class VetrequestForm(forms.ModelForm):
     creation_date = forms.DateField()
     content = forms.CharField(widget=forms.Textarea(attrs={"cols": "70", "rows": "8"}))
-    state = forms.ChoiceField(choices=[('pending','pending'),
-                                      ('finished','finished')])
+    # state = forms.ChoiceField(choices=[('pending','pending'),
+    #                                   ('finished','finished')])
     animalid = MyModelChoiceField(
         queryset=Animal.objects.all(),
-        label='Animal'
+        label='Animal',
+        widget=forms.HiddenInput()
     )
     vetid = forms.ModelChoiceField(
         queryset=User.objects.filter(groups__name='vet'),
-        label='Veterinarian'
+        label='Veterinarian',
+        # widget=forms.HiddenInput()
     )
                
     class Meta:
@@ -63,7 +65,42 @@ class VetrequestForm(forms.ModelForm):
         fields = [
             'creation_date',
             'content',
-            'state',
+            # 'state',
             'animalid',
             'vetid'
         ]
+        
+        
+class VetrequestExamForm(forms.ModelForm):
+    exam_time = forms.DateField()
+    exam_procedure = forms.ChoiceField(choices=[('vaccination','vaccination'),
+                                                ('regular checkup','regular checkup'),
+                                                ('other','other')])
+     
+    class Meta:
+        model = Vetrequest
+        fields = [
+            'exam_time',
+            'exam_procedure'
+        ]
+
+
+# class VetrequestNewForm(forms.ModelForm):
+    
+#     animalid = MyModelChoiceField(
+#         queryset=Animal.objects.all(),
+#         label='Animal'
+#     )
+    
+#     vetid = forms.ModelChoiceField(
+#         queryset=User.objects.filter(groups__name='vet'),
+#         label='Veterinarian'
+#     )
+    
+#     class Meta:
+#         model = Vetrequest
+#         fields = [
+#             'state',
+#             'animalid',
+#             'vetid'
+#         ]

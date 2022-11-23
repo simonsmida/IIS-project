@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .forms import VetrequestForm
+from .forms import VetrequestForm, VetrequestExamForm
 from shelter.models import Vetrequest, Animal
 from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.http import HttpResponseForbidden   
@@ -11,6 +11,9 @@ from reservation.decorators import my_login_required
 def vetrequest_create_view(request):
     form = VetrequestForm(request.POST or None)
     
+    # if has_group(request.user, 'caregiver') or request.user.is_superuser:
+    #     form = VetrequestNewForm(request.POST or None)
+        
     if form.is_valid():
         vetrequest = form.save(commit=False)
         vetrequest.caregiverid = request.user
@@ -28,16 +31,17 @@ def vetrequest_create_view(request):
 def vetrequest_update_view(request, id=id):
     user = request.user
     obj = get_object_or_404(Vetrequest, id=id)
-    
+
     if obj.vetid == user or obj.caregiverid == user or user.is_superuser:
         form = VetrequestForm(request.POST or None, instance=obj)
-            
+         
         if form.is_valid():
             form.save()
             return redirect('../../')
         
         context = {
-            'form': form
+            'form': form,
+            'animalname': obj.animalid.name
         }
         return render(request, "vetrequest/vetrequest_create.html", context)
     return HttpResponseForbidden()
@@ -74,12 +78,40 @@ def vetrequest_list_view(request):
 @permission_required("shelter.view_vetrequest", login_url="login", raise_exception=True)
 def vetrequest_detail_view(request, id):
     obj = get_object_or_404(Vetrequest, id=id)
+    exam_form = []
+    
+    if request.POST.get('state', False):
+        obj.state = 'finished'  
+        obj.save()
+        return redirect(".")
+    if obj.vetid == request.user and obj.state == "finished":
+        exam_form = VetrequestExamForm(request.POST or None)
+        
+        if exam_form.is_valid():
+            # exam = exam_form.save(commit=False)
+            obj.exam_time = exam_form.cleaned_data['exam_time']
+            obj.exam_procedure = exam_form.cleaned_data['exam_procedure']
+            obj.save()
+            return redirect('../')
+        
     if obj.vetid == request.user or obj.caregiverid == request.user or request.user.is_superuser:
         context = {
-            "object": obj
+            "object": obj,
+            "exam": exam_form
         }
         return render(request, "vetrequest/vetrequest_detail.html", context)
     return HttpResponseForbidden()
+
+# @login_required(login_url="login")
+# @permission_required("shelter.view_vetrequest", login_url="login", raise_exception=True)
+# def vetrequest_finisheddetail_view(request, id):
+#     obj = get_object_or_404(Vetrequest, id=id)
+#     if obj.vetid == request.user or obj.caregiverid == request.user or request.user.is_superuser:
+#         context = {
+#             "object": obj
+#         }
+#         return render(request, "vetrequest/vetrequest_detail.html", context)
+#     return HttpResponseForbidden()
 
 
 @login_required(login_url="login")

@@ -3,7 +3,7 @@
 {% block content %}
 
 <form action='.' method='POST'>{% csrf_token %}
-    <h1>Do you want to delete the request?</h1>
+    <h1>Do you want to delete the request for {{ object.animalid.name }}?</h1>
     <p><input type='submit' value='Yes' />  <a href='../'>Cancel</a></p>
 
 </form>

@@ -13,6 +13,9 @@ class Vetrequest(models.Model):
     vetid = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE,related_name='vet_req',
                                     db_column='VetID')
     animalid = models.ForeignKey('Animal', models.CASCADE, db_column='AnimalID')
+    exam_time = models.DateField()
+    exam_procedure = models.CharField(max_length=255)
+    # exam_result = models.CharField(max_length=255)
     
     def get_absolute_url(self):
         return reverse("vetrequest:vetrequest-detail", kwargs={"id": self.id})

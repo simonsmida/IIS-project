@@ -22,6 +22,15 @@
     </form>
 {% endif %}
 
+{% if user|has_group:'caregiver' %}
+    <form  action="{% url 'vetrequest:vetrequest-create'%}" method="POST" class="form">
+        <input type="hidden" name="animalid" value="{{object.id}}" />
+        <input type="hidden" name="animalname" value="{{object.name}}" />
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary" style="width: 100px">Write Request</button>
+    </form>
+{% endif %}
+ 
 <h2>Name: {{ object.name }}</h2>
 <h2>Breed: {{ object.breed }}</h2>
 <h2>Age:  {{ object.age }}</h2>
