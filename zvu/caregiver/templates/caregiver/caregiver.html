@@ -16,7 +16,9 @@
      <!-- Page Content -->
      <div class="caregiver-content">
           {% if  content == 'manage_volunteers' %}
-               {% include 'caregiver/manage_volunteers.html' %}
+               <div class="volunteer-wrap">
+                    {% include 'caregiver/manage_volunteers.html' %}
+               </div>       
           {% endif %}
           
           {% if content == 'edit_animals' %}

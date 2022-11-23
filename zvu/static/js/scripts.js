@@ -46,3 +46,62 @@ window.addEventListener('DOMContentLoaded', event => {
 //         $("#sidebar > ul > li:nth-child("+(index+1)+")").addClass('active');
 //     });
 // });
+
+/**
+ * Verify volunteer -> ajax
+ */
+ $(document).ready(function () {
+    $(document).on("click","button.verify", function(){
+        //1. Remove currently active class
+        console.log('You clicked button for verification');
+        var id = $(this).attr("id");
+        console.log(id);
+        $.ajax({
+            type: 'GET',
+            url: '/caregiver/manage_volunteers/verify',
+            data: {
+                "id" : id
+            },
+            success: function( data ){
+                console.log(data);
+                $('.volunteer-wrap').empty();
+                $('.volunteer-wrap').html(data);
+            },
+            error: function(){
+                console.log("Error bad response");
+            }
+
+        });
+    });
+
+});
+
+
+/**
+ * Unverify volunteer -> ajax
+ */
+$(document).ready(function () {
+    $(document).on("click","button.unverify", function(){
+        //1. Remove currently active class
+        console.log('You clicked button for unverification');
+        var id = $(this).attr("id");
+        console.log(id);
+        $.ajax({
+            type: 'GET',
+            url: '/caregiver/manage_volunteers/unverify',
+            data: {
+                "id" : id
+            },
+            success: function( data ){
+                console.log(data);
+                $('.volunteer-wrap').empty();
+                $('.volunteer-wrap').html(data);
+            },
+            error: function(){
+                console.log("Error bad response");
+            }
+
+        });
+    });
+
+});

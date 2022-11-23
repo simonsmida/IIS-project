@@ -38,6 +38,57 @@ def manage_volunteers_view(request):
 
 @login_required(login_url="login")
 @user_group('caregiver','volunteer')
+def verify_volunteers_view(request):
+    if request.method == "GET":
+        print("I am going to verify ")
+        # 1. Get user with specified ID
+        volunteer_id = request.GET['id']
+        volunteer_obj =  User.objects.get(id=volunteer_id)
+        # 2. Get verified user group
+        noverif_group = Group.objects.get(name="volunteer_notrust")
+        verif_group = Group.objects.get(name="volunteer")
+        if volunteer_obj != None:
+            print(volunteer_obj.first_name)
+            verif_group.user_set.add(volunteer_obj)
+            noverif_group.user_set.remove(volunteer_obj)
+            
+            verified =  User.objects.filter(groups__name='volunteer')
+            not_verified = User.objects.filter(groups__name='volunteer_notrust')
+            context = {
+                "verified": verified,
+                "nonverified": not_verified,
+                "content" : "manage_volunteers"
+            }
+            return render(request, "caregiver/manage_volunteers.html", context)
+
+@login_required(login_url="login")
+@user_group('caregiver','volunteer')
+def unverify_volunteers_view(request):
+    if request.method == "GET":
+        print("I am going to unverify ")
+        # 1. Get user with specified ID
+        volunteer_id = request.GET['id']
+        volunteer_obj =  User.objects.get(id=volunteer_id)
+        # 2. Get user group
+        noverif_group = Group.objects.get(name="volunteer_notrust")
+        verif_group = Group.objects.get(name="volunteer")
+        if volunteer_obj != None:
+            print(volunteer_obj.first_name)
+            verif_group.user_set.remove(volunteer_obj)
+            noverif_group.user_set.add(volunteer_obj)
+            
+            verified =  User.objects.filter(groups__name='volunteer')
+            not_verified = User.objects.filter(groups__name='volunteer_notrust')
+            context = {
+                "verified": verified,
+                "nonverified": not_verified,
+                "content" : "manage_volunteers"
+            }
+            return render(request, "caregiver/manage_volunteers.html", context)
+
+
+@login_required(login_url="login")
+@user_group('caregiver','volunteer')
 def edit_animals_view(request):
     context = {
         "content" : "edit_animals"

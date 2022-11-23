@@ -1,82 +1,58 @@
-<div class="volunteer-wrap">
     <div class="nonverified-volunteers">
         <h1 class="text-center"> Non-verified volunteers </h1>
         {% for user in nonverified %}
         <div class="container">
             <div class="card" style="max-width: 900px; margin: auto;">
-                <div class="row g-0" style="padding: 20px;">
-                    <!-- Text -->
-                    <div class="col-md-8" style="padding-left: 20px;">
-                        <div class="card-block px-4">
-                            <h4 class="card-title">{{ user.first_name }} {{user.last_name}}</h4>
-                        </div>
-                        <!-- Buttons -->
+            <div class="row g-0" style="padding: 20px;">
+                <!-- Text -->
+                <div class="col-md-8" style="padding-left: 20px;">
+                    <div class="card-block px-4">
+                        <h4 class="card-title">{{ user.first_name }} {{user.last_name}}</h4>
+                        <p class="card-text">User name: {{ user.username }} </p>
                     </div>
-                    {% comment %} <div class="col-md-2">
-                        <div class="card-block">   
-                            <!-- Create reservation directly -->   
-                            <div style="margin: 10px">                
-                            {% if user|has_group:'volunteer' %}
-                            <form  action="{% url 'reservation:reservation-create'%}" method="POST" class="form">
-                                <input type="hidden" name="animalid" value="{{instance.id}}" />
-                                <input type="hidden" name="zviera" value="{{instance.name}}" />
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-primary" style="width: 100px">Reserve</button>
-                            </form>
-                            {% endif %}
-                            </div>
-                            <!-- Go to detail view -->
-                            <div style="margin: 10px">
-                                <a href="{% url 'animals:animal-detail' instance.id %}" class="btn btn-primary" style="width: 100px">More info</a>
-                                <!-- <a href='{{ instance.get_absolute_url }}' class="btn btn-secondary btn-sm btn-block">Detail</a> -->
-                            </div>
+                    <!-- Buttons -->
+                </div>
+                <div class="col-md-2">
+                    <div class="card-block">   
+                        <!-- Verify user -->
+                        <div style="margin: 10px">
+                            <button id="{{user.id}}" type="submit" class="verify btn btn-primary" style="width: 100px">Verify</button>
                         </div>
-                    </div> {% endcomment %}
+                    </div>
                 </div>
             </div>
-            </div>
-            <!-- add margin below the card -->
-            <div class="row" style="margin-bottom: 10px;"></div>
-        {% endfor %}
-    </div>
-    <div class="verified-volunteers">
-        <h1 class="text-center"> Verified volunteers </h1>
-        {% for user in verified %}
-        <div class="container">
-            <div class="card" style="max-width: 900px; margin: auto;">
-                <div class="row g-0" style="padding: 20px;">
-                    <!-- Text -->
-                    <div class="col-md-8" style="padding-left: 20px;">
-                        <div class="card-block px-4">
-                            <h4 class="card-title">{{ user.first_name }} {{user.last_name}}</h4>
-                        </div>
-                        <!-- Buttons -->
+        </div>
+        </div>
+        <!-- add margin below the card -->
+        <div class="row" style="margin-bottom: 10px;"></div>
+    {% endfor %}
+</div>
+<div class="verified-volunteers">
+    <h1 class="text-center"> Verified volunteers </h1>
+    {% for user in verified %}
+    <div class="container">
+        <div class="card" style="max-width: 900px; margin: auto;">
+            <div class="row g-0" style="padding: 20px;">
+                <!-- Text -->
+                <div class="col-md-8" style="padding-left: 20px;">
+                    <div class="card-block px-4">
+                        <h4 class="card-title">{{ user.first_name }} {{user.last_name}}</h4>
                     </div>
-                    {% comment %} <div class="col-md-2">
-                        <div class="card-block">   
-                            <!-- Create reservation directly -->   
-                            <div style="margin: 10px">                
-                            {% if user|has_group:'volunteer' %}
-                            <form  action="{% url 'reservation:reservation-create'%}" method="POST" class="form">
-                                <input type="hidden" name="animalid" value="{{instance.id}}" />
-                                <input type="hidden" name="zviera" value="{{instance.name}}" />
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-primary" style="width: 100px">Reserve</button>
-                            </form>
-                            {% endif %}
-                            </div>
-                            <!-- Go to detail view -->
-                            <div style="margin: 10px">
-                                <a href="{% url 'animals:animal-detail' instance.id %}" class="btn btn-primary" style="width: 100px">More info</a>
-                                <!-- <a href='{{ instance.get_absolute_url }}' class="btn btn-secondary btn-sm btn-block">Detail</a> -->
-                            </div>
-                        </div>
-                    </div> {% endcomment %}
+                    <!-- Buttons -->
                 </div>
+                <div class="col-md-2">
+                    <div class="card-block">   
+                        <!-- Go to detail view -->
+                        <div style="margin: 10px">
+                            <button id="{{user.id}}" type="submit" class="unverify btn btn-primary" style="width: 100px">Unverify</button>
+                            <!-- <a href='{{ instance.get_absolute_url }}' class="btn btn-secondary btn-sm btn-block">Detail</a> -->
+                        </div>
+                    </div>
+                </div> 
             </div>
-            </div>
-            <!-- add margin below the card -->
-            <div class="row" style="margin-bottom: 10px;"></div>
-        {% endfor %}
-    </div>
+        </div>
+        </div>
+        <!-- add margin below the card -->
+        <div class="row" style="margin-bottom: 10px;"></div>
+    {% endfor %}
 </div>
