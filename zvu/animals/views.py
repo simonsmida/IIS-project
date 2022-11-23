@@ -3,6 +3,7 @@ from .forms import AnimalForm
 from shelter.models import Animal
 from django.contrib.auth.decorators import login_required, permission_required
 from reservation.views import reservation_create_view
+from django.core.paginator import Paginator
 
 
 @login_required(login_url="login")
@@ -54,11 +55,16 @@ def pretty_request(request):
         body=request.body,
     )
     
+
 def animal_list_view(request):
-    queryset = Animal.objects.all() # list of objects
+    animal_list = Animal.objects.all() # list of objects
     print(pretty_request(request))
+    # pagination
+    p = Paginator(animal_list, 5)
+    page = request.GET.get('page')
+    animals = p.get_page(page)
     context = {
-        "object_list": queryset,
+        'animals': animals
     }
     return render(request, "animals/animal_list.html", context)
 
