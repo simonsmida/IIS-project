@@ -7,62 +7,28 @@ from animals.templatetags.animals_extras import has_group
 from reservation.decorators import my_login_required
 
 
-# @login_required(login_url="login")
-# @permission_required("shelter.add_reservation", login_url="login", raise_exception=True)
-# def reservation_create_view(request):
-#     zvieraid1 = request.POST.get('zvieraid', False)
-#     if zvieraid1 == False:
-#         # form.save()
-#         kokot = "dsadas"
-#         print(kokot)
-#         # return redirect('../')
-#         # reservation_update_view(request, int(zvieraid1))
-#     print("cicina")
-#     form = ReservationForm(request.POST or None)
-#     obj = get_object_or_404(Animal, id_zviera=int(zvieraid1))
-#     # print(zvieraid1)
-    
-#     # if request.user.is_superuser:
-#     #     form = ReservationManageForm(request.POST or None)
-#     #     return render(request, "reservation/reservation_create.html", form)
-#     if form.is_valid():
-#         print("here")
-#         reservation = form.save(commit=False)
-#         reservation.dobrovolnikid = request.user
-#         reservation.zvieraid = int(zvieraid1)
-#         reservation.save()
-#         return redirect('../')
-#     zviera = obj.meno
-#     context = {
-#         'form': form,
-#         'zviera': zviera
-#     }
-#     return render(request, "reservation/reservation_create.html", context)
-
-# @user_passes_test(lambda u: u.is_authenticated, login_url='/login/?next=/animals/')
-
 @my_login_required
 @permission_required("shelter.add_reservation", login_url="login", raise_exception=True)
 def reservation_create_view(request):
     form = ReservationForm(request.POST or None)
     if request.user.is_superuser:
-        zviera = ""
+        # zviera = ""
         form = ReservationManageForm(request.POST or None)
         if form.is_valid():
             form.save()
             return redirect('../')
-    else:
-        zviera = "Reservation for "
+    # else:
+        # zviera = "Reservation for "
     if form.is_valid():
         reservation = form.save(commit=False)
         reservation.volunteerid = request.user
         reservation.save()
         return redirect('../')
     
-    zviera = f"{zviera} \"{request.POST.get('zviera', False)}\"" 
+    # zviera = f"{zviera} \"{request.POST.get('zviera', False)}\"" 
     context = {
         'form': form,
-        'zviera': zviera
+        # 'zviera': zviera
     }
     return render(request, "reservation/reservation_create.html", context)
 
@@ -98,6 +64,9 @@ def reservation_list_view(request):
     if request.user.is_superuser or has_group(request.user, 'caregiver'):
         queryset1 = Reservation.objects.filter(approval=0) # list of objects
         queryset2 = Reservation.objects.filter(approval=1)
+        queryset2 = queryset2.order_by('animalid')
+        
+    queryset1 = queryset1.order_by('animalid')
     
     context = {
         "object_list1": queryset1,

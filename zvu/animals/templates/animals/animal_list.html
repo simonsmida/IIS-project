@@ -65,6 +65,14 @@
                     {% endif %}
                 </form>
                 {% endif %}
+                {% if user|has_group:'caregiver' %}
+                <form  action="{% url 'vetrequest:vetrequest-create'%}" method="POST" class="form">
+                    <input type="hidden" name="animalid" value="{{instance.id}}" />
+                    <input type="hidden" name="animalname" value="{{instance.name}}" />
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary" style="width: 100px">Reserve</button>
+                </form>
+                {% endif %}
                 </div>
                 <!-- Go to detail view -->
                 <div style="margin: 10px">

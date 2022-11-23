@@ -6,6 +6,7 @@ class MyModelChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, obj):
         return obj.name
 
+
 class ReservationForm(forms.ModelForm):
     creation_date = forms.DateField()
     reserved_from = forms.DateField()
@@ -15,7 +16,7 @@ class ReservationForm(forms.ModelForm):
         label='Animal',
         widget=forms.HiddenInput()
     )
-               
+                         
     class Meta:
         model = Reservation
         fields = [
@@ -24,6 +25,7 @@ class ReservationForm(forms.ModelForm):
             'reserved_to',
             'animalid'
         ]
+   
         
 class ReservationUpdateForm(forms.ModelForm):
     creation_date = forms.DateField()
@@ -48,12 +50,10 @@ class ReservationManageForm(forms.ModelForm):
     creation_date = forms.DateField()
     reserved_from = forms.DateField()
     reserved_to = forms.DateField()
-    # approval = forms.ChoiceField(choices=[(0,'neschválená'),(1,'schválená')],required=False)
-    approval = forms.IntegerField()
-    state = forms.ChoiceField(choices=[('čakajúca','čakajúca'),
-                                      ('prebihajúca','prebihajúca'),
-                                      ('dokončená','dokončená')],
-                             required=False)
+    approval = forms.ChoiceField(choices=[(0,'unapproved'),(1,'approved')])
+    state = forms.ChoiceField(choices=[('pending','pending'),
+                                      ('ongoing','ongoing'),
+                                      ('finished','finished')])
     animalid = MyModelChoiceField(
         queryset=Animal.objects.all(),
         label='Animal'

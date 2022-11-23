@@ -8,23 +8,20 @@
      <a href="{% url "vetrequest:vetrequest-create" %}">New Request</a>
 {% endif %}
 
-{% comment %} {% if user|has_group:'caregiver' or user.is_superuser %}
-     <h1>Unapproved</h1>
+{% if user|has_group:'vet' or user.is_superuser or user|has_group:'caregiver' %}
+
+     <h1>Pending</h1>
      {% for instance in object_list1 %}
-          <p><a href='{{ instance.get_absolute_url }}'>Reservation {{ instance.id }}</a></p>
+          <p><a href='{{ instance.get_absolute_url }}'>Request for {{ instance.animalid.name }}</a></p>
      {% endfor %}
-   
-     <h1>Approved</h1>
+     
+     <h1>Finished</h1>
      {% for instance in object_list2 %}
-          <p><a href='{{ instance.get_absolute_url }}'>Reservation {{ instance.id }}</a></p>
+          <p><a href='{{ instance.get_absolute_url }}'>Request for {{ instance.animalid.name }}</a></p>
      {% endfor %}
 
-{% else %} {% endcomment %}
+{% else %} 
 
-{% for instance in object_list1 %}
-     <p><a href='{{ instance.get_absolute_url }}'>Request {{ instance.id }}</a></p>
-{% endfor %}
-
-{% comment %} {% endif %} {% endcomment %}
+{% endif %}
 
 {% endblock %}

@@ -46,15 +46,26 @@ def vetrequest_update_view(request, id=id):
 @login_required(login_url="login")
 @permission_required("shelter.view_vetrequest", login_url="login", raise_exception=True)
 def vetrequest_list_view(request):
-    queryset1 = Vetrequest.objects.filter(vetid=request.user) # list of objects
+    if has_group(request.user, 'vet'):
+        queryset = Vetrequest.objects.filter(vetid=request.user) # list of objects
+    elif has_group(request.user, 'caregiver'):
+        queryset = Vetrequest.objects.filter(caregiverid=request.user) # list of objects
+    elif request.user.is_superuser:
+        queryset = Vetrequest.objects.all() # list of objects
+        
+    queryset1 = queryset.filter(state='pending')
+    queryset1 = queryset1.order_by('animalid')
+    queryset2 = queryset.filter(state='finished')
+    queryset2 = queryset2.order_by('animalid')
+        
     # queryset2 = []
     # if request.user.is_superuser or has_group(request.user, 'caregiver'):
     #     queryset1 = Vetrequest.objects.filter(state='pending') # list of objects
     #     queryset2 = Vetrequest.objects.filter(state='finished')
     
     context = {
-        "object_list1": queryset1
-        # "object_list2": queryset2   
+        "object_list1": queryset1,
+        "object_list2": queryset2   
     }
     return render(request, "vetrequest/vetrequest_list.html", context)
 

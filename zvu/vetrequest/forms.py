@@ -46,8 +46,9 @@ class MyModelChoiceField(forms.ModelChoiceField):
     
 class VetrequestForm(forms.ModelForm):
     creation_date = forms.DateField()
-    content = forms.TextInput()
-    state = forms.CharField(max_length=255)
+    content = forms.CharField(widget=forms.Textarea(attrs={"cols": "70", "rows": "8"}))
+    state = forms.ChoiceField(choices=[('pending','pending'),
+                                      ('finished','finished')])
     animalid = MyModelChoiceField(
         queryset=Animal.objects.all(),
         label='Animal'
