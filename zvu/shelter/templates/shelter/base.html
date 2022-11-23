@@ -6,14 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>{% block title %}Útulok{% endblock %}</title>
   </head>
   <body id="page-top">
     {% include 'shelter/navbar.html' %}
+    {% block content2 %} 
+    {% endblock %}
     <div style="padding-top: 3.5rem; padding-bottom: 2rem;">
       {% block content %} 
       {% endblock %}
     </div>
+    
     {% include 'shelter/footer.html' %}
 
     <!-- Bootstrap core JS-->
