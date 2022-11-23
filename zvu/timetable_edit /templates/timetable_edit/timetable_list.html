@@ -1,0 +1,11 @@
+{% extends 'shelter/base.html' %}
+
+{% block content %}
+
+<a href="{% url "timetable_edit:timetable-create" %}">New Timetable</a>
+
+{% for instance in object_list %}
+     <p>Timetable for <a href='{{ instance.get_absolute_url }}'>{{ instance.animalid.name }}</a></p>
+{% endfor %}
+
+{% endblock %}

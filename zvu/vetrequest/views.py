@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .forms import VetrequestForm, VetrequestExamForm
+from .forms import VetrequestForm, VetrequestExamForm, VetrequestNewForm
 from shelter.models import Vetrequest, Animal
 from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.http import HttpResponseForbidden   
@@ -24,6 +24,25 @@ def vetrequest_create_view(request):
         'form': form
     }
     return render(request, "vetrequest/vetrequest_create.html", context)
+
+@my_login_required
+@permission_required("shelter.add_vetrequest", login_url="login", raise_exception=True)
+def vetrequest_newcreate_view(request):
+    form = VetrequestNewForm(request.POST or None)
+    
+    # if has_group(request.user, 'caregiver') or request.user.is_superuser:
+    #     form = VetrequestNewForm(request.POST or None)
+        
+    if form.is_valid():
+        vetrequest = form.save(commit=False)
+        vetrequest.caregiverid = request.user
+        vetrequest.save()
+        return redirect('../')
+    
+    context = {
+        'form': form
+    }
+    return render(request, "vetrequest/vetrequest_newcreate.html", context)
 
 
 @login_required(login_url="login")
@@ -56,12 +75,12 @@ def vetrequest_list_view(request):
         queryset = Vetrequest.objects.filter(caregiverid=request.user) # list of objects
     elif request.user.is_superuser:
         queryset = Vetrequest.objects.all() # list of objects
-        
+    
     queryset1 = queryset.filter(state='pending')
     queryset1 = queryset1.order_by('animalid')
     queryset2 = queryset.filter(state='finished')
     queryset2 = queryset2.order_by('animalid')
-        
+    
     # queryset2 = []
     # if request.user.is_superuser or has_group(request.user, 'caregiver'):
     #     queryset1 = Vetrequest.objects.filter(state='pending') # list of objects

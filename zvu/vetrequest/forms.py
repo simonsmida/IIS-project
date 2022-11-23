@@ -69,6 +69,32 @@ class VetrequestForm(forms.ModelForm):
             'animalid',
             'vetid'
         ]
+
+class VetrequestNewForm(forms.ModelForm):
+    creation_date = forms.DateField()
+    content = forms.CharField(widget=forms.Textarea(attrs={"cols": "70", "rows": "8"}))
+    # state = forms.ChoiceField(choices=[('pending','pending'),
+    #                                   ('finished','finished')])
+    animalid = MyModelChoiceField(
+        queryset=Animal.objects.all(),
+        label='Animal',
+        # widget=forms.HiddenInput()
+    )
+    vetid = forms.ModelChoiceField(
+        queryset=User.objects.filter(groups__name='vet'),
+        label='Veterinarian',
+        # widget=forms.HiddenInput()
+    )
+               
+    class Meta:
+        model = Vetrequest
+        fields = [
+            'creation_date',
+            'content',
+            # 'state',
+            'animalid',
+            'vetid'
+        ]
         
         
 class VetrequestExamForm(forms.ModelForm):

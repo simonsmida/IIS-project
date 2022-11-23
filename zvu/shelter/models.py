@@ -15,7 +15,7 @@ class Vetrequest(models.Model):
     animalid = models.ForeignKey('Animal', models.CASCADE, db_column='AnimalID')
     exam_time = models.DateField()
     exam_procedure = models.CharField(max_length=255)
-    # exam_result = models.CharField(max_length=255)
+    # exam_protocol = models.CharField(max_length=255)
     
     def get_absolute_url(self):
         return reverse("vetrequest:vetrequest-detail", kwargs={"id": self.id})
@@ -41,10 +41,21 @@ class Animal(models.Model):
     age = models.PositiveIntegerField()
     registration_date = models.DateField()
     image = models.CharField(max_length=255, blank=True, null=True)
+    # info = models.CharField(max_length=255)
     
     def get_absolute_url(self):
         return reverse("animals:animal-detail", kwargs={"id": self.id})
 
+class Timetable(models.Model):
+    id = models.AutoField(primary_key=True)
+    day = models.CharField(max_length=20)
+    time_from = models.TimeField()
+    time_to = models.TimeField()
+    is_free = models.PositiveIntegerField()
+    animalid = models.ForeignKey('Animal', models.CASCADE, db_column='AnimalID')
+    
+    def get_absolute_url(self):
+        return reverse("timetable:timetable-detail", kwargs={"id": self.id})
 
 # Create your models here.
 # class Volunteer(models.Model):

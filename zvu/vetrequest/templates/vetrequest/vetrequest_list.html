@@ -5,7 +5,7 @@
 {% block content %}
 
 {% if user|has_group:'caregiver' or user.is_superuser %}
-     <a href="{% url "vetrequest:vetrequest-create" %}">New Request</a>
+     <a href="{% url "vetrequest:vetrequest-newcreate" %}">New Request</a>
 {% endif %}
 
 {% if user|has_group:'vet' or user.is_superuser or user|has_group:'caregiver' %}

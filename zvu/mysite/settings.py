@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'myadmin.apps.MyadminConfig',
     'shelter.apps.ShelterConfig',
+    'timetable.apps.TimetableConfig',
     'volunteer.apps.VolunteerConfig',
     'volunteer_edit.apps.Volunteer_editConfig',
     'caregiver.apps.CaregiverConfig',
