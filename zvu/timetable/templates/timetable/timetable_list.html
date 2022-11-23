@@ -2,10 +2,41 @@
 
 {% block content %}
 
-<a href="{% url "timetable_edit:timetable-create" %}">New Timetable</a>
+<a href="{% url "timetable:timetable-create" %}">New Timetable</a>
 
-{% for instance in object_list %}
-     <p>Timetable for <a href='{{ instance.get_absolute_url }}'>{{ instance.animalid.name }}</a></p>
-{% endfor %}
+{% if object_list1 %}
+     <h2>Monday</h2>
+     {% for instance in object_list1 %}
+          <p><a href='{{ instance.get_absolute_url }}'>{{ instance.time_from }} - {{ instance.time_to }}</a></p>
+     {% endfor %}
+{% endif %}
+
+{% if object_list2 %}
+     <h2>Tuesday</h2>
+     {% for instance in object_list2 %}
+          <p><a href='{{ instance.get_absolute_url }}'>{{ instance.time_from }} - {{ instance.time_to }}</a></p>
+     {% endfor %}
+{% endif %}
+
+{% if object_list3 %}
+     <h2>Wednesday</h2>
+     {% for instance in object_list3 %}
+          <p><a href='{{ instance.get_absolute_url }}'>{{ instance.time_from }} - {{ instance.time_to }}</a></p>
+     {% endfor %}
+{% endif %}
+
+{% if object_list4 %}
+     <h2>Thursday</h2>
+     {% for instance in object_list4 %}
+          <p><a href='{{ instance.get_absolute_url }}'>{{ instance.time_from }} - {{ instance.time_to }}</a></p>
+     {% endfor %}
+{% endif %}
+
+{% if object_list5 %}
+     <h2>Friday</h2>
+     {% for instance in object_list5 %}
+          <p><a href='{{ instance.get_absolute_url }}'>{{ instance.time_from }} - {{ instance.time_to }}</a></p>
+     {% endfor %}
+{% endif %}
 
 {% endblock %}

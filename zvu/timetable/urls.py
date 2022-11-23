@@ -8,7 +8,7 @@ from .views import (
 )
 
 
-app_name = 'timetable_edit'
+app_name = 'timetable'
 urlpatterns = [
     path('', timetable_list_view, name='timetable-list'),
     path('create/', timetable_create_view, name='timetable-create'),

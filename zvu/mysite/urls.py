@@ -28,6 +28,7 @@ urlpatterns = [
     path('vetrequest/', include('vetrequest.urls')),
     path('animals/', include('animals.urls')),
     path('reservation/', include('reservation.urls')),
+    path('timetable/', include('timetable.urls')),
     path('myadmin/', include('myadmin.urls')),
     path('', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
