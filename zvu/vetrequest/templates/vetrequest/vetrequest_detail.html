@@ -8,7 +8,7 @@
     <p><a href='{{object.get_absolute_url}}update'>Update</a></p>
 {% endif %}
 
-{% if user|has_group:'vet' and object.state != 'finished'%}
+{% if user|has_group:'vet' and object.state == 'pending'%}
    <form  action='{{object.get_absolute_url}}' method="POST" class="form">
         <input type="hidden" name="state" value="finished" />
         {% csrf_token %}
@@ -24,13 +24,14 @@
 <h1>State:       {{ object.state }}</h1>
 <h3> Request: </h3>
 <p>{{ object.content }}</p>
-
-{% if user|has_group:'vet' and not object.exam_time and object.state != 'pending'%}
+<p>-------------------------------------------------------------------------------</p>
+{% comment %} not object.exam_time and object.state != 'pending' {% endcomment %}
+{% if user|has_group:'vet' and object.state == 'finished' %}
 <form action='.' method='POST'>{% csrf_token %}
     {{ exam.as_p }}
     <input type='submit' name='save' value='Save' />
 </form>
-{% elif user|has_group:'vet' and object.exam_time %}
+{% elif user|has_group:'vet' and object.state == 'exam' %}
 <h1>Exam time:        {{ object.exam_time }}</h1>
 <h1>Exam procedure:   {{ object.exam_procedure }}</h1>
 {% endif %} 
