@@ -27,7 +27,7 @@ def timetable_update_view(request, id=id):
     form = TimetableForm(request.POST or None, instance=obj)
     if form.is_valid():
         form.save()
-        return redirect("animals:animal-detail")
+        return redirect(f'../../../animals/{obj.animalid.id}')
     context = {
         'form': form
     }
