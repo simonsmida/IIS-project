@@ -23,6 +23,16 @@
         </div>
     </div>
 
+    <!-- print message -->
+    {% if message %}
+        <!-- add row with centered element -->
+        <div class="row mb-4">
+            <div class="alert alert-success text-center" role="alert">
+                {{ message }}
+            </div>
+        </div>
+    {% endif %}
+
     {% for animal in animals %}
     <div class="card" style="max-width: 900px; margin: auto;">
         <div class="row g-0" style="padding: 20px;">
@@ -78,7 +88,8 @@
     <div class="row" style="margin-bottom: 10px;"></div>
 {% endfor %}
 
-<!-- Pagination -->
+<!-- Pagination if not search -->
+{% if not is_search %}
     <div class="row">
         <div class="col-12 d-flex justify-content-center">
             {% if animals.has_other_pages %} 
@@ -109,5 +120,7 @@
         </div>
     </div>
 </div>
+{% endif %}
+
 
 {% endblock %}
