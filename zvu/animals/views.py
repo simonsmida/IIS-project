@@ -37,9 +37,9 @@ def animal_update_view(request, id=id):
 def animal_list_view(request):
     if request.method == 'POST':
         search_text = request.POST['search']
-        pet_list = Animal.objects.filter(name__contains=search_text)  | \
-                   Animal.objects.filter(breed__contains=search_text) | \
-                   Animal.objects.filter(age__contains=search_text)
+        pet_list = Animal.objects.filter(name__icontains=search_text)  | \
+                   Animal.objects.filter(breed__icontains=search_text) | \
+                   Animal.objects.filter(age__icontains=search_text)
     else:  # No search
         pet_list = Animal.objects.all()
 
