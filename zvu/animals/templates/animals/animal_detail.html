@@ -9,11 +9,14 @@
     <p><a href='{{object.get_absolute_url}}update'>Update {{ object.name }}</a></p>
 {% endif %}
 
-<form  action="{% url 'timetable:timetable-list'%}" method="POST" class="form">
-    <input type="hidden" name="animalid" value="{{object.id}}" />
-    {% csrf_token %}
-    <button type="submit" class="btn btn-primary" style="width: 100px">Timetable</button>
-</form>
+{% if user|has_group:'caregiver' or user|has_group:'volunteer' %} 
+    <form  action="{% url 'timetable:timetable-list'%}" method="POST" class="form">
+        <input type="hidden" name="animalid" value="{{object.id}}" />
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary" style="width: 100px">Timetable</button>
+    </form>
+{% endif %}
+
 
 {% if user|has_group:'volunteer' or user|has_group:'volunteer_notrust' or not user.is_authenticated %}
     <form  action="{% url 'reservation:reservation-create'%}" method="POST" class="form">

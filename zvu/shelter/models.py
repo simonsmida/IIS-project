@@ -55,7 +55,7 @@ class Timetable(models.Model):
     animalid = models.ForeignKey('Animal', models.CASCADE, db_column='AnimalID')
     
     def get_absolute_url(self):
-        return reverse("timetable:timetable-detail", kwargs={"id": self.id})
+        return reverse("timetable:timetable-update", kwargs={"id": self.id})
 
 # Create your models here.
 # class Volunteer(models.Model):
