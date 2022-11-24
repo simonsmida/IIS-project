@@ -15,16 +15,15 @@ class Vetrequest(models.Model):
     animalid = models.ForeignKey('Animal', models.CASCADE, db_column='AnimalID')
     exam_time = models.DateField()
     exam_procedure = models.CharField(max_length=255)
-    # exam_protocol = models.CharField(max_length=255)
+    exam_protocol = models.CharField(max_length=255)
     
     def get_absolute_url(self):
         return reverse("vetrequest:vetrequest-detail", kwargs={"id": self.id})
 
 class Reservation(models.Model):
     id = models.AutoField(primary_key=True)
-    creation_date = models.DateField()
-    reserved_from = models.DateField()
-    reserved_to = models.DateField()
+    reserved_from = models.DateTimeField()
+    reserved_to = models.DateTimeField()
     approval = models.IntegerField(default=0)
     state = models.CharField(max_length=255, default='pending')
     animalid = models.ForeignKey('Animal', models.CASCADE, db_column='AnimalID')
@@ -41,16 +40,15 @@ class Animal(models.Model):
     age = models.PositiveIntegerField()
     registration_date = models.DateField()
     image = models.CharField(max_length=255, blank=True, null=True)
-    # info = models.CharField(max_length=255)
+    info = models.CharField(max_length=255)
     
     def get_absolute_url(self):
         return reverse("animals:animal-detail", kwargs={"id": self.id})
 
 class Timetable(models.Model):
     id = models.AutoField(primary_key=True)
-    day = models.CharField(max_length=20)
-    time_from = models.TimeField()
-    time_to = models.TimeField()
+    reserved_from = models.DateTimeField()
+    reserved_to = models.DateTimeField()
     is_free = models.PositiveIntegerField()
     animalid = models.ForeignKey('Animal', models.CASCADE, db_column='AnimalID')
     
