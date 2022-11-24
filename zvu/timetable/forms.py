@@ -1,19 +1,25 @@
 from django import forms
 from django.contrib.auth.models import User
-from shelter.models import Timetable
+from shelter.models import Timetable, Animal
 
+class MyModelChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.name
 
 class TimetableForm(forms.ModelForm):
-    day = forms.CharField(max_length=255)
-    time_from = forms.TimeField()
-    time_to = forms.TimeField()
+    reserved_from = forms.DateTimeField()
+    reserved_to = forms.DateTimeField()
     is_free = forms.ChoiceField(choices=[(0,'free'),(1,'reserved')])
-
+    animalid = MyModelChoiceField(
+        queryset=Animal.objects.all(),
+        label='Animal'
+        )
+    
     class Meta:
         model = Timetable
         fields = [
-            'day',
-            'time_from',
-            'time_to',
-            'is_free'
+            'reserved_from',
+            'reserved_to',
+            'is_free',
+            'animalid'    
         ]
