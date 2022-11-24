@@ -29,11 +29,6 @@ def login_view(request):
     return render(request, 'registration/login.html', context)
 
 
-def logout_view(request):
-    logout(request)
-    return redirect('home')
-
-
 def sign_up_view(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
