@@ -15,8 +15,13 @@
           <p><a href='{{ instance.get_absolute_url }}'>Request for {{ instance.animalid.name }}</a></p>
      {% endfor %}
      
-     <h1>Finished</h1>
+     <h1>Ready for Exam</h1>
      {% for instance in object_list2 %}
+          <p><a href='{{ instance.get_absolute_url }}'>Request for {{ instance.animalid.name }}</a></p>
+     {% endfor %}
+
+     <h1>Exam</h1>
+     {% for instance in object_list3 %}
           <p><a href='{{ instance.get_absolute_url }}'>Request for {{ instance.animalid.name }}</a></p>
      {% endfor %}
 

@@ -5,7 +5,10 @@
 
 <h1>Veterinarian</h1>
 
-<img src="https://www.streamscheme.com/wp-content/uploads/2022/02/pausechamp-600.png.webp" alt="Veterinarian" width="200" height="auto">
+<p>
+    <a href="{% url "animals:animal-list" %}">All Animals</a><br>
+    <a href="{% url "vetrequest:vetrequest-list" %}">Requests</a><br>
+</p>
 
 {% endblock %}
 

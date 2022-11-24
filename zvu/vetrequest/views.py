@@ -76,10 +76,10 @@ def vetrequest_list_view(request):
     elif request.user.is_superuser:
         queryset = Vetrequest.objects.all() # list of objects
     
+    queryset = queryset.order_by('animalid')
     queryset1 = queryset.filter(state='pending')
-    queryset1 = queryset1.order_by('animalid')
     queryset2 = queryset.filter(state='finished')
-    queryset2 = queryset2.order_by('animalid')
+    queryset3 = queryset.filter(state='exam')
     
     # queryset2 = []
     # if request.user.is_superuser or has_group(request.user, 'caregiver'):
@@ -88,7 +88,8 @@ def vetrequest_list_view(request):
     
     context = {
         "object_list1": queryset1,
-        "object_list2": queryset2   
+        "object_list2": queryset2,
+        "object_list3": queryset3   
     }
     return render(request, "vetrequest/vetrequest_list.html", context)
 
@@ -110,6 +111,7 @@ def vetrequest_detail_view(request, id):
             # exam = exam_form.save(commit=False)
             obj.exam_time = exam_form.cleaned_data['exam_time']
             obj.exam_procedure = exam_form.cleaned_data['exam_procedure']
+            obj.state = "exam"
             obj.save()
             return redirect('../')
         
