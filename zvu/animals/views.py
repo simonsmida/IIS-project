@@ -40,15 +40,14 @@ def animal_list_view(request):
     if request.method == 'POST':
         search_text = request.POST['search']
         pet_list = Animal.objects.filter(name__icontains=search_text)  | \
-                   Animal.objects.filter(breed__icontains=search_text) | \
-                   Animal.objects.filter(age__icontains=search_text)
-
+                    Animal.objects.filter(breed__icontains=search_text) | \
+                    Animal.objects.filter(age__icontains=search_text)
         message = "Search results for: \"" + search_text + "\""
         is_search = True
 
-        if not pet_list:
+        if not pet_list or search_text == '':
             pet_list = Animal.objects.all()
-            message = "No search results found for: \"" + search_text + "\". Showing all pets."
+            message = "No search results found for: \"" + search_text + "\". Showing all pets." if search_text != '' else "Showing all pets."
             is_search = False
 
     else:  # No search
