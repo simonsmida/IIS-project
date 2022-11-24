@@ -61,7 +61,7 @@ def timetable_delete_view(request, id):
     obj = get_object_or_404(Timetable, id=id)
     if request.method == "POST":
         obj.delete()
-        return redirect('../../')
+        return redirect(f'../../../animals/{obj.animalid.id}')
     context = {
         "object": obj
     }

@@ -10,7 +10,9 @@
 
 {% if object_list1 %}
      {% for instance in object_list1 %}
-          <p><a href='{{ instance.get_absolute_url }}'>{{ instance.reserved_from }} - {{ instance.reserved_to }}</a></p>
+          <p><a href='{{ instance.get_absolute_url }}'>{{ instance.reserved_from }} - {{ instance.reserved_to }}</a> 
+             <a href='{{instance.id}}/delete'>Delete</a>
+          </p>
      {% endfor %}
 {% endif %}    
 
