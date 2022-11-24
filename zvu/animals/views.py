@@ -44,11 +44,12 @@ def animal_list_view(request):
                    Animal.objects.filter(age__icontains=search_text)
 
         message = "Search results for: \"" + search_text + "\""
-        
+        is_search = True
+
         if not pet_list:
             pet_list = Animal.objects.all()
             message = "No search results found for: \"" + search_text + "\". Showing all pets."
-        is_search = True
+            is_search = False
 
     else:  # No search
         pet_list = Animal.objects.all()
