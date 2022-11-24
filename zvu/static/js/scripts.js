@@ -105,3 +105,90 @@ $(document).ready(function () {
     });
 
 });
+
+/**
+ * APPROVE RESERVATIONS
+ */
+
+/**
+ * Function for filtering reservations 
+ */
+ $(document).ready(function () {
+    $(document).on("click","button.approve-res-date", function(){
+        // 1. Get data from input fields
+        var from = $('#startDateApprove').val();
+        var to = $('#endDateApprove').val();
+        var approval_type = $('#approve-type').val();
+        var dateFrom = new Date(from);
+        var dateTo = new Date(to);
+        // 2. Check if the input dates are valid 
+        if (dateFrom > dateTo){
+            $(".approve-result").html("<p> No reservations in selected date</p>");
+            console.log("error");
+        }else{
+            console.log('Sending to server...');
+            console.log(dateFrom);
+            console.log(dateTo);
+            console.log(from);
+            console.log(to);
+            console.log(approval_type);
+            $.ajax({
+            type: 'GET',
+            url: '/caregiver/approve_res/get_reservations',
+            data: {
+                "from" : from,
+                "to" : to,
+                "approval_type": approval_type
+            },
+            success: function( data ){
+                console.log(data);
+                $('.approve-result').empty();
+                $('.approve-result').html(data);
+            },
+            error: function(){
+                console.log("Error bad response");
+            }
+
+        });
+
+        }
+    });
+});
+
+/**
+ * Function for approving reservations
+ */
+$(document).ready(function () {
+    $(document).on("click","button.change-approvement", function(){
+        //1. Remove currently active class
+        console.log('You clicked button changing approvement');
+        var id = $(this).attr("res-id");
+        var approve = $(this).attr("approve");
+        var from = $('#startDateApprove').val();
+        var to = $('#endDateApprove').val();
+        var approval_type = $('#approve-type').val();
+        console.log(id);
+        console.log(approve);
+        $.ajax({
+            type: 'GET',
+            url: '/caregiver/approve_res/approve',
+            data: {
+                "from" : from,
+                "to" : to,
+                "approval_type": approval_type,
+                "id" : id,
+                "approve" : approve
+            },
+            success: function( data ){
+                console.log(data);
+                $('.approve-result').empty();
+                $('.approve-result').html(data);
+            },
+            error: function(){
+                console.log("Error bad response");
+            }
+
+        });
+    });
+
+});

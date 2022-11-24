@@ -27,12 +27,16 @@
           
           {% if content == 'create_schedules' %}
                {% include 'caregiver/create_schedules.html' %}
-               {% endif %}
+          {% endif %}
           
+          {% if content == 'approve_res' %}
+               {% include 'caregiver/approve_main.html' %}
+          {% endif %}
+
           {% if content == 'register_walks' %}
                {% include 'caregiver/register_walks.html' %}
           {% endif %}
-
+          
           {% if content == 'create_vet_request' %}
                {% include 'caregiver/create_vet_request.html' %}
           {% endif %}
