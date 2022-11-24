@@ -12,7 +12,18 @@
 
 
 <div class="container">
-{% for animal in animals %}
+    <div class="row mb-4">
+        <div class="col-12 d-flex justify-content-center">
+            <!-- search animals form -->
+            <form class="d-flex" method="POST" action=".">
+                {% csrf_token %}
+                <input class="form-control me-2" type="search" placeholder="Name, breed or age" aria-label="Search" name="search">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+
+    {% for animal in animals %}
     <div class="card" style="max-width: 900px; margin: auto;">
         <div class="row g-0" style="padding: 20px;">
             <!-- Image -->
@@ -97,7 +108,6 @@
             {% endif %}
         </div>
     </div>
-
 </div>
 
 {% endblock %}

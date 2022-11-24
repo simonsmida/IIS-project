@@ -33,34 +33,17 @@ def animal_update_view(request, id=id):
     }
     return render(request, "animals/animal_create.html", context)
 
-def pretty_request(request):
-    headers = ''
-    for header, value in request.META.items():
-        if not header.startswith('HTTP'):
-            continue
-        header = '-'.join([h.capitalize() for h in header[5:].lower().split('_')])
-        headers += '{}: {}\n'.format(header, value)
-
-    return (
-        '{method} HTTP/1.1\n'
-        'Content-Length: {content_length}\n'
-        'Content-Type: {content_type}\n'
-        '{headers}\n\n'
-        '{body}'
-    ).format(
-        method=request.method,
-        content_length=request.META['CONTENT_LENGTH'],
-        content_type=request.META['CONTENT_TYPE'],
-        headers=headers,
-        body=request.body,
-    )
-    
 
 def animal_list_view(request):
-    animal_list = Animal.objects.all() # list of objects
-    print(pretty_request(request))
-    # pagination
-    p = Paginator(animal_list, 5)
+    if request.method == 'POST':
+        search_text = request.POST['search']
+        pet_list = Animal.objects.filter(name__contains=search_text)  | \
+                   Animal.objects.filter(breed__contains=search_text) | \
+                   Animal.objects.filter(age__contains=search_text)
+    else:  # No search
+        pet_list = Animal.objects.all()
+
+    p = Paginator(pet_list, 5)
     page = request.GET.get('page')
     animals = p.get_page(page)
     context = {
@@ -88,3 +71,26 @@ def animal_delete_view(request, id):
         "object": obj
     }
     return render(request, "animals/animal_delete.html", context)
+
+
+def pretty_request(request):
+    headers = ''
+    for header, value in request.META.items():
+        if not header.startswith('HTTP'):
+            continue
+        header = '-'.join([h.capitalize() for h in header[5:].lower().split('_')])
+        headers += '{}: {}\n'.format(header, value)
+
+    return (
+        '{method} HTTP/1.1\n'
+        'Content-Length: {content_length}\n'
+        'Content-Type: {content_type}\n'
+        '{headers}\n\n'
+        '{body}'
+    ).format(
+        method=request.method,
+        content_length=request.META['CONTENT_LENGTH'],
+        content_type=request.META['CONTENT_TYPE'],
+        headers=headers,
+        body=request.body,
+    )
