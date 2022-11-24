@@ -1,10 +1,10 @@
 from django.urls import path
 from .views import (
-    animal_create_view, 
-    animal_detail_view, 
+    animal_create_view,
+    animal_detail_view,
     animal_delete_view,
     animal_list_view,
-    animal_update_view,   
+    animal_update_view   
 )
 
 app_name = 'animals'
