@@ -36,26 +36,17 @@ def timetable_update_view(request, id=id):
 
 @login_required(login_url="login")
 def timetable_list_view(request):
+    queryset1 = []
     if request.POST.get('animalid', False):
         animalid = request.POST['animalid']
+    # animal = get_object_or_404(Animal, id=animalid)
+    # animal_name = animal.name
+        queryset = Timetable.objects.filter(animalid=animalid)# list of objects
+        queryset1 = queryset.order_by('reserved_from','reserved_to')
 
-    animal = get_object_or_404(Animal, id=animalid)
-    animal_name = animal.name
-
-    queryset = Timetable.objects.filter(animalid=animalid)# list of objects
-    queryset1 = queryset.order_by('reserved_from','reserved_to')
-    # queryset1 = queryset.filter(day='Pondelok')
-    # queryset2 = queryset.filter(day='Utorok')
-    # queryset3 = queryset.filter(day='Streda')
-    # queryset4 = queryset.filter(day='Stvrtok')
-    # queryset5 = queryset.filter(day='Piatok')
     context = {
         "object_list1": queryset1,
-        "animal_name": animal_name,
-        # "object_list2": queryset2,
-        # "object_list3": queryset3,
-        # "object_list4": queryset4,
-        # "object_list5": queryset5
+        # "animal_name": animal_name,
     }
     return render(request, "timetable/timetable_list.html", context)
 

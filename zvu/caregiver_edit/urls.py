@@ -7,9 +7,6 @@ from .views import (
     caregiver_update_view,
 )
 
-from animals.views import (
-    animal_list_view
-)
 
 app_name = 'caregiver_edit'
 urlpatterns = [
@@ -18,5 +15,4 @@ urlpatterns = [
     path('<int:id>/', caregiver_detail_view, name='caregiver-detail'),
     path('<int:id>/update/', caregiver_update_view, name='caregiver-update'),
     path('<int:id>/delete/', caregiver_delete_view, name='caregiver-delete'),
-    # path('animals/', animal_list_view, name='animal-list'),
 ]

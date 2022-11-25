@@ -66,13 +66,13 @@ def sign_up_view(request):
 def edit_profile_view(request):
     obj = get_object_or_404(User, id=request.user.id)
     form = ChangeAccForm(request.POST or None, instance=obj)
-    print("qauck")
+    
     if form.is_valid():
-        print("haf")
         form.save()
         return redirect("profile")
     else:
         print(form.errors.as_data())
+        
     context = {
         'form': form
     }
