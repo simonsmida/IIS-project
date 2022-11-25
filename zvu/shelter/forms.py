@@ -1,5 +1,4 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
@@ -38,3 +37,19 @@ class LoginForm(forms.Form):
             if not user:
                 raise forms.ValidationError("Invalid login")
        
+
+class ChangePasswordForm(forms.Form):
+    old_password = forms.CharField(widget=forms.PasswordInput)
+    new_password = forms.CharField(widget=forms.PasswordInput)
+    confirm_password = forms.CharField(widget=forms.PasswordInput)
+
+    def clean(self):
+        cleaned_data = super(ChangePasswordForm, self).clean()
+        old_password = cleaned_data.get('old_password')
+        new_password = cleaned_data.get('new_password')
+        confirm_password = cleaned_data.get('confirm_password')
+
+        if new_password != confirm_password:
+            raise forms.ValidationError(
+                "new_password and confirm_password does not match"
+            )

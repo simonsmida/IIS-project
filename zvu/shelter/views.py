@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, LoginForm, ChangePasswordForm
 
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth import login, logout, authenticate
@@ -53,6 +53,34 @@ def sign_up_view(request):
     }
 
     return render(request, 'registration/sign_up.html', context)
+
+
+def password_change_view(request):
+    if request.method == "POST":
+        form = ChangePasswordForm(request.POST)
+        if form.is_valid():
+            old_password = form.cleaned_data.get('old_password')
+            new_password = form.cleaned_data.get('new_password')
+            confirm_password = form.cleaned_data.get('confirm_password')
+
+            if new_password != confirm_password:
+                return render(request, 'registration/password_change.html', {'error': 'Passwords do not match'})
+
+            if request.user.check_password(old_password):
+                request.user.set_password(new_password)
+                request.user.save()
+                print("going home")
+                return redirect('home')
+            else:
+                return render(request, 'registration/password_change.html', {'error': 'Old password is not correct'})
+    else:
+        form = ChangePasswordForm()
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'registration/password_change.html', context)
 
 
 def home(request):
