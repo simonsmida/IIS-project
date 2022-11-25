@@ -16,7 +16,9 @@
      <!-- Page Content -->
      <div class="caregiver-content">
           {% if  content == 'manage_volunteers' %}
-               {% include 'caregiver/manage_volunteers.html' %}
+               <div class="volunteer-wrap">
+                    {% include 'caregiver/manage_volunteers.html' %}
+               </div>       
           {% endif %}
           
           {% if content == 'edit_animals' %}
@@ -25,12 +27,16 @@
           
           {% if content == 'create_schedules' %}
                {% include 'caregiver/create_schedules.html' %}
-               {% endif %}
+          {% endif %}
           
-          {% if content == 'register_walks' %}
-               {% include 'caregiver/register_walks.html' %}
+          {% if content == 'approve_res' %}
+               {% include 'caregiver/approve_main.html' %}
           {% endif %}
 
+          {% if content == 'register_walks' %}
+               {% include 'caregiver/walks_main.html' %}
+          {% endif %}
+         
           {% if content == 'create_vet_request' %}
                {% include 'caregiver/create_vet_request.html' %}
           {% endif %}

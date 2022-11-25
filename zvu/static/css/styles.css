@@ -43,6 +43,40 @@ a[data-toggle="collapse"] {
   padding-top: 20px;
 }
 
+/* CAREGIVER RESERVATION APPROVAL */
+#page-top > div.caregiver-wrapper > div > div > div > div > div:nth-child(3) > p {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1em;
+  font-weight: 300;
+  line-height: 1.7em;
+  color: #454545;
+}
+
+.table td {
+  text-align: center;   
+}
+#page-top > div.caregiver-wrapper > div > div > div.container.pt-4 > div > div:nth-child(1) > div > div,
+#page-top > div.caregiver-wrapper > div > div > div.container.pt-4 > div > div.col.center > div > div,
+#page-top > div.caregiver-wrapper > div > div > div.container.pt-4 > div > div:nth-child(5)
+{
+  max-width: 70px;
+}
+
+#page-top > div.caregiver-wrapper > div > div > div > div > div:nth-child(3){
+  max-width: 125px;
+  padding-right: 0;
+  margin-left: 5px;
+}
+
+#page-top > div.caregiver-wrapper > div > div > div > div > div:nth-child(1) > div > div > label,
+#page-top > div.caregiver-wrapper > div > div > div > div > div.col.center > div > div > label{
+  max-width: 60px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1em;
+  font-weight: 300;
+  line-height: 1.7em;
+  color: #454545;
+}
 
 /* Footer fix */
 .footer {

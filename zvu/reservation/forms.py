@@ -48,7 +48,7 @@ class ReservationUpdateForm(forms.ModelForm):
 class ReservationManageForm(forms.ModelForm):
     reserved_date = forms.DateField()
     reserved_from = forms.TimeField()
-    reserved_to = forms.DateField()
+    reserved_to = forms.TimeField()
     approval = forms.ChoiceField(choices=[(0,'unapproved'),(1,'approved')])
     state = forms.ChoiceField(choices=[('pending','pending'),
                                       ('ongoing','ongoing'),

@@ -1,0 +1,47 @@
+<div class="reserve-wrap container center-block center-text">
+    <!-- Filter for reservation approval -->
+    <div class="container pt-4">
+        <div class="row align-items-stretch justify-content-center nowrap">
+            <table class="table">
+                <thead>
+                    <tr>
+                      <th scope="col">Date</th>
+                      <th scope="col">Volunteer name</th>
+                      <th scope="col">Reservation state</th>
+                      <th scope="col">Approval type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <input id="startDateApprove" class="form-control" type="date" />
+                        </td>
+                        <td>
+                            <input id="walk-search-reserve" class="form-control me-2" type="search" placeholder="Volunteer username" aria-label="Search" name="search">
+                        </td>
+                        <td>
+                            <select id="walk-reservation-state" class="form-select w-150" aria-label="Default select example">
+                                <option selected value="0" state="Pending">Pending</option>
+                                <option value="1" state="Finished">Finished </option>
+                            </select>
+                        </td>
+                        <td>
+                            <select id="walk-approve-type" class="form-select" aria-label="Default select example">
+                                <option selected value="1">Approved reservations</option>
+                                <option value="0">Unapproved reservations</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button type="submit" class="walk-search btn btn-primary">Search</button>  
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Reservations -->
+    <div class="approve-result center-block container text-center">
+        {% include "caregiver/walks_register.html" %}
+    </div>
+</div>
+
