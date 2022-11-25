@@ -21,9 +21,10 @@
               Pet List
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" href="/animals/">Dogs</a></li>
+              <li><a class="dropdown-item" href="/animals/">Dogs</a></li> <!--href="/animals/animal_list/?animal_type=Dog">Dogs</a></li>-->
               <li><a class="dropdown-item" href="/animals/">Cats</a></li>
               <li><a class="dropdown-item" href="/animals/">Rabbits</a></li>
+              <li><a class="dropdown-item" href="/animals/">Display all pets</a></li>
             </ul>
         </ul>
         <ul class="navbar-nav">
@@ -31,6 +32,10 @@
           <span class="navbar-text">User: {{user.username}} | </span>
           <li class="nav-item">
             <a class="nav-link" href="/logout">Logout</a>
+          </li>
+          <!-- change password -->
+          <li class="nav-item">
+            <a class="nav-link" href="password-change">Change password</a>
           </li>
           {% else %}
           <li class="nav-item">
