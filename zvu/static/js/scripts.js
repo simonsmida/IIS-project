@@ -192,3 +192,49 @@ $(document).ready(function () {
     });
 
 });
+
+/**
+ * REGISTER WALKS
+ */
+
+/**
+ * Function for displaying time edit
+ */
+ $(document).ready(function () {
+    $(document).on("click","button.walk-time-edit", function(){
+        //1. Remove currently active class
+        console.log('You clicked button for editing walk time');
+        var id = $(this).attr("walk-id");
+        var visibility = $("#ahoj.walk-new-time").attr("style");
+        console.log(id);
+        console.log(visibility);
+        if (visibility === "display:none"){
+            $("#ahoj.walk-new-time").attr("style","display:table-row");
+        }
+        else if(visibility === "display:table-row"){
+            $("#ahoj.walk-new-time").attr("style","display:none");
+        }
+
+        // $.ajax({
+        //     type: 'GET',
+        //     url: '/caregiver/approve_res/approve',
+        //     data: {
+        //         "from" : from,
+        //         "to" : to,
+        //         "approval_type": approval_type,
+        //         "id" : id,
+        //         "approve" : approve
+        //     },
+        //     success: function( data ){
+        //         console.log(data);
+        //         $('.approve-result').empty();
+        //         $('.approve-result').html(data);
+        //     },
+        //     error: function(){
+        //         console.log("Error bad response");
+        //     }
+
+        // });
+    });
+
+});

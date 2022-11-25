@@ -51,6 +51,9 @@ a[data-toggle="collapse"] {
   color: #454545;
 }
 
+.table td {
+  text-align: center;   
+}
 #page-top > div.caregiver-wrapper > div > div > div.container.pt-4 > div > div:nth-child(1) > div > div,
 #page-top > div.caregiver-wrapper > div > div > div.container.pt-4 > div > div.col.center > div > div,
 #page-top > div.caregiver-wrapper > div > div > div.container.pt-4 > div > div:nth-child(5)
