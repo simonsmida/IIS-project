@@ -1,0 +1,40 @@
+<div>
+    <h1> Reservations </h1>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Reservation ID</th>
+            <th scope="col">Volunteer</th>
+            <th scope="col">Creation date</th>
+            <th scope="col">State</th>
+            <th scope="col">Approval</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            {% for reserve in reservations  %}
+            <tr>
+                <th scope="row">{{reserve.id}}</th>
+                <td>{{reserve.volunteerid.first_name}} {{reserve.volunteerid.last_name}}</td>
+                <td>{{reserve.reserved_date|date:"d.m.Y"}}</td>
+                <td>{{reserve.state}}</td>
+                <td>
+                {% if reserve.approval == 0  %}
+                    no
+                {% else %}
+                    yes
+                {% endif %}
+                </td>
+                <td>
+                    {% if reserve.approval == 0  %}
+                    <button res-id="{{reserve.id}}" approve="1" type="submit" class="change-approvement btn btn-primary">Approve</button> 
+                    {% else %}
+                    <button res-id="{{reserve.id}}" approve="0" type="submit" class="change-approvement btn btn-primary">Unapprove</button>  
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    
+</div>
