@@ -4,15 +4,13 @@ from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseForbidden
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
-from shelter.models import Reservation
+from shelter.models import Reservation, Animal
 from .decorators import user_group
 from datetime import datetime
 
 
 # Create your views here.
 @login_required(login_url="login")
-#@user_passes_test(lambda u: u.groups.filter(name='caregiver').exists(), login_url='../shelter/forbidden.html')
-# @permission_required(perm='shelter.view_animal', raise_exception=True)
 def caregiver_view(request):
     user = request.user
     if user.groups.filter(name='caregiver').exists() or user.is_superuser:
@@ -92,10 +90,11 @@ def unverify_volunteers_view(request):
 
 @login_required(login_url="login")
 @user_group('caregiver')
-
 def edit_animals_view(request):
+    animals = Animal.objects.all()
     context = {
-        "content" : "edit_animals"
+        "content" : "edit_animals",
+        "animals" : animals
     }
     return render(request, "caregiver/caregiver.html", context)
 

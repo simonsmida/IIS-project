@@ -1,1 +1,52 @@
-<h1> edit animals </h1>
+<div class="approve-result center-block container text-center">
+  <div>
+    <div class="header center-block container text-center">
+      <table class="table">
+        <tbody>
+            <tr>
+                <td>
+                    <h1>Animals</h1>
+                </td>
+                <td>
+                  <a href='create' >
+                    <button type="submit" class="btn btn-primary" style="width: 100px">New animal</button>
+                  </a>
+              </td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Breed</th>
+          <th scope="col">Age</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        
+          {% for animal in animals  %}
+          <tr>
+              <th scope="row">{{animal.name}}</th>
+              <td>{{animal.breed}}</td>
+              <td>{{animal.age}}</td>
+              <td>
+                  {% comment %} <button res-id="{{reserve.id}}"  type="submit" class="change-approvement btn btn-primary">Update</button> {% endcomment %}
+                  {% comment %} <button res-id="{{reserve.id}}"  type="submit" class="change-approvement btn btn-primary">Delete</button>   {% endcomment %}
+                  <a href='{{animal.id}}/update' >
+                    <button type="submit" class="btn btn-primary" style="width: 100px">Update</button>
+                  </a>
+                  <a href='{{animal.id}}/delete' >
+                    <button type="submit" class="btn btn-primary" style="width: 100px">Delete</button>
+                  </a>
+              </td>
+          </tr>
+          {% endfor %}
+      </tbody>
+    </table>
+      
+  </div>
+</div>

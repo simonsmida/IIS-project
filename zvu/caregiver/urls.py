@@ -16,6 +16,14 @@ from .views import (
 
 )
 
+from animals.views import (
+    animal_create_view,
+    animal_detail_view,
+    animal_delete_view,
+    animal_list_view,
+    animal_update_view   
+)
+
 app_name = 'caregiver'
 urlpatterns = [
     path('', manage_volunteers_view, name='caregiver'),
@@ -23,6 +31,9 @@ urlpatterns = [
     path('manage_volunteers/verify', verify_volunteers_view, name='verify-volunteers'),
     path('manage_volunteers/unverify', unverify_volunteers_view, name='unverify-volunteers'),
     path('edit_animals/', edit_animals_view, name='edit-animals'),
+    path('edit_animals/<int:id>/update', animal_update_view, name='update-animal'),
+    path('edit_animals/<int:id>/delete', animal_delete_view, name='delete-animal'),
+    path('edit_animals/create', animal_create_view, name='create-animal'),
     path('create_schedules/', create_schedules_view, name='create-schedules'),
 
     path('approve_res/', approve_res_view, name='approve-res'),
