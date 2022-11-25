@@ -42,13 +42,14 @@ class MyModelChoiceField(forms.ModelChoiceField):
 #             'reserved_to',
 #             'animalid'
 #         ]
-            
+   
     
 class VetrequestForm(forms.ModelForm):
-    creation_date = forms.DateField()
+    creation_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
     content = forms.CharField(widget=forms.Textarea(attrs={"cols": "70", "rows": "8"}))
     # state = forms.ChoiceField(choices=[('pending','pending'),
     #                                   ('finished','finished')])
+
     animalid = MyModelChoiceField(
         queryset=Animal.objects.all(),
         label='Animal',
@@ -70,8 +71,9 @@ class VetrequestForm(forms.ModelForm):
             'vetid'
         ]
 
+
 class VetrequestNewForm(forms.ModelForm):
-    creation_date = forms.DateField()
+    creation_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
     content = forms.CharField(widget=forms.Textarea(attrs={"cols": "70", "rows": "8"}))
     # state = forms.ChoiceField(choices=[('pending','pending'),
     #                                   ('finished','finished')])
@@ -95,10 +97,11 @@ class VetrequestNewForm(forms.ModelForm):
             'animalid',
             'vetid'
         ]
+
         
         
 class VetrequestExamForm(forms.ModelForm):
-    exam_time = forms.DateField()
+    exam_time = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
     exam_procedure = forms.ChoiceField(choices=[('vaccination','vaccination'),
                                                 ('regular checkup','regular checkup'),
                                                 ('other','other')])
