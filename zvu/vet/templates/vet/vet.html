@@ -1,0 +1,14 @@
+{% extends 'shelter/base.html' %}
+
+{% block content %}
+
+
+<h1>Veterinarian</h1>
+
+<p>
+    <a href="{% url "animals:animal-list" %}">All Animals</a><br>
+    <a href="{% url "vetrequest:vetrequest-list" %}">Requests</a><br>
+</p>
+
+{% endblock %}
+

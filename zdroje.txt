@@ -1,2 +1,3 @@
 https://github.com/techwithtim/Django-Auth-And-Perms - No license
 https://github.com/codingforentrepreneurs/Try-Django - MIT license
+https://stackoverflow.com/a/56076027/20241032 - stack overflow

@@ -1,0 +1,17 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "database-iis.cxswoe5tyx0e.eu-central-1.rds.amazonaws.com",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "database_iis",
+            "username": "admin",
+            "password": "F*ckDictionaryAttacks4ever369",
+            "database": "database_iis"
+        }
+    ]
+}

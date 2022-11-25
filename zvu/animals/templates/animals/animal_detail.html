@@ -9,16 +9,39 @@
     <p><a href='{{object.get_absolute_url}}update'>Update {{ object.name }}</a></p>
 {% endif %}
 
-{% if user|has_group:'volunteer' %}
+{% if user|has_group:'caregiver' or user|has_group:'volunteer' %} 
+    <form  action="{% url 'timetable:timetable-list'%}" method="POST" class="form">
+        <input type="hidden" name="animalid" value="{{object.id}}" />
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary" style="width: 100px">Timetable</button>
+    </form>
+{% endif %}
+
+
+{% if user|has_group:'volunteer' or user|has_group:'volunteer_notrust' or not user.is_authenticated %}
     <form  action="{% url 'reservation:reservation-create'%}" method="POST" class="form">
         <input type="hidden" name="animalid" value="{{object.id}}" />
         <input type="hidden" name="zviera" value="{{object.name}}" />
         {% csrf_token %}
-        <button type="submit" class="btn btn-primary">Reserve</button>
+        {% if user|has_group:'volunteer_notrust' %}
+            <button type="submit" class="btn btn-primary" style="width: 100px" disabled>Reserve</button>
+        {% else %}
+            <button type="submit" class="btn btn-primary" style="width: 100px">Reserve</button>
+        {% endif %}
     </form>
 {% endif %}
 
+{% if user|has_group:'caregiver' %}
+    <form  action="{% url 'vetrequest:vetrequest-create'%}" method="POST" class="form">
+        <input type="hidden" name="animalid" value="{{object.id}}" />
+        <input type="hidden" name="animalname" value="{{object.name}}" />
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary" style="width: 100px">Write Request</button>
+    </form>
+{% endif %}
+ 
 <h2>Name: {{ object.name }}</h2>
 <h2>Breed: {{ object.breed }}</h2>
 <h2>Age:  {{ object.age }}</h2>
+<h2>Info: {{ object.info }}
 {% endblock %}

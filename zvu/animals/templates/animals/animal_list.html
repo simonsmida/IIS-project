@@ -5,76 +5,122 @@
 {% block content %}
 
 {% if user|has_group:'caregiver' %} 
-<a href="{% url "animals:animal-create" %}">New Animal</a>
+<a href="{% url 'animals:animal-create' %}">New Animal</a>
 {% endif %}
 
-<!-- Pet list -->
-<div class="container" style="margin-bottom: 5rem; margin-top: 2rem;">
-     <div class="row">
-         <div class="col-md-12">
-             <h1 class="text-center">Pet List</h1>
-         </div>
-     </div>
-     <!-- Horizontal line as a separator -->
-     <hr>
-     <div class="row">
-         <div class="col-md-4 text-center" style="padding-bottom: 10px;">
-            <a id="dog-filter" href="/pet_list/dogs" class="btn btn-primary btn-lg btn-block" style="width: 100px;">Dogs</a>
-         </div>
-         <div class="col-md-4 text-center" style="padding-bottom: 10px;">
-             <a id="cat-filter" href="/pet_list/cats" class="btn btn-primary btn-lg btn-block" style="width: 100px;">Cats</a>
-         </div>
-         <div class="col-md-4 text-center" style="padding-bottom: 10px;">
-             <a id="rab-filter" href="/pet_list/rabbits" class="btn btn-primary btn-lg btn-block" style="width: 100px;">Rabbits</a>
-         </div>
-     </div>
- </div>
+{% include 'shelter/petlist_header.html' %}
 
 
-{% for instance in object_list %}
 <div class="container">
-<div class="card" style="max-width: 900px; margin: auto;">
-    <div class="row g-0" style="padding: 20px;">
-        <!-- Image -->
-        <div class="col-md-2 position-relative">
-            <img src="https://via.placeholder.com/150" class="card-img fit-cover" alt="placeholder image">
+    <div class="row mb-4">
+        <div class="col-12 d-flex justify-content-center">
+            <!-- search animals form -->
+            <form class="d-flex" method="POST" action=".">
+                {% csrf_token %}
+                <input class="form-control me-2" type="search" placeholder="Name, breed or age" aria-label="Search" name="search">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </form>
         </div>
-        <!-- Text -->
-        <div class="col-md-8" style="padding-left: 20px;">
-            <div class="card-block px-4">
-                <h4 class="card-title">{{ instance.name }}</h4>
-                <p class="card-text"><b>Breed:</b> {{ instance.breed }}</p>
-                <p class="card-text"><b>Age:</b> {{ instance.age }}</p>
-                <p class="card-text"><b>Registered:</b> {{ instance.registration_date }}</p>
+    </div>
+
+    <!-- print message -->
+    {% if message %}
+        <!-- add row with centered element -->
+        <div class="row mb-4">
+            <div class="alert alert-success text-center" role="alert">
+                {{ message }}
             </div>
         </div>
-        <!-- Buttons -->
-        <div class="col-md-2">
-            <div class="card-block">   
-                <!-- Create reservation directly -->   
-                <div style="margin: 10px">                
-                {% if user|has_group:'volunteer' %}
-                <form  action="{% url 'reservation:reservation-create'%}" method="POST" class="form">
-                    <input type="hidden" name="animalid" value="{{instance.id}}" />
-                    <input type="hidden" name="zviera" value="{{instance.name}}" />
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-primary" style="width: 100px">Reserve</button>
-                </form>
-                {% endif %}
+    {% endif %}
+
+    {% for animal in animals %}
+    <div class="card" style="max-width: 900px; margin: auto;">
+        <div class="row g-0" style="padding: 20px;">
+            <!-- Image -->
+            <div class="col-md-2 position-relative">
+                <img src="https://via.placeholder.com/150" class="card-img fit-cover" alt="placeholder image">
+            </div>
+            <!-- Text -->
+            <div class="col-md-8" style="padding-left: 20px;">
+                <div class="card-block px-4">
+                    <h4 class="card-title">{{ animal.name }}</h4>
+                    <p class="card-text"><b>Breed:</b> {{ animal.breed }}</p>
+                    <p class="card-text"><b>Age:</b> {{ animal.age }}</p>
+                    <p class="card-text"><b>Registered:</b> {{ animal.registration_date }}</p>
                 </div>
-                <!-- Go to detail view -->
-                <div style="margin: 10px">
-                    <a href="{% url 'animals:animal-detail' instance.id %}" class="btn btn-primary" style="width: 100px">More info</a>
-                    <!-- <a href='{{ instance.get_absolute_url }}' class="btn btn-secondary btn-sm btn-block">Detail</a> -->
+            </div>
+            <!-- Buttons -->
+            <div class="col-md-2">
+                <div class="card-block">   
+                    <!-- Create reservation directly -->   
+                    <div style="margin: 10px">                
+                    {% if user|has_group:'volunteer' or user|has_group:'volunteer_notrust' or not user.is_authenticated %}
+                    <form  action="{% url 'reservation:reservation-create'%}" method="POST" class="form">
+                        <input type="hidden" name="animalid" value="{{animal.id}}" />
+                        <input type="hidden" name="zviera" value="{{animal.name}}" />
+                        {% csrf_token %}
+                        {% if user|has_group:'volunteer_notrust' %}
+                            <button type="submit" class="btn btn-primary" style="width: 100px" disabled>Reserve</button>
+                        {% else %}
+                            <button type="submit" class="btn btn-primary" style="width: 100px">Reserve</button>
+                        {% endif %}
+                    </form>
+                    {% endif %}
+                    {% if user|has_group:'caregiver' %}
+                    <form  action="{% url 'vetrequest:vetrequest-create'%}" method="POST" class="form">
+                        <input type="hidden" name="animalid" value="{{animal.id}}" />
+                        <input type="hidden" name="animalname" value="{{animal.name}}" />
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary" style="width: 100px">Write Request</button>
+                    </form>
+                    {% endif %}
+                    </div>
+                    <!-- Go to detail view -->
+                    <div style="margin: 10px">
+                        <a href="{% url 'animals:animal-detail' animal.id %}" class="btn btn-primary" style="width: 100px">More info</a>
+                        <!-- <a href='{{ animal.get_absolute_url }}' class="btn btn-secondary btn-sm btn-block">Detail</a> -->
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-</div>
-<!-- add margin below the card -->
-<div class="row" style="margin-bottom: 10px;"></div>
+    <!-- add margin below the card -->
+    <div class="row" style="margin-bottom: 10px;"></div>
 {% endfor %}
+
+<!-- Pagination if not search -->
+{% if not is_search %}
+    <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+            {% if animals.has_other_pages %} 
+            <ul class="pagination">
+                {% if animals.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ animals.previous_page_number }}">Previous</a>
+                    </li>
+                {% endif %}
+                {% for i in animals.paginator.page_range %}
+                    {% if animals.number == i %}
+                        <li class="page-item active">
+                            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if animals.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ animals.next_page_number }}">Next</a>
+                    </li>
+                {% endif %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endif %}
 
 
 {% endblock %}

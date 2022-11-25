@@ -16,14 +16,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+
 urlpatterns = [
     path('', include('shelter.urls')),
     path('volunteer_edit/', include('volunteer_edit.urls')),
     path('volunteer/', include('volunteer.urls')),
     path('caregiver_edit/', include('caregiver_edit.urls')),
     path('caregiver/', include('caregiver.urls')),
+    path('vet_edit/', include('vet_edit.urls')),
+    path('vet/', include('vet.urls')),
+    path('vetrequest/', include('vetrequest.urls')),
     path('animals/', include('animals.urls')),
     path('reservation/', include('reservation.urls')),
+    path('timetable/', include('timetable.urls')),
     path('myadmin/', include('myadmin.urls')),
     path('', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),

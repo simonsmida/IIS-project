@@ -13,6 +13,7 @@ def caregiver_create_view(request):
     if form.is_valid():
         user = form.save()
         my_group.user_set.add(user)
+        # TODO: save?
         form = CaregiverForm()
         return redirect('../')
     context = {

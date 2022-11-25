@@ -9,17 +9,17 @@
 {% if user|has_group:'caregiver' or user.is_superuser %}
      <h1>Unapproved</h1>
      {% for instance in object_list1 %}
-          <p><a href='{{ instance.get_absolute_url }}'>Reservation {{ instance.id }}</a></p>
+          <p><a href='{{ instance.get_absolute_url }}'>Reservation for {{ instance.animalid.name }}</a></p>
      {% endfor %}
    
      <h1>Approved</h1>
      {% for instance in object_list2 %}
-          <p><a href='{{ instance.get_absolute_url }}'>Reservation {{ instance.id }}</a></p>
+          <p><a href='{{ instance.get_absolute_url }}'>Reservation for {{ instance.animalid.name }}</a></p>
      {% endfor %}
 
 {% else %}
      {% for instance in object_list1 %}
-          <p><a href='{{ instance.get_absolute_url }}'>Reservation {{ instance.id }}</a></p>
+          <p><a href='{{ instance.get_absolute_url }}'>Reservation for {{ instance.animalid.name }}</a></p>
      {% endfor %}
 {% endif %}
 

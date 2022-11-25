@@ -2,11 +2,16 @@
 
 {% block content %}
 
+{% comment %} 
 {% if not user.is_superuser %}
     <h3>{{ zviera }}</h3>
+{% endif %} {% endcomment %}
+
+{% if form.cleaned_data.animalid.name %}
+    <h3>Reservation for "{{ form.cleaned_data.animalid.name }}"</h3>
 {% endif %}
 
-<form action='.' method='POST'>{% csrf_token %}
+<form action='.' method='POST'>{% csrf_token %} 
     {{ form.as_p }}
     <input type='submit' name='save' value='Save' />
 </form>

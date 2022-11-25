@@ -36,7 +36,7 @@
           {% if content == 'register_walks' %}
                {% include 'caregiver/walks_main.html' %}
           {% endif %}
-          
+         
           {% if content == 'create_vet_request' %}
                {% include 'caregiver/create_vet_request.html' %}
           {% endif %}
@@ -47,7 +47,7 @@
 <p>
      <a href="{% url "animals:animal-list" %}">All Animals</a><br>
      <a href="{% url "volunteer_edit:volunteer-list" %}">Volunteers</a><br>
-     <a href="{% url "animals:animal-list" %}">Vypsat požadavek</a><br>
+     <a href="{% url "vetrequest:vetrequest-create" %}">Vypsat požadavek</a><br>
      <a href="{% url "reservation:reservation-list" %}">Venčenia</a>
 </p>-->
 {% endblock %}

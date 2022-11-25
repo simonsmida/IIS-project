@@ -42,6 +42,7 @@ a[data-toggle="collapse"] {
 .verified-volunteers{
   padding-top: 20px;
 }
+
 /* CAREGIVER RESERVATION APPROVAL */
 #page-top > div.caregiver-wrapper > div > div > div > div > div:nth-child(3) > p {
   font-family: 'Poppins', sans-serif;
@@ -76,7 +77,6 @@ a[data-toggle="collapse"] {
   line-height: 1.7em;
   color: #454545;
 }
-
 
 /* Footer fix */
 .footer {

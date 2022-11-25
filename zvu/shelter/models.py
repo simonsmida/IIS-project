@@ -3,23 +3,28 @@ from django.urls import reverse
 from django.conf import settings
 
 
-class VetRequest(models.Model):
+class Vetrequest(models.Model):
     id = models.AutoField(primary_key=True)
     reserved_date = models.DateField()
     content = models.CharField(max_length=255)
-    state = models.CharField(max_length=255)
+    state = models.CharField(max_length=255, default='pending')
     caregiverid = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, related_name='caregiver_req',
                                     db_column='CaregiverID')
     vetid = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE,related_name='vet_req',
                                     db_column='VetID')
     animalid = models.ForeignKey('Animal', models.CASCADE, db_column='AnimalID')
+    exam_time = models.DateField()
+    exam_procedure = models.CharField(max_length=255)
+    exam_protocol = models.CharField(max_length=255)
     
+    def get_absolute_url(self):
+        return reverse("vetrequest:vetrequest-detail", kwargs={"id": self.id})
 
 class Reservation(models.Model):
     id = models.AutoField(primary_key=True)
     reserved_date = models.DateField()
-    reserved_from = models.DateField()
-    reserved_to = models.DateField()
+    reserved_from = models.TimeField()
+    reserved_to = models.TimeField()
     approval = models.IntegerField(default=0)
     state = models.CharField(max_length=255, default='pending')
     time_picked = models.TimeField(blank=True, null=True)
@@ -38,10 +43,21 @@ class Animal(models.Model):
     age = models.PositiveIntegerField()
     registration_date = models.DateField()
     image = models.CharField(max_length=255, blank=True, null=True)
+    info = models.CharField(max_length=255)
     
     def get_absolute_url(self):
         return reverse("animals:animal-detail", kwargs={"id": self.id})
 
+class Timetable(models.Model):
+    id = models.AutoField(primary_key=True)
+    reserved_date = models.DateField()
+    reserved_from = models.TimeField()
+    reserved_to = models.TimeField()
+    is_free = models.PositiveIntegerField()
+    animalid = models.ForeignKey('Animal', models.CASCADE, db_column='AnimalID')
+    
+    def get_absolute_url(self):
+        return reverse("timetable:timetable-update", kwargs={"id": self.id})
 
 # Create your models here.
 # class Volunteer(models.Model):

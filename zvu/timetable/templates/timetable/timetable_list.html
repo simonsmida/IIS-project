@@ -1,0 +1,81 @@
+{% extends 'shelter/base.html' %}
+
+{% load animals_extras %}
+
+{% block content %}
+
+{% if user|has_group:'caregiver' %}
+<form  action="{% url "timetable:timetable-create" %}" method="POST" class="form">
+     <input type="hidden" name="animalid" value="{{object_list1.0.animalid.id}}" />
+     {% csrf_token %}
+     <button type="submit" class="btn btn-primary" style="width: 100px">New Timetable</button>
+</form>
+{% endif %}
+
+{% if user|has_group:'caregiver' %}
+     {% if object_list1 %}
+     <h3>{{object_list1.0.animalid.name}}'s Timetable</h3>
+          {% for instance in object_list1 %}
+               <p><a href='{{ instance.get_absolute_url }}'>{{ instance.reserved_date }}
+                    {{ instance.reserved_from }} - {{ instance.reserved_to }}</a> 
+               <a href='{{instance.id}}/delete'>Delete</a>
+               </p>
+          {% endfor %}
+     {% else %} 
+          <h3>No Timetable available</h3>
+     {% endif %}
+
+{% elif object_list1 %}
+     <div class="container">
+          <form>
+               <div class="row mt-4">
+                    <h3>{{object_list1.0.animalid.name}}'s Timetable</h3>
+                    <hr>
+                    {% for instance in object_list1 %}
+                         <p><a href='{{ instance.get_absolute_url }}'>{{ instance.reserved_date }}
+                         {{ instance.reserved_from }} - {{ instance.reserved_to }}</a></p>
+                    {% endfor %}
+                    <hr>
+               </div>
+               <div class="row mt-2">
+                    <div class="col-md-1 p-0 text-center">
+                         <label for="dates" class="col-form-label">Date:</label>
+                    </div>
+                    <div class="col-md-3 p-0">
+                         <select class="form-select" id="dates" name="dates">
+                         <option value="default" disabled selected value>Choose available date</option>
+                         {% for instance in object_list1 %}
+                              {% if instance.reserved_date %}
+                              <!-- <option value="{{instance.id}}">{{instance.reserved_date}}</option> -->
+                              <option value="{{instance.reserved_date|date:'Y-m-d'}}">{{instance.reserved_date}}</option>
+                              {% endif %}
+                         {% endfor %}
+                         </select>
+                    </div>
+                    <div class="col-md-1 p- text-center" id="time-label">
+                         <label for="time" class="col-form-label">Time:</label>
+                    </div>
+                    <div class="col-md-3 p-0">
+                         <select class="form-select" id="time" name="time">
+                         <!-- selected option = 'Choose time' -->
+                         <option value="default" disabled selected value>Choose available time</option>
+                         {% for instance in object_list1 %}
+                              <option value="{{instance.reserved_date|date:'Y-m-d'}}">{{instance.reserved_from}} - {{instance.reserved_to}}</option>
+                         {% endfor %}
+                         </select>
+                    </div>
+                    <div class="col-md-4">
+                         <!-- confirm reservation button which redirects to animal detail -->
+                         <a href="{% url 'animals:animal-detail' object_list1.0.animalid.id %}" class="btn btn-primary" id="reserve-btn">Confirm Reservation</a>
+                    </div>
+               </div>
+          </form>
+
+     </div>
+     {% else %} 
+     <div class="row mt-4 text-center">
+          <h3>No Timetable available</h3>
+     </div>
+{% endif %}  
+
+{% endblock %}

@@ -8,6 +8,7 @@ from shelter.models import Reservation
 from .decorators import user_group
 from datetime import datetime
 
+
 # Create your views here.
 @login_required(login_url="login")
 #@user_passes_test(lambda u: u.groups.filter(name='caregiver').exists(), login_url='../shelter/forbidden.html')
@@ -25,6 +26,7 @@ def caregiver_view(request):
 
 
 @login_required(login_url="login")
+
 @user_group('caregiver')
 def manage_volunteers_view(request):
     #Get volunteers
@@ -90,6 +92,7 @@ def unverify_volunteers_view(request):
 
 @login_required(login_url="login")
 @user_group('caregiver')
+
 def edit_animals_view(request):
     context = {
         "content" : "edit_animals"

@@ -34,10 +34,14 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'myadmin.apps.MyadminConfig',
     'shelter.apps.ShelterConfig',
+    'timetable.apps.TimetableConfig',
     'volunteer.apps.VolunteerConfig',
     'volunteer_edit.apps.Volunteer_editConfig',
     'caregiver.apps.CaregiverConfig',
     'caregiver_edit.apps.Caregiver_editConfig',
+    'vet.apps.VetConfig',
+    'vet_edit.apps.Vet_editConfig',
+    'vetrequest.apps.VetrequestConfig',
     'animals.apps.AnimalsConfig',
     'reservation.apps.ReservationConfig',
     'crispy_forms',
@@ -62,6 +66,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django_session_timeout.middleware.SessionTimeoutMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -148,3 +154,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/home'
 
 LOGOUT_REDIRECT_URL = '/login'
+
+SESSION_EXPIRE_SECONDS = 600
+
+SESSION_TIMEOUT_REDIRECT = '/login'
+
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
