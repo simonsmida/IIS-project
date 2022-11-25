@@ -29,13 +29,11 @@
         </ul>
         <ul class="navbar-nav">
           {% if user.is_authenticated %}
-          <span class="navbar-text">User: {{user.username}} | </span>
           <li class="nav-item">
-            <a class="nav-link" href="/logout">Logout</a>
+            <a class="nav-link btn btn-outline-secondary" href="/profile" style="color: white;">User: {{user.username}}</a>
           </li>
-          <!-- change password -->
           <li class="nav-item">
-            <a class="nav-link" href="password-change">Change password</a>
+            <a class="nav-link" href="/logout/">Logout</a>
           </li>
           {% else %}
           <li class="nav-item">
