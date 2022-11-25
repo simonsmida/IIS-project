@@ -63,3 +63,19 @@ class ChangeAccForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ["username", "first_name", "last_name"]
+
+    def clean(self):
+        cleaned_data = super(ChangeAccForm, self).clean()
+        username = cleaned_data.get('username')
+        first_name = cleaned_data.get('first_name')
+        last_name = cleaned_data.get('last_name')
+
+        if username and first_name and last_name:
+            user = User.objects.filter(username=username).first()
+            if not user:
+                raise forms.ValidationError("Invalid username")
+            else:
+                user.first_name = first_name
+                user.last_name = last_name
+                user.save()
+        
