@@ -18,14 +18,14 @@
                     {% if reserve.time_picked == None  %}
                         Not set
                     {% else %}
-                        {{reserve.time_picked|date:"G:i"}}
+                        {{reserve.time_picked|date:"H:i"}}
                     {% endif %}
                 </td>
                 <td>
                     {% if reserve.time_return == None  %}
                         Not set
                     {% else %}
-                        {{reserve.time_return|date:"G:i"}}
+                        {{reserve.time_return|date:"H:i"}}
                     {% endif %}
                 </td>
                 <td><button type="submit" class="walk-time-edit btn btn-primary" editrow-id="{{reserve.id}}">Set time</button></td>
@@ -37,14 +37,14 @@
                     {% if reserve.time_picked == None  %}
                         <input id="walkStartTime-{{reserve.id}}" class="form-control" type="time" />
                     {% else %}
-                        <input id="walkStartTime-{{reserve.id}}" class="form-control" value="{{reserve.time_picked|date:"G:i"}}" type="time" />
+                        <input id="walkStartTime-{{reserve.id}}" class="form-control" value="{{reserve.time_picked|date:"H:i"}}" type="time" />
                     {% endif %}
                 </td>
                 <td>
                     {% if reserve.time_return == None  %}
                         <input id="walkEndTime-{{reserve.id}}" class="form-control" type="time" />
                     {% else %}
-                        <input id="walkEndTime-{{reserve.id}}" class="form-control" value="{{reserve.time_return|date:"G:i"}}" type="time" />
+                        <input id="walkEndTime-{{reserve.id}}" class="form-control" value="{{reserve.time_return|date:"H:i"}}" type="time" />
                     {% endif %}
                 </td>
                 <td>
