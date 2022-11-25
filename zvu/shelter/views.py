@@ -32,6 +32,11 @@ def login_view(request):
     return render(request, 'registration/login.html', context)
 
 
+def logout_view(request):
+    logout(request)
+    return redirect('home')
+
+
 def sign_up_view(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
@@ -57,6 +62,7 @@ def sign_up_view(request):
 
     return render(request, 'registration/sign_up.html', context)
 
+
 def changeacc_view(request):
     obj = get_object_or_404(User, id=request.user.id)
     form = ChangeAccForm(request.POST or None, instance=obj)
@@ -70,7 +76,7 @@ def changeacc_view(request):
     context = {
         'form': form
     }
-    return render(request, "shelter/changeacc.html", context)
+    return render(request, "accounts/changeacc.html", context)
 
 
 def password_change_view(request):
@@ -82,15 +88,14 @@ def password_change_view(request):
             confirm_password = form.cleaned_data.get('confirm_password')
 
             if new_password != confirm_password:
-                return render(request, 'registration/password_change.html', {'error': 'Passwords do not match'})
+                return render(request, 'accounts/password_change.html', {'error': 'Passwords do not match'})
 
             if request.user.check_password(old_password):
                 request.user.set_password(new_password)
                 request.user.save()
-                print("going home")
                 return redirect('home')
             else:
-                return render(request, 'registration/password_change.html', {'error': 'Old password is not correct'})
+                return render(request, 'accounts/password_change.html', {'error': 'Old password is not correct'})
     else:
         form = ChangePasswordForm()
 
@@ -98,7 +103,15 @@ def password_change_view(request):
         'form': form
     }
 
-    return render(request, 'registration/password_change.html', context)
+    return render(request, 'accounts/password_change.html', context)
+
+
+def profile_view(request):
+    user = get_object_or_404(User, id=request.user.id)
+    context = {
+        'user': user
+    }
+    return render(request, "accounts/profile.html", context)
 
 
 def home(request):
