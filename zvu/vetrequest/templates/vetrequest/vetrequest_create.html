@@ -1,7 +1,9 @@
 {% extends 'shelter/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
+{% comment %}
 {% if form.cleaned_data.animalid.name %}
     <h3>Request for "{{ form.cleaned_data.animalid.name }}"</h3>
 {% endif %}
@@ -9,10 +11,17 @@
 {% if animalname %}
     <h3>Request for "{{ animalname }}"</h3>
 {% endif %}
+{% endcomment %}
 
-<form action='.' method='POST'>{% csrf_token %}
-    {{ form.as_p }}
-    <input type='submit' name='save' value='Save' />
-</form>
+<div class="form-wrapper"style="padding-top: 50px">
+    <h2 class="mb-5">Create new vet request
+    {% if form.cleaned_data.animalid.name %} for "{{ form.cleaned_data.animalid.name }}"
+    {% elif animalname %} for "{{ animalname }}" {% endif %}</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type='submit' name='save' value='Save' class="btn btn-primary"/>
+    </form>
+</div>
 
 {% endblock %}
