@@ -1,5 +1,6 @@
 {% extends 'shelter/base.html' %}
-
+{% load crispy_forms_tags %}
+{% load crispy_forms_tags %}
 {% load animals_extras %}
 
 {% block content %}
@@ -43,5 +44,5 @@
 <h2>Name: {{ object.name }}</h2>
 <h2>Breed: {{ object.breed }}</h2>
 <h2>Age:  {{ object.age }}</h2>
-<h2>Info: {{ object.info }}
+<h2>Health record: {{ object.info }}
 {% endblock %}
