@@ -7,7 +7,7 @@ class MyModelChoiceField(forms.ModelChoiceField):
         return obj.name
 
 class ReservationForm(forms.ModelForm):
-    creation_date = forms.DateField()
+    reserved_date = forms.DateField()
     reserved_from = forms.DateField()
     reserved_to = forms.DateField()
     animalid = MyModelChoiceField(
@@ -19,14 +19,14 @@ class ReservationForm(forms.ModelForm):
     class Meta:
         model = Reservation
         fields = [
-            'creation_date',
+            'reserved_date',
             'reserved_from',
             'reserved_to',
             'animalid'
         ]
         
 class ReservationUpdateForm(forms.ModelForm):
-    creation_date = forms.DateField()
+    reserved_date = forms.DateField()
     reserved_from = forms.DateField()
     reserved_to = forms.DateField()
     animalid = MyModelChoiceField(
@@ -37,7 +37,7 @@ class ReservationUpdateForm(forms.ModelForm):
     class Meta:
         model = Reservation
         fields = [
-            'creation_date',
+            'reserved_date',
             'reserved_from',
             'reserved_to',
             'animalid'
@@ -45,7 +45,7 @@ class ReservationUpdateForm(forms.ModelForm):
             
     
 class ReservationManageForm(forms.ModelForm):
-    creation_date = forms.DateField()
+    reserved_date = forms.DateField()
     reserved_from = forms.DateField()
     reserved_to = forms.DateField()
     # approval = forms.ChoiceField(choices=[(0,'neschválená'),(1,'schválená')],required=False)
@@ -66,7 +66,7 @@ class ReservationManageForm(forms.ModelForm):
     class Meta:
         model = Reservation
         fields = [
-            'creation_date',
+            'reserved_date',
             'reserved_from',
             'reserved_to',
             'approval',

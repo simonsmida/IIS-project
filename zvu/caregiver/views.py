@@ -5,8 +5,8 @@ from django.http import HttpResponseForbidden
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 from shelter.models import Reservation
-
 from .decorators import user_group
+from datetime import datetime
 
 # Create your views here.
 @login_required(login_url="login")
@@ -125,7 +125,6 @@ def get_reservations(request):
     View for getting the reservation according to filter
     requirements sent from ajax request
     '''
-    print("som tu")
     if request.method == "GET":
         from_date = request.GET['from']
         to_date = request.GET['to']
@@ -137,11 +136,11 @@ def get_reservations(request):
         if from_date == "" and to_date == "":
             reservations = Reservation.objects.all()
         elif from_date == "":
-            reservations = Reservation.objects.filter(creation_date__lt=to_date)
+            reservations = Reservation.objects.filter(reserved_date__lt=to_date)
         elif to_date == "":
-            reservations = Reservation.objects.filter(creation_date__gt=from_date)
+            reservations = Reservation.objects.filter(reserved_date__gt=from_date)
         else:
-            reservations = Reservation.objects.filter(creation_date__range=[from_date, to_date])
+            reservations = Reservation.objects.filter(reserved_date__range=[from_date, to_date])
         
         # 2. Filter according to reservation approve 
         if approve == 0 or approve == 1:
@@ -161,9 +160,11 @@ def approve_reservation(request):
     if request.method == "GET":
         approve = int(request.GET['approve'])
         res_id = int(request.GET['id'])
-        reservation = Reservation.objects.get(id=res_id)
-        reservation.approval = approve
-        reservation.save()
+        Reservation.objects.filter(id=res_id).update(approval=approve)
+        
+        # reservation = Reservation.objects.get(id=res_id)
+        # reservation.approval = approve
+        # reservation.save()
         # To not clear current filter on page, we pass
         # filter data to get_reservations
         response = get_reservations(request)
@@ -172,10 +173,40 @@ def approve_reservation(request):
 @login_required(login_url="login")
 @user_group('caregiver')
 def register_walks_view(request):
+    reservations = Reservation.objects.all()
+    print(reservations)
     context = {
-        "content" : "register_walks"
+        "content" : "register_walks",
+        "reservations" : reservations
     }
     return render(request, "caregiver/caregiver.html", context)
+
+@login_required(login_url="login")
+@user_group('caregiver')
+def save_walk_time(request):
+    if request.method == "GET":
+        # 1. Get values from request
+        res_id = int(request.GET['id'])
+        time_picked = request.GET['time_picked']
+        time_return = request.GET['time_return']
+        print(time_picked)
+        print(time_return)
+        print(type(time_return))
+        # 3. Set new values from request
+        if time_picked == "" and time_return == "":
+            Reservation.objects.filter(id=res_id).update(time_picked=None, time_return=None)
+        elif time_picked == "":
+            Reservation.objects.filter(id=res_id).update(time_picked=None,time_return=time_return)
+        elif time_return == "":
+            Reservation.objects.filter(id=res_id).update(time_picked=time_picked,time_return=None)
+        else:
+            Reservation.objects.filter(id=res_id).update(time_picked=time_picked,time_return=time_return)
+            
+        reservations = Reservation.objects.all()
+        context = {
+            "reservations" : reservations
+        }
+        return render(request, "caregiver/walks_register.html", context)
 
 @login_required(login_url="login")
 @user_group('caregiver')

@@ -1,0 +1,58 @@
+    <table class="table walk-table">
+        <thead>
+          <tr>
+            <th scope="col">Reservation ID</th>
+            <th scope="col">Creation date</th>
+            <th scope="col">Volunteer name</th>
+            <th scope="col">Time picked</th>
+            <th scope="col">Time returned</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for reserve in reservations  %}
+            <tr>
+                <th scope="row">{{reserve.id}}</th>
+                <td>{{reserve.volunteerid.first_name}} {{reserve.volunteerid.last_name}}</td>
+                <td>{{reserve.reserved_date|date:"d.m.Y"}}</td>
+                <td>
+                    {% if reserve.time_picked == None  %}
+                        Not set
+                    {% else %}
+                        {{reserve.time_picked}}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if reserve.time_return == None  %}
+                        Not set
+                    {% else %}
+                        {{reserve.time_return}}
+                    {% endif %}
+                </td>
+                <td><button type="submit" class="walk-time-edit btn btn-primary" editrow-id="{{reserve.id}}">Set time</button></td>
+            </tr>
+            <tr id="set-time-{{reserve.id}}" class="walk-new-time" style="display:none">
+                <td colspan="3">
+                </td>
+                <td>
+                    {% if reserve.time_picked == None  %}
+                        <input id="walkStartTime-{{reserve.id}}" class="form-control" type="time" />
+                    {% else %}
+                        <input id="walkStartTime-{{reserve.id}}" class="form-control" value="{{reserve.time_picked|date:"HH:mm"}}" type="time" />
+                    {% endif %}
+                </td>
+                <td>
+                    {% if reserve.time_return == None  %}
+                        <input id="walkEndTime-{{reserve.id}}" class="form-control" type="time" />
+                    {% else %}
+                        <input id="walkEndTime-{{reserve.id}}" class="form-control" value="{{reserve.time_return|date:"HH:mm"}}" type="time" />
+                        {% comment %} <input id="walkEndTime-{{reserve.id}}" class="form-control" value="13:00" type="time" /> {% endcomment %}
+                    {% endif %}
+                </td>
+                <td>
+                    <button type="submit" class="walk-time-save btn btn-primary" settime-id="{{reserve.id}}">Save</button>  
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    

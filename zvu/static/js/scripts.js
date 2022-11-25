@@ -204,37 +204,60 @@ $(document).ready(function () {
     $(document).on("click","button.walk-time-edit", function(){
         //1. Remove currently active class
         console.log('You clicked button for editing walk time');
-        var id = $(this).attr("walk-id");
-        var visibility = $("#ahoj.walk-new-time").attr("style");
+        var id = $(this).attr("editrow-id");
+        var row_id = "#set-time-"+id+".walk-new-time";
+        var visibility = $(row_id).attr("style");
         console.log(id);
         console.log(visibility);
+        console.log(row_id);
         if (visibility === "display:none"){
-            $("#ahoj.walk-new-time").attr("style","display:table-row");
+            $(row_id).attr("style","display:table-row");
         }
         else if(visibility === "display:table-row"){
-            $("#ahoj.walk-new-time").attr("style","display:none");
+            $(row_id).attr("style","display:none");
         }
 
-        // $.ajax({
-        //     type: 'GET',
-        //     url: '/caregiver/approve_res/approve',
-        //     data: {
-        //         "from" : from,
-        //         "to" : to,
-        //         "approval_type": approval_type,
-        //         "id" : id,
-        //         "approve" : approve
-        //     },
-        //     success: function( data ){
-        //         console.log(data);
-        //         $('.approve-result').empty();
-        //         $('.approve-result').html(data);
-        //     },
-        //     error: function(){
-        //         console.log("Error bad response");
-        //     }
+    });
 
-        // });
+});
+
+/**
+ * Function for 
+ */
+$(document).ready(function () {
+    $(document).on("click","button.walk-time-save", function(){
+        //1. Remove currently active class
+        console.log('You clicked button for saving walk time');
+        var id = $(this).attr("settime-id");
+        var time_picked = $("#walkStartTime-"+id).val()
+        var time_return = $("#walkEndTime-"+id).val()
+
+        console.log(id);
+        console.log(time_picked);
+        console.log(time_return);
+        // if (time_picked > time_return) {
+        //     console.log('Invalid time of return');
+        // } 
+        // else{
+            $.ajax({
+                type: 'GET',
+                url: '/caregiver/register_walks/save',
+                data: {
+                    "id" : id,
+                    "time_picked" : time_picked,
+                    "time_return" : time_return,
+                },
+                success: function( data ){
+                    console.log(data);
+                    $('.walk-table').empty();
+                    $('.walk-table').html(data);
+                },
+                error: function(){
+                    console.log("Error bad response");
+                }
+            });
+        // }
+        
     });
 
 });

@@ -16,7 +16,7 @@
             <tr>
                 <th scope="row">{{reserve.id}}</th>
                 <td>{{reserve.volunteerid.first_name}} {{reserve.volunteerid.last_name}}</td>
-                <td>{{reserve.creation_date|date:"d.m.Y"}}</td>
+                <td>{{reserve.reserved_date|date:"d.m.Y"}}</td>
                 <td>{{reserve.state}}</td>
                 <td>
                 {% if reserve.approval == 0  %}

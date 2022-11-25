@@ -5,7 +5,7 @@ from django.conf import settings
 
 class VetRequest(models.Model):
     id = models.AutoField(primary_key=True)
-    creation_date = models.DateField()
+    reserved_date = models.DateField()
     content = models.CharField(max_length=255)
     state = models.CharField(max_length=255)
     caregiverid = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, related_name='caregiver_req',
@@ -17,11 +17,13 @@ class VetRequest(models.Model):
 
 class Reservation(models.Model):
     id = models.AutoField(primary_key=True)
-    creation_date = models.DateField()
+    reserved_date = models.DateField()
     reserved_from = models.DateField()
     reserved_to = models.DateField()
     approval = models.IntegerField(default=0)
     state = models.CharField(max_length=255, default='pending')
+    time_picked = models.TimeField(blank=True, null=True)
+    time_return = models.TimeField(blank=True, null=True)
     animalid = models.ForeignKey('Animal', models.CASCADE, db_column='AnimalID')
     volunteerid = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, db_column='VolunteerID')
     
