@@ -7,9 +7,9 @@ class MyModelChoiceField(forms.ModelChoiceField):
         return obj.name
 
 class TimetableForm(forms.ModelForm):
-    reserved_date = forms.DateField()
-    reserved_from = forms.TimeField()
-    reserved_to = forms.TimeField()
+    reserved_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
+    reserved_from = forms.TimeField(widget=forms.widgets.TimeInput(attrs={'type': 'time'}))
+    reserved_to = forms.TimeField(widget=forms.widgets.TimeInput(attrs={'type': 'time'}))
     is_free = forms.ChoiceField(choices=[(0,'free'),(1,'reserved')])
     animalid = MyModelChoiceField(
         queryset=Animal.objects.all(),
