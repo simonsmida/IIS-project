@@ -61,7 +61,7 @@ def changeacc_view(request):
     if form.is_valid():
         print("haf")
         form.save()
-        return redirect('../')
+        return redirect("changeacc")
     else:
         print(form.errors.as_data())
     context = {
