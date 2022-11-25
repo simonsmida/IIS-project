@@ -63,20 +63,20 @@ def sign_up_view(request):
     return render(request, 'registration/sign_up.html', context)
 
 
-def changeacc_view(request):
+def edit_profile_view(request):
     obj = get_object_or_404(User, id=request.user.id)
     form = ChangeAccForm(request.POST or None, instance=obj)
     print("qauck")
     if form.is_valid():
         print("haf")
         form.save()
-        return redirect("changeacc")
+        return redirect("profile")
     else:
         print(form.errors.as_data())
     context = {
         'form': form
     }
-    return render(request, "accounts/changeacc.html", context)
+    return render(request, "accounts/edit_profile.html", context)
 
 
 def password_change_view(request):
@@ -88,14 +88,14 @@ def password_change_view(request):
             confirm_password = form.cleaned_data.get('confirm_password')
 
             if new_password != confirm_password:
-                return render(request, 'accounts/password_change.html', {'error': 'Passwords do not match'})
+                return render(request, 'accounts/change_password.html', {'error': 'Passwords do not match'})
 
             if request.user.check_password(old_password):
                 request.user.set_password(new_password)
                 request.user.save()
                 return redirect('home')
             else:
-                return render(request, 'accounts/password_change.html', {'error': 'Old password is not correct'})
+                return render(request, 'accounts/change_password.html', {'error': 'Old password is not correct'})
     else:
         form = ChangePasswordForm()
 
@@ -103,7 +103,7 @@ def password_change_view(request):
         'form': form
     }
 
-    return render(request, 'accounts/password_change.html', context)
+    return render(request, 'accounts/change_password.html', context)
 
 
 def profile_view(request):
