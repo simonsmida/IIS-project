@@ -102,12 +102,14 @@ class VetrequestExamForm(forms.ModelForm):
     exam_procedure = forms.ChoiceField(choices=[('vaccination','vaccination'),
                                                 ('regular checkup','regular checkup'),
                                                 ('other','other')])
+    exam_protocol = forms.CharField()
      
     class Meta:
         model = Vetrequest
         fields = [
             'exam_time',
-            'exam_procedure'
+            'exam_procedure',
+            'exam_protocol'
         ]
 
 
