@@ -72,15 +72,6 @@ class ChangeAccForm(forms.ModelForm):
 
         if username and first_name and last_name:
             user = User.objects.filter(username=username)
-        if user.count() > 1:
-            raise forms.ValidationError("Username already exists")
-        
-        # if username and first_name and last_name:
-        #     user = User.objects.filter(username=username).first()
-        #     if not user:
-        #         raise forms.ValidationError("Invalid username")
-        #     else:
-        #         user.first_name = first_name
-        #         user.last_name = last_name
-        #         user.save()
+            if user:
+                raise forms.ValidationError("Username already exists")
         
