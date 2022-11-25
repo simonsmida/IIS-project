@@ -9,11 +9,8 @@ from reservation.decorators import my_login_required
 @my_login_required
 @permission_required("shelter.add_vetrequest", login_url="login", raise_exception=True)
 def vetrequest_create_view(request):
-    form = VetrequestForm(request.POST or None)
-    
-    # if has_group(request.user, 'caregiver') or request.user.is_superuser:
-    #     form = VetrequestNewForm(request.POST or None)
-        
+    form = VetrequestForm(request.POST or None) 
+                    
     if form.is_valid():
         vetrequest = form.save(commit=False)
         vetrequest.caregiverid = request.user
@@ -29,10 +26,7 @@ def vetrequest_create_view(request):
 @permission_required("shelter.add_vetrequest", login_url="login", raise_exception=True)
 def vetrequest_newcreate_view(request):
     form = VetrequestNewForm(request.POST or None)
-    
-    # if has_group(request.user, 'caregiver') or request.user.is_superuser:
-    #     form = VetrequestNewForm(request.POST or None)
-        
+            
     if form.is_valid():
         vetrequest = form.save(commit=False)
         vetrequest.caregiverid = request.user

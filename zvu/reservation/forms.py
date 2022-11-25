@@ -28,6 +28,7 @@ class ReservationForm(forms.ModelForm):
    
         
 class ReservationUpdateForm(forms.ModelForm):
+    reserved_date = forms.DateField()
     reserved_from = forms.TimeField()
     reserved_to = forms.TimeField()
     animalid = MyModelChoiceField(
@@ -45,7 +46,7 @@ class ReservationUpdateForm(forms.ModelForm):
             
     
 class ReservationManageForm(forms.ModelForm):
-    creation_date = forms.TimeField()
+    reserved_date = forms.DateField()
     reserved_from = forms.TimeField()
     reserved_to = forms.DateField()
     approval = forms.ChoiceField(choices=[(0,'unapproved'),(1,'approved')])
