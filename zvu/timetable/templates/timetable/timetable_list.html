@@ -12,6 +12,19 @@
 </form>
 {% endif %}
 
+{% if user|has_group:'caregiver' %}
+{% if object_list1 %}
+<h3>{{object_list1.0.animalid.name}}'s Timetable</h3>
+     {% for instance in object_list1 %}
+          <p><a href='{{ instance.get_absolute_url }}'>{{ instance.reserved_date }}
+               {{ instance.reserved_from }} - {{ instance.reserved_to }}</a> 
+             <a href='{{instance.id}}/delete'>Delete</a>
+          </p>
+     {% endfor %}
+{% endif %}
+  
+
+{% else %}
 {% if object_list1 %}
 <div class="container">
      <form>
@@ -48,6 +61,6 @@
 
 </div>
 {% endif %}    
-
+{% endif %}  
 
 {% endblock %}

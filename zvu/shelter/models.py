@@ -22,8 +22,9 @@ class Vetrequest(models.Model):
 
 class Reservation(models.Model):
     id = models.AutoField(primary_key=True)
-    reserved_from = models.DateTimeField()
-    reserved_to = models.DateTimeField()
+    reserved_date = models.DateField()
+    reserved_from = models.TimeField()
+    reserved_to = models.TimeField()
     approval = models.IntegerField(default=0)
     state = models.CharField(max_length=255, default='pending')
     animalid = models.ForeignKey('Animal', models.CASCADE, db_column='AnimalID')
@@ -47,8 +48,9 @@ class Animal(models.Model):
 
 class Timetable(models.Model):
     id = models.AutoField(primary_key=True)
-    reserved_from = models.DateTimeField()
-    reserved_to = models.DateTimeField()
+    reserved_date = models.DateField()
+    reserved_from = models.TimeField()
+    reserved_to = models.TimeField()
     is_free = models.PositiveIntegerField()
     animalid = models.ForeignKey('Animal', models.CASCADE, db_column='AnimalID')
     

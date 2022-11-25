@@ -64,14 +64,14 @@ class ChangeAccForm(forms.ModelForm):
         model = User
         fields = ["username", "first_name", "last_name", "email"]
 
-    def clean(self):
-        cleaned_data = super(ChangeAccForm, self).clean()
-        username = cleaned_data.get('username')
-        first_name = cleaned_data.get('first_name')
-        last_name = cleaned_data.get('last_name')
+    # def clean(self):
+    #     cleaned_data = super(ChangeAccForm, self).clean()
+    #     username = cleaned_data.get('username')
+    #     first_name = cleaned_data.get('first_name')
+    #     last_name = cleaned_data.get('last_name')
 
-        if username and first_name and last_name:
-            user = User.objects.filter(username=username)
-            if user:
-                raise forms.ValidationError("Username already exists")
+    #     if username and first_name and last_name:
+    #         user = User.objects.filter(username=username)
+    #         if user.count() > 1:
+    #             raise forms.ValidationError("Username already exists")
         

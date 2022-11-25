@@ -8,8 +8,9 @@ class MyModelChoiceField(forms.ModelChoiceField):
 
 
 class ReservationForm(forms.ModelForm):
-    reserved_from = forms.DateTimeField()
-    reserved_to = forms.DateTimeField()
+    reserved_date = forms.DateField()
+    reserved_from = forms.TimeField()
+    reserved_to = forms.TimeField()
     animalid = MyModelChoiceField(
         queryset=Animal.objects.all(),
         label='Animal',
@@ -19,6 +20,7 @@ class ReservationForm(forms.ModelForm):
     class Meta:
         model = Reservation
         fields = [
+            'reserved_date',
             'reserved_from',
             'reserved_to',
             'animalid'
@@ -26,8 +28,8 @@ class ReservationForm(forms.ModelForm):
    
         
 class ReservationUpdateForm(forms.ModelForm):
-    reserved_from = forms.DateTimeField()
-    reserved_to = forms.DateTimeField()
+    reserved_from = forms.TimeField()
+    reserved_to = forms.TimeField()
     animalid = MyModelChoiceField(
         queryset=Animal.objects.all(),
         label='Animal',
@@ -43,8 +45,8 @@ class ReservationUpdateForm(forms.ModelForm):
             
     
 class ReservationManageForm(forms.ModelForm):
-    creation_date = forms.DateTimeField()
-    reserved_from = forms.DateTimeField()
+    creation_date = forms.TimeField()
+    reserved_from = forms.TimeField()
     reserved_to = forms.DateField()
     approval = forms.ChoiceField(choices=[(0,'unapproved'),(1,'approved')])
     state = forms.ChoiceField(choices=[('pending','pending'),
