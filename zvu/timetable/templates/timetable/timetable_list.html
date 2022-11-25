@@ -1,12 +1,16 @@
 {% extends 'shelter/base.html' %}
 
+{% load animals_extras %}
+
 {% block content %}
 
+{% if user|has_group:'caregiver' %}
 <form  action="{% url "timetable:timetable-create" %}" method="POST" class="form">
      <input type="hidden" name="animalid" value="{{object_list1.0.animalid.id}}" />
      {% csrf_token %}
      <button type="submit" class="btn btn-primary" style="width: 100px">New Timetable</button>
 </form>
+{% endif %}
 
 {% if object_list1 %}
      {% for instance in object_list1 %}
@@ -15,33 +19,5 @@
           </p>
      {% endfor %}
 {% endif %}    
-
-{% comment %} {% if object_list2 %}
-     <h2>Tuesday</h2>
-     {% for instance in object_list2 %}
-          <p><a href='{{ instance.get_absolute_url }}'>{{ instance.reserved_from }} - {{ instance.reserved_to }}</a></p>
-     {% endfor %}
-{% endif %}
-
-{% if object_list3 %}
-     <h2>Wednesday</h2>
-     {% for instance in object_list3 %}
-          <p><a href='{{ instance.get_absolute_url }}'>{{ instance.reserved_from }} - {{ instance.reserved_to }}</a></p>
-     {% endfor %}
-{% endif %}
-
-{% if object_list4 %}
-     <h2>Thursday</h2>
-     {% for instance in object_list4 %}
-          <p><a href='{{ instance.get_absolute_url }}'>{{ instance.reserved_from }} - {{ instance.reserved_to }}</a></p>
-     {% endfor %}
-{% endif %}
-
-{% if object_list5 %}
-     <h2>Friday</h2>
-     {% for instance in object_list5 %}
-          <p><a href='{{ instance.get_absolute_url }}'>{{ instance.reserved_from }} - {{ instance.reserved_to }}</a></p>
-     {% endfor %}
-{% endif %} {% endcomment %}
 
 {% endblock %}

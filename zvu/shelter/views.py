@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from .forms import RegisterForm, LoginForm
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import RegisterForm, LoginForm, ChangeAccForm
 
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth import login, logout, authenticate
@@ -53,6 +53,21 @@ def sign_up_view(request):
     }
 
     return render(request, 'registration/sign_up.html', context)
+
+def changeacc_view(request):
+    obj = get_object_or_404(User, id=request.user.id)
+    form = ChangeAccForm(request.POST or None, instance=obj)
+    print("qauck")
+    if form.is_valid():
+        print("haf")
+        form.save()
+        return redirect('../')
+    else:
+        print(form.errors.as_data())
+    context = {
+        'form': form
+    }
+    return render(request, "shelter/changeacc.html", context)
 
 
 def home(request):

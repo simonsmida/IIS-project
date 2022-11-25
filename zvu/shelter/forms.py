@@ -37,4 +37,13 @@ class LoginForm(forms.Form):
             user = authenticate(username=username, password=password)
             if not user:
                 raise forms.ValidationError("Invalid login")
-       
+
+
+class ChangeAccForm(forms.ModelForm):
+    username = forms.CharField()
+    first_name = forms.CharField()
+    last_name = forms.CharField()
+
+    class Meta:
+        model = User
+        fields = ["username", "first_name", "last_name"]
