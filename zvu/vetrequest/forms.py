@@ -101,7 +101,7 @@ class VetrequestNewForm(forms.ModelForm):
         
         
 class VetrequestExamForm(forms.ModelForm):
-    exam_time = forms.DateField()
+    exam_time = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
     exam_procedure = forms.ChoiceField(choices=[('vaccination','vaccination'),
                                                 ('regular checkup','regular checkup'),
                                                 ('other','other')])
