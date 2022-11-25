@@ -13,11 +13,41 @@
 {% endif %}
 
 {% if object_list1 %}
-     {% for instance in object_list1 %}
-          <p><a href='{{ instance.get_absolute_url }}'>{{ instance.reserved_from }} - {{ instance.reserved_to }}</a> 
-             <a href='{{instance.id}}/delete'>Delete</a>
-          </p>
-     {% endfor %}
+<div class="container">
+     <form>
+          <div class="row mt-4">
+               <h3>{{animal_name}}'s Timetable</h3>
+               <hr>
+          </div>
+          <div class="row mt-2">
+               <div class="col-md-1 p-0 text-center">
+                    <label for="dates" class="col-form-label">Date:</label>
+               </div>
+               <div class="col-md-3 p-0">
+                    <select class="form-select" id="dates" name="dates">
+                    {% for instance in object_list1 %}
+                         <option value="{{instance.id}}">{{instance.reserved_from}}</option>
+                    {% endfor %}
+                    </select>
+               </div>
+               <div class="col-md-1 p- text-center">
+                    <label for="time" class="col-form-label">Time:</label>
+               </div>
+               <div class="col-md-3 p-0">
+                    <select class="form-select" id="time" name="time">
+                    {% for instance in object_list1 %}
+                         <option value="{{instance.id}}">{{instance.reserved_to}}</option>
+                    {% endfor %}
+                    </select>
+               </div>
+               <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary">Confirm reservation</button>
+               </div>
+          </div>
+     </form>
+
+</div>
 {% endif %}    
+
 
 {% endblock %}
