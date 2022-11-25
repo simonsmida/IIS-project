@@ -53,3 +53,13 @@ class ChangePasswordForm(forms.Form):
             raise forms.ValidationError(
                 "new_password and confirm_password does not match"
             )
+
+
+class ChangeAccForm(forms.ModelForm):
+    username = forms.CharField()
+    first_name = forms.CharField()
+    last_name = forms.CharField()
+
+    class Meta:
+        model = User
+        fields = ["username", "first_name", "last_name"]
