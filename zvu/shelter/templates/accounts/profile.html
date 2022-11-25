@@ -16,8 +16,6 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-3">
-                            <!-- display user info -->
-                            <!-- lead text (bold): text -->
                             <p class="lead text-dark fw-bold">Username: </p>
                             <p class="lead text-dark fw-bold">First Name: </p>
                             <p class="lead text-dark fw-bold">Last Name: </p>
@@ -32,21 +30,19 @@
                     </div>
                     <div class="row mb-2">
                         <div class="col-md-6">
-                            <a href="{% url 'changeacc' %}" class="btn btn-primary">Edit Profile</a>
+                            <a href="{% url 'edit-profile' %}" class="btn btn-primary">Edit Profile</a>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <a href="{% url 'password-change' %}" class="btn btn-primary">Change Password</a>
+                            <a href="{% url 'change-password' %}" class="btn btn-primary">Change Password</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </div>
-
-
-
 
 
 {% endblock%}
