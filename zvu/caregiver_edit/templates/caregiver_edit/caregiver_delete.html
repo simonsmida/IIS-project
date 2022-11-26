@@ -2,11 +2,20 @@
 
 {% block content %}
 
-
-<form action='.' method='POST'>{% csrf_token %}
-    <h1>Do you want to delete the product "{{ object.username }}"?</h1>
-    <input type='submit' value='Yes' />  <a href='../'>Cancel</a>
-</form>
-
+<div class="container">
+    <div class="m-2 mt-5">
+    <form action='.' method='POST'>{% csrf_token %}    
+        <h1>Do you want to delete the caregiver "{{ object.username }}"?</h1>
+        <div class="row">
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-6">
+                <input type='submit' value='Delete' class="btn btn-danger me-2 mt-4"/>  
+                <a href='../' class="btn btn-secondary mt-4">Cancel</a>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
 
 {% endblock %}

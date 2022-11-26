@@ -2,15 +2,39 @@
 
 {% block content %}
 
-<a href="{% url "volunteer_edit:volunteer-create" %}">New Volunteer</a>
 
-<h1>Trusted</h1>
-{% for instance in object_list1 %}
-     <p>{{ instance.id }} - <a href='{{ instance.get_absolute_url }}'>{{ instance.username }}</a></p>
-{% endfor %}
-<h1>Not Trusted</h1>
-{% for instance in object_list2 %}
-     <p>{{ instance.id }} - <a href='{{ instance.get_absolute_url }}'>{{ instance.username }}</a></p>
-{% endfor %}
+<div class="container">
+     <div class="row">
+         <div class="col">
+             <div class="page-header mt-4">
+                 <h1>Manage Volunteers</h1>
+             </div>
+         </div>
+     </div>
+     <hr>
+     <div class="row">
+          <div class="col">
+               <div class="mt-4">
+                    <a class="btn btn-success" href="{% url 'volunteer_edit:volunteer-create' %}">New Volunteer</a>
+               </div>
+         </div>
+     </div>
+     <div class="row mt-5 mb-2">
+          <div class="col">
+               <h3 class="pull-left">Verified</h3>
+               <hr>
+               {% for instance in object_list1 %}
+                    <p class="ms-4">{{ instance.id }} - <a href='{{ instance.get_absolute_url }}'>{{ instance.username }}</a></p>
+               {% endfor %}
+          </div>
+          <div class="col">
+               <h3 class="pull-left">Not Verified</h3>
+               <hr>
+               {% for instance in object_list2 %}
+                    <p class="ms-4">{{ instance.id }} - <a href='{{ instance.get_absolute_url }}'>{{ instance.username }}</a></p>
+               {% endfor %}
+          </div>
+     </div>
+</div>
 
 {% endblock %}
