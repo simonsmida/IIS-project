@@ -22,6 +22,12 @@
           </li>
         </ul>
         <ul class="navbar-nav">
+          <!-- if superuser, dropdown menu -->
+          {% if user.is_superuser %} 
+          <li class="nav-item">
+            <a class="nav-link btn btn-warning me-1" href="/myadmin" style="color: black;">Manage Shelter</a>
+          </li>
+          {% endif %}
           <!-- if user role is caregiver -->
           {% if user|has_group:'caregiver' %}
           <li class="nav-item">
