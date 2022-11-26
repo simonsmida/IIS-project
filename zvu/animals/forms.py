@@ -18,7 +18,7 @@ class AnimalForm(forms.ModelForm):
         ]
 
 class AnimalHealthForm(forms.ModelForm):
-    info = forms.CharField(widget=forms.Textarea(attrs={"cols": "70", "rows": "8"}), label='Health record')
+    info = forms.CharField(widget=forms.Textarea(attrs={"cols": "70", "rows": "8"}), label='',required=False)
     
     class Meta:
         model = Animal

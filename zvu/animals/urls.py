@@ -4,14 +4,18 @@ from .views import (
     animal_detail_view,
     animal_delete_view,
     animal_list_view,
-    animal_update_view   
+    animal_update_view,
+    animal_medrec_detail_view,
+    animal_medrec_list_view
 )
 
 app_name = 'animals'
 urlpatterns = [
     path('', animal_list_view, name='animal-list'),
+    path('medical_records/', animal_medrec_list_view, name='animal-medrecords'),
     path('create/', animal_create_view, name='animal-create'),
     path('<int:id>/', animal_detail_view, name='animal-detail'),
     path('<int:id>/update/', animal_update_view, name='animal-update'),
+    path('medical_records/<int:id>/medrec/', animal_medrec_detail_view, name='animal-medrec'),
     path('<int:id>/delete/', animal_delete_view, name='animal-delete'),
 ]

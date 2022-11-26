@@ -1,0 +1,41 @@
+{% extends 'shelter/base.html' %}
+
+{% block content %}
+
+
+<div class="edit-animals-content center-block container text-center">
+    <div>
+      <div class="approve-res center-block container text-center">
+
+      <h1>Medical records</h1>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Breed</th>
+            <th scope="col">Age</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            {% for animal in animals  %}
+            <tr>
+                <th scope="row">{{animal.name}}</th>
+                <td>{{animal.breed}}</td>
+                <td>{{animal.age}}</td>
+                <td>
+                    <a href='{{animal.id}}/medrec' >
+                        <button type="submit" class="btn btn-primary" style="width: 100px">Medical records</button>  
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+        
+    </div>
+  </div>
+
+{% endblock %}

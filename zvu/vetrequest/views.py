@@ -136,9 +136,13 @@ def vetrequest_delete_view(request, id):
     if obj.vetid == request.user or obj.caregiverid == request.user or request.user.is_superuser:
         if request.method == "POST":
             obj.delete()
+            if obj.vetid == request.user:
+                return redirect('../../')
             return redirect('../')
         context = {
             "object": obj
         }
+        if obj.vetid == request.user:
+            return render(request, "vetrequest/vetrequest_examdelete.html", context)
         return render(request, "vetrequest/vetrequest_delete.html", context)
     return HttpResponseForbidden()

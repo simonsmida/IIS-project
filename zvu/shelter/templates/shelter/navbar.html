@@ -27,6 +27,18 @@
           <li class="nav-item">
             <a class="nav-link btn btn-info me-2" href="/caregiver" style="color: white">Caretaker Portal</a>
           {% endif %}
+          {% if user|has_group:'vet' %}
+          <li class="nav-item">
+            <a class="nav-link btn btn-info me-2" href="/vetrequest" style="color: white">Vetrequests</a>
+          <li class="nav-item">
+            <a class="nav-link btn btn-info me-2" href="/animals/medical_records" style="color: white">Medical records</a>
+          {% endif %}
+          {% if user|has_group:'volunteer' %}
+          <li class="nav-item">
+            <a class="nav-link btn btn-info me-2" href="/reservations" style="color: white">My reservations</a>
+          <li class="nav-item">
+            <a class="nav-link btn btn-info me-2" href="/walks" style="color: white">Walk history</a>
+          {% endif %}
           {% if user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link btn btn-outline-secondary" href="/profile" style="color: white;">User: {{user.username}}</a>
