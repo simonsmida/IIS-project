@@ -47,7 +47,7 @@
                          {% for instance in object_list1 %}
                               {% if instance.reserved_date %}
                               <!-- <option value="{{instance.id}}">{{instance.reserved_date}}</option> -->
-                              <option value="{{instance.reserved_date|date:'Y-m-d'}}">{{instance.reserved_date}}</option>
+                              <option value="{{instance.reserved_date|date:'Y-m-d'}}">{{instance.reserved_date|date:'Y-m-d'}}</option>
                               {% endif %}
                          {% endfor %}
                          </select>
@@ -60,13 +60,14 @@
                          <!-- selected option = 'Choose time' -->
                          <option value="default" disabled selected value>Choose available time</option>
                          {% for instance in object_list1 %}
-                              <option value="{{instance.reserved_date|date:'Y-m-d'}}">{{instance.reserved_from}} - {{instance.reserved_to}}</option>
+                              <option value="{{instance.reserved_date|date:'Y-m-d'}}">{{instance.reserved_from|date:'H:i'}} - {{instance.reserved_to|date:'H:i'}}</option>
                          {% endfor %}
                          </select>
                     </div>
                     <div class="col-md-4">
                          <!-- confirm reservation button which redirects to animal detail -->
-                         <a href="{% url 'animals:animal-detail' object_list1.0.animalid.id %}" class="btn btn-primary" id="reserve-btn">Confirm Reservation</a>
+                         <!-- <a href="{% url 'animals:animal-detail' object_list1.0.animalid.id %}" class="btn btn-primary" id="reserve-btn" animalid="{{object_list1.0.animalid.id}}">Confirm reservation</a> -->
+                         <button type="button" class="btn btn-primary" id="reserve-btn" animalid="{{object_list1.0.animalid.id}}">Confirm Reservation</button>
                     </div>
                </div>
           </form>
