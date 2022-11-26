@@ -1,9 +1,38 @@
 {% extends 'shelter/base.html' %}
 
 {% block content %}
-<p><a href='{{object.get_absolute_url}}delete'>Delete {{ object.username }}</a></p>
-<p><a href='{{object.get_absolute_url}}update'>Update {{ object.username }}</a></p>
 
-<h1>Firstname:       {{ object.first_name }}</h1>
-<h1>Lastname: {{ object.last_name }}</h1>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="page-header mt-4">
+                <h1>Caregiver '{{object.username}}'</h1>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col">
+            <h3 class="pull-left">Firstname: <span class="fw-lighter">{{object.first_name }}</span></h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h3 class="pull-left">Lastname: <span class="fw-lighter">{{ object.last_name }}</span></h3>
+        </div>
+    </div>
+    {% if object.email %}
+    <div class="row">
+        <div class="col">
+            <h3 class="pull-left">Email: <span class="fw-lighter">{{ object.email }}</span></h3>
+        </div>
+    </div>
+    {% endif %}
+    <div class="row mt-5">
+        <div class="text-left">
+            <a href='{{object.get_absolute_url}}update' class="btn btn-warning mb-1 me-2" style="width: 100px;">Update</a>
+            <a href='{{object.get_absolute_url}}delete' class="btn btn-danger mb-1" style="width: 100px;">Delete</a>
+        </div>
+    </div>
+</div>
 {% endblock %}
