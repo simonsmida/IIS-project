@@ -4,9 +4,6 @@
      
 {% block content %}
 
-{% if user|has_group:'caregiver' %} 
-<a href="{% url 'animals:animal-create' %}">New Animal</a>
-{% endif %}
 
 {% include 'shelter/petlist_header.html' %}
 
@@ -14,12 +11,16 @@
 <div class="container">
     <div class="row mb-4">
         <div class="col-12 d-flex justify-content-center">
+            <a href="{% url 'animals:animal-list' %}" class="btn btn-outline-secondary me-4">Show all pets</a>
             <!-- search animals form -->
             <form class="d-flex" method="POST" action=".">
                 {% csrf_token %}
                 <input class="form-control me-2" type="search" placeholder="Name, breed or age" aria-label="Search" name="search">
-                <button class="btn btn-outline-secondary" type="submit">Search</button>
+                <button class="btn btn-dark" type="submit">Search</button>
             </form>
+            {% if user|has_group:'caregiver' %} 
+                <a href="{% url 'animals:animal-create' %}" class="btn btn-warning ms-4">New Animal</a>
+            {% endif %}
         </div>
     </div>
 
@@ -30,7 +31,7 @@
             <div class="alert alert-success text-center" role="alert">
                 {{ message }}
             </div>
-        </div>
+         </div>
     {% endif %}
 
     {% for animal in animals %}
@@ -55,12 +56,14 @@
                     <!-- Create reservation directly -->   
                     <div style="margin: 10px">                
                     {% if user|has_group:'volunteer' or user|has_group:'volunteer_notrust' or not user.is_authenticated %}
-                    <form  action="{% url 'reservation:reservation-create'%}" method="POST" class="form">
+                    <form  action="{% url 'timetable:timetable-list'%}" method="POST" class="form">
                         <input type="hidden" name="animalid" value="{{animal.id}}" />
                         <input type="hidden" name="zviera" value="{{animal.name}}" />
                         {% csrf_token %}
                         {% if user|has_group:'volunteer_notrust' %}
-                            <button type="submit" class="btn btn-primary" style="width: 100px" disabled>Reserve</button>
+                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Wait for verification by our caregiver">
+                                <button class="btn btn-primary" style="pointer-events: none;  width: 100px" type="button" disabled>Reserve</button>
+                            </span>
                         {% else %}
                             <button type="submit" class="btn btn-primary" style="width: 100px">Reserve</button>
                         {% endif %}
@@ -77,8 +80,7 @@
                     </div>
                     <!-- Go to detail view -->
                     <div style="margin: 10px">
-                        <a href="{% url 'animals:animal-detail' animal.id %}" class="btn btn-primary" style="width: 100px">More info</a>
-                        <!-- <a href='{{ animal.get_absolute_url }}' class="btn btn-secondary btn-sm btn-block">Detail</a> -->
+                        <a href="{% url 'animals:animal-detail' animal.id %}" class="btn btn-outline-primary" style="width: 100px">More info</a>
                     </div>
                 </div>
             </div>

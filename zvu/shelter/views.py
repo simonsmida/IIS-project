@@ -49,8 +49,9 @@ def sign_up_view(request):
             if password != confirm_password:
                 return render(request, 'registration/sign_up.html', {'error': 'Passwords do not match'})
 
-            user = User.objects.create_user(username, email, password)
-            user.save()
+            user = form.save()
+            group = Group.objects.get(name='volunteer_notrust')
+            user.groups.add(group)
             login(request, user)
             return redirect('home')
     else:

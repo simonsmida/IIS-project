@@ -1,4 +1,4 @@
-<div class="approve-result center-block container text-center">
+<div class="edit-animals-content center-block container text-center">
   <div>
     <div class="header center-block container text-center">
       <table class="table">
@@ -8,9 +8,7 @@
                     <h1>Animals</h1>
                 </td>
                 <td>
-                  <a href='create' >
-                    <button type="submit" class="btn btn-primary" style="width: 100px">New animal</button>
-                  </a>
+                    <button type="submit" class="create-animal btn btn-primary" style="width: 100px">New animal</button>
               </td>
             </tr>
         </tbody>
@@ -34,14 +32,8 @@
               <td>{{animal.breed}}</td>
               <td>{{animal.age}}</td>
               <td>
-                  {% comment %} <button res-id="{{reserve.id}}"  type="submit" class="change-approvement btn btn-primary">Update</button> {% endcomment %}
-                  {% comment %} <button res-id="{{reserve.id}}"  type="submit" class="change-approvement btn btn-primary">Delete</button>   {% endcomment %}
-                  <a href='{{animal.id}}/update' >
-                    <button type="submit" class="btn btn-primary" style="width: 100px">Update</button>
-                  </a>
-                  <a href='{{animal.id}}/delete' >
-                    <button type="submit" class="btn btn-primary" style="width: 100px">Delete</button>
-                  </a>
+                    <button id="{{animal.id}}" type="submit" class="update-animal btn btn-primary" animal-id="{{animal.id}}" style="width: 100px">Update</button>
+                    <button id="{{animal.id}}" type="submit" class="delete-animal btn btn-primary" animal-id="{{animal.id}}" style="width: 100px">Delete</button>
               </td>
           </tr>
           {% endfor %}

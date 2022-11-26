@@ -7,6 +7,11 @@
 // Scripts
 // 
 
+// Endable tooltips
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+
 window.addEventListener('DOMContentLoaded', event => {
 
     // Activate Bootstrap scrollspy on the main nav element
@@ -223,7 +228,7 @@ $(document).ready(function () {
 });
 
 /**
- * Function for 
+ * Function for saving walk times
  */
 $(document).ready(function () {
     $(document).on("click","button.walk-time-save", function(){
@@ -259,6 +264,91 @@ $(document).ready(function () {
             });
         // }
         
+    });
+
+});
+
+// CAEEGIVER ANIMAL EDIT 
+/**
+ * Function for creating animals
+ */
+ $(document).ready(function () {
+    $(document).on("click","button.create-animal", function(){
+        //1. Remove currently active class
+        console.log('You clicked button for creating animal');
+        $.ajax({
+            type: 'GET',
+            url: '/caregiver/edit_animals/create_form',
+            success: function( data ){
+                console.log(data);
+                $('.edit-animals-content').empty();
+                $('.edit-animals-content').html(data);
+            },
+            error: function(){
+                console.log("Error bad response");
+            }
+        });
+    });
+
+});
+
+/**
+ * Function for updating animals
+ */
+ $(document).ready(function () {
+    $(document).on("click","button.update-animal", function(){
+        //1. Get animal id
+        var animal_id = $(this).attr("animal-id");
+        var form_url = '/caregiver/edit_animals/'+animal_id+'/update';
+
+        console.log(animal_id);
+        console.log(form_url);
+        console.log('You clicked button for updating animal');
+        
+        $.ajax({
+            type: 'GET',
+            url: '/caregiver/edit_animals/'+animal_id+'/update',
+            success: function( data ){
+                console.log(data);
+                $('.edit-animals-content').empty();
+                $('.edit-animals-content').html(data);
+            },
+            error: function(){
+                console.log("Error bad response");
+            }
+        });
+    });
+
+});
+
+/**
+ * Function for deleting animals
+ */
+ $(document).ready(function () {
+    $(document).on("click","button.delete-animal", function(){
+        //1. Remove currently active class
+        console.log('You clicked button for deleting animal');
+        var animal_id = $(this).attr("animal-id");
+        if(!confirm("Are you sure you want to delete an animal?")){
+            return false;
+        };
+        console.log(animal_id);
+
+        $.ajax({
+            type: 'GET',
+            url: '/caregiver/edit_animals/delete',
+            data: {
+                "id":animal_id
+            },
+            success: function( data ){
+                console.log(data);
+                $('.edit-animals-content').empty();
+                $('.edit-animals-content').html(data);
+            },
+            error: function(){
+                console.log("Error bad response");
+            }
+        });
     });
 
 });
@@ -319,3 +409,35 @@ $(document).ready(function () {
 });
 
 
+/**
+ * Function: sending volunteer's reservation 
+ */
+$(document).ready(function () {
+    $(document).on("click","#reserve-btn", function(){
+        var id = $(this).attr("animalid");
+        var date = $("#dates option:selected").text();
+        var time = $("#time option:selected").text();
+        console.log("alalala");
+        console.log(date);
+        console.log(time);
+        console.log(id);
+
+        $.ajax({
+                type: 'GET',
+                url: '/reservation/sent/',
+                data: {
+                    "id" : id,
+                    "date" : date,
+                    "time" : time,
+                },
+                success: function( data ){
+                    console.log(data);
+                    document.write(data);
+                },
+                error: function(){
+                    console.log("(ajax func): Error bad response");
+                }
+            });
+        });
+
+});

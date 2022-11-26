@@ -5,44 +5,74 @@
 
 {% block content %}
 
-{% if user|has_group:'caregiver' or user.is_superuser %} 
-    <p><a href='{{object.get_absolute_url}}delete'>Delete {{ object.name }}</a></p>
-    <p><a href='{{object.get_absolute_url}}update'>Update {{ object.name }}</a></p>
-{% endif %}
-
-{% if user|has_group:'caregiver' or user|has_group:'volunteer' %} 
-    <form  action="{% url 'timetable:timetable-list'%}" method="POST" class="form">
-        <input type="hidden" name="animalid" value="{{object.id}}" />
-        {% csrf_token %}
-        <button type="submit" class="btn btn-primary" style="width: 100px">Timetable</button>
-    </form>
-{% endif %}
-
-
-{% if user|has_group:'volunteer' or user|has_group:'volunteer_notrust' or not user.is_authenticated %}
-    <form  action="{% url 'reservation:reservation-create'%}" method="POST" class="form">
-        <input type="hidden" name="animalid" value="{{object.id}}" />
-        <input type="hidden" name="zviera" value="{{object.name}}" />
-        {% csrf_token %}
-        {% if user|has_group:'volunteer_notrust' %}
-            <button type="submit" class="btn btn-primary" style="width: 100px" disabled>Reserve</button>
-        {% else %}
-            <button type="submit" class="btn btn-primary" style="width: 100px">Reserve</button>
-        {% endif %}
-    </form>
-{% endif %}
-
-{% if user|has_group:'caregiver' %}
-    <form  action="{% url 'vetrequest:vetrequest-create'%}" method="POST" class="form">
-        <input type="hidden" name="animalid" value="{{object.id}}" />
-        <input type="hidden" name="animalname" value="{{object.name}}" />
-        {% csrf_token %}
-        <button type="submit" class="btn btn-primary" style="width: 100px">Write Request</button>
-    </form>
-{% endif %}
  
-<h2>Name: {{ object.name }}</h2>
-<h2>Breed: {{ object.breed }}</h2>
-<h2>Age:  {{ object.age }}</h2>
-<h2>Health record: {{ object.info }}
+<div class="container mt-5">
+<div class="row df-flex justify-content-center">
+<div class="col-md-6">
+    <div class="card">
+        <div class="card-header">
+            <h3>This is <strong>{{object.name}}</strong></h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="text-dark fw-bold">Name: <span class="ms-2 fw-light">{{ object.name }}</span></p>
+                    <p class="text-dark fw-bold">Breed: <span class="ms-2 fw-light">{{ object.breed }}</span></p>
+                    <p class="text-dark fw-bold">Age: <span class="ms-2 fw-light">{{ object.age }}</span></p>
+                    <p class="text-dark fw-bold">Registered: <span class="ms-2 fw-light">{{ object.registration_date }}</span></p>
+                    <p class="text-dark fw-bold">Info: <span class="ms-2 fw-light">{{ object.info }}</span></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+
+                    <!-- Caregiver: delete/update a pet -->
+                    {% if user|has_group:'caregiver' or user.is_superuser %} 
+                        <a href='{{object.get_absolute_url}}delete' class="btn btn-danger float-start m-2" style="width: 145px;">Delete {{ object.name }}</a>
+                        <a href='{{object.get_absolute_url}}update' class="btn btn-warning float-start m-2" style="width: 145px;">Update {{ object.name }}</a>
+                    {% endif %}
+                    
+                    <!-- Caregiver & volunteer: reservation for a walk (timetable) -->
+                    {% if user|has_group:'caregiver' or user|has_group:'volunteer' %} 
+                        <form  action="{% url 'timetable:timetable-list'%}" method="POST" class="form">
+                            <input type="hidden" name="animalid" value="{{object.id}}" />
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary float-end m-2" style="width: 145px;">Reserve me!</button>
+                        </form>
+                    {% endif %}
+
+                    {% if user|has_group:'volunteer' or user|has_group:'volunteer_notrust' or not user.is_authenticated %}
+                        <form  action="{% url 'timetable:timetable-list'%}" method="POST" class="form">
+                            <input type="hidden" name="animalid" value="{{object.id}}" />
+                            <input type="hidden" name="zviera" value="{{object.name}}" />
+                            {% csrf_token %}
+                            {% if user|has_group:'volunteer_notrust' %}
+                                <span class="d-inline-block float-end" tabindex="0" data-toggle="tooltip" title="Wait for verification by our caregiver">
+                                    <button class="btn btn-primary" style="pointer-events: none;  width: 100px" type="button" disabled>Reserve</button>
+                                </span>
+                            {% endif %}
+                            {% comment %}
+                            {% else %}
+                                <button type="submit" class="btn btn-primary" style="width: 145px;">Reserve</button>
+                            {% endif %}
+                            {% endcomment %}
+                        </form>
+                    {% endif %}
+
+                    {% if user|has_group:'caregiver' %}
+                        <form  action="{% url 'vetrequest:vetrequest-create'%}" method="POST" class="form">
+                            <input type="hidden" name="animalid" value="{{object.id}}" />
+                            <input type="hidden" name="animalname" value="{{object.name}}" />
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary float-end m-2" style="width: 145px;">Write Request</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
 {% endblock %}

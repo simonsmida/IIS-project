@@ -5,7 +5,8 @@ from django.contrib.auth.decorators import login_required, permission_required, 
 from django.http import HttpResponseForbidden   
 from animals.templatetags.animals_extras import has_group
 from reservation.decorators import my_login_required
-
+from django.contrib.auth.models import User
+from datetime import datetime
 
 @my_login_required
 @permission_required("shelter.add_reservation", login_url="login", raise_exception=True)
@@ -99,4 +100,44 @@ def reservation_delete_view(request, id):
             "object": obj
         }
         return render(request, "reservation/reservation_delete.html", context)
+    return HttpResponseForbidden()
+
+    # reserved_date = models.DateField()
+    # reserved_from = models.TimeField()
+    # reserved_to = models.TimeField()
+    # approval = models.IntegerField(default=0)
+    # state = models.CharField(max_length=255, default='pending')
+    # time_picked = models.TimeField(blank=True, null=True)
+    # time_return = models.TimeField(blank=True, null=True)
+    # animalid = models.ForeignKey('Animal', models.CASCADE, db_column='AnimalID')
+    # volunteerid = models.ForeignKey(settings.AUTH_USER_MODEL, mo
+
+
+def reservation_sent_view(request):
+    if request.method == "GET":
+        animal_id = int(request.GET["id"])
+        animal = Animal.objects.get(id=animal_id)
+        
+        volunteer_id = request.user.id
+        volunteer = User.objects.get(id=volunteer_id)
+
+        # reservation = Reservation.objects.create         
+
+        date = request.GET["date"]
+        time = request.GET["time"]
+
+        reserved_from = time[:5]
+        reserved_to = time[-5:]
+
+        reservation = Reservation(
+            reserved_date=date,
+            reserved_from=reserved_from,
+            reserved_to=reserved_to,
+            animalid=animal,
+            volunteerid=volunteer,
+        )
+
+        reservation.save()
+        return redirect("../")
+
     return HttpResponseForbidden()

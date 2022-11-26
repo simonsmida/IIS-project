@@ -13,16 +13,18 @@ from .views import (
     get_reservations,
     approve_reservation,
     save_walk_time,
-
-
+    animal_create_form_view,
+    animal_create_view,
+    animal_update_view,
+    animal_delete_view,
 )
 
 from animals.views import (
-    animal_create_view,
+    #animal_create_view,
     animal_detail_view,
-    animal_delete_view,
+    #animal_delete_view,
     animal_list_view,
-    animal_update_view   
+    # animal_update_view   
 )
 
 from vetrequest.views import (
@@ -42,10 +44,12 @@ urlpatterns = [
     path('manage_volunteers/unverify', unverify_volunteers_view, name='unverify-volunteers'),
     
     path('edit_animals/', edit_animals_view, name='edit-animals'),
-    path('edit_animals/<int:id>/update', animal_update_view, name='update-animal'),
-    path('edit_animals/<int:id>/delete', animal_delete_view, name='delete-animal'),
-    path('edit_animals/create', animal_create_view, name='create-animal'),
+    path('edit_animals/create_form', animal_create_form_view, name='caregiver-create-form'),
+    path('edit_animals/create_animal', animal_create_view, name='caregiver-create-animal'),
     
+    path('edit_animals/<int:id>/update', animal_update_view, name='update-animal'),
+    # path('edit_animals/<int:id>/delete', animal_delete_view, name='delete-animal'),
+    path('edit_animals/delete', animal_delete_view, name='delete-animal'),
     path('create_schedules/', create_schedules_view, name='create-schedules'),
     
     path('create_vet_request/', create_vet_request_view, name='vet_request'),
@@ -59,7 +63,7 @@ urlpatterns = [
     
 
     path('register_walks/', register_walks_view, name='register-walks'),
-    path('register_walks/save/', save_walk_time, name='saev-walk-time'),
+    path('register_walks/save/', save_walk_time, name='save-walk-time'),
 
     path('create_vet_request/', create_vet_request_view, name='create-vet-request'),
     

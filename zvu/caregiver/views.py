@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseForbidden
@@ -7,7 +7,7 @@ from django.contrib.auth.models import Group
 from shelter.models import Reservation, Animal, Vetrequest
 from .decorators import user_group
 from datetime import datetime
-
+from animals.forms import AnimalForm
 
 # Create your views here.
 @login_required(login_url="login")
@@ -209,6 +209,51 @@ def save_walk_time(request):
             "reservations" : reservations
         }
         return render(request, "caregiver/walks_register.html", context)
+
+
+@login_required(login_url="login")
+@user_group('caregiver')
+def animal_create_form_view(request):
+    form = AnimalForm()     
+    context = {
+        'form': form,
+    }
+    return render(request, "caregiver/edit_animal_create.html", context)
+
+@login_required(login_url="login")
+@user_group('caregiver')
+def animal_create_view(request):
+    form = AnimalForm(request.POST or None)     
+    if form.is_valid():
+        form.save()
+        form = AnimalForm()
+    return redirect("/caregiver/edit_animals/")
+
+
+@login_required(login_url="login")
+@user_group('caregiver')
+def animal_update_view(request, id=id):
+    obj = get_object_or_404(Animal, id=id)
+    if request.method == "POST":
+        form = AnimalForm(request.POST, instance=obj)     
+        if form.is_valid():
+            form.save()
+        return redirect("/caregiver/edit_animals/")
+    else:
+        form = AnimalForm(instance=obj)     
+    context = {"form":form, "id": id}
+    return render(request, "caregiver/edit_animal_update.html", context)
+
+@login_required(login_url="login")
+@user_group('caregiver')
+def animal_delete_view(request):
+    if request.method == "GET":
+        animal_id = request.GET["id"]
+        delete_animal = Animal.objects.get(id=animal_id)
+        delete_animal.delete()
+        animals = Animal.objects.all()
+        context = {"animals":animals}
+        return render(request, "caregiver/edit_animals.html", context)
 
 @login_required(login_url="login")
 @user_group('caregiver')

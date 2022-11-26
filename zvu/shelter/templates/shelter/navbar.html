@@ -1,3 +1,5 @@
+{% load animals_extras %}
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
       <a class="navbar-brand" href="/home#page-top">Útulok</a>
@@ -15,19 +17,16 @@
           <li class="nav-item">
             <a class="nav-link" href="/home#contact">Contact</a>
           </li>
-          <!-- Item Pet List contains submenu with items: Dogs, Cats, Rabbits -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Pet List
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" href="/animals/">Dogs</a></li> <!--href="/animals/animal_list/?animal_type=Dog">Dogs</a></li>-->
-              <li><a class="dropdown-item" href="/animals/">Cats</a></li>
-              <li><a class="dropdown-item" href="/animals/">Rabbits</a></li>
-              <li><a class="dropdown-item" href="/animals/">Display all pets</a></li>
-            </ul>
+          <li class="nav-item">
+            <a class="nav-link" href="/animals">Pet list</a>
+          </li>
         </ul>
         <ul class="navbar-nav">
+          <!-- if user role is caregiver -->
+          {% if user|has_group:'caregiver' %}
+          <li class="nav-item">
+            <a class="nav-link btn btn-info me-2" href="/caregiver" style="color: white">Caretaker Portal</a>
+          {% endif %}
           {% if user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link btn btn-outline-secondary" href="/profile" style="color: white;">User: {{user.username}}</a>
