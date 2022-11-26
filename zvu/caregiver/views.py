@@ -197,11 +197,15 @@ def save_walk_time(request):
         # 3. Set new values from request
         if time_picked == "" and time_return == "":
             Reservation.objects.filter(id=res_id).update(time_picked=None, time_return=None)
+            Reservation.objects.filter(id=res_id).update(state="Pending")
         elif time_picked == "":
             Reservation.objects.filter(id=res_id).update(time_picked=None,time_return=time_return)
+            Reservation.objects.filter(id=res_id).update(state="Finished")
         elif time_return == "":
             Reservation.objects.filter(id=res_id).update(time_picked=time_picked,time_return=None)
+            Reservation.objects.filter(id=res_id).update(state="Pending")
         else:
+            Reservation.objects.filter(id=res_id).update(state="Finished")
             Reservation.objects.filter(id=res_id).update(time_picked=time_picked,time_return=time_return)
             
         reservations = Reservation.objects.all()
