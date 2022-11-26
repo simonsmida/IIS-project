@@ -30,11 +30,12 @@
           <form>
                <div class="row mt-4">
                     <h3>{{object_list1.0.animalid.name}}'s Timetable</h3>
-                    <hr>
+                    {% comment %}
                     {% for instance in object_list1 %}
                          <p><a href='{{ instance.get_absolute_url }}'>{{ instance.reserved_date }}
                          {{ instance.reserved_from }} - {{ instance.reserved_to }}</a></p>
                     {% endfor %}
+                    {% endcomment %}
                     <hr>
                </div>
                <div class="row mt-2">

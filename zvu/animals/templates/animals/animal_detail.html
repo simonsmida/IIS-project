@@ -50,9 +50,12 @@
                                 <span class="d-inline-block float-end" tabindex="0" data-toggle="tooltip" title="Wait for verification by our caregiver">
                                     <button class="btn btn-primary" style="pointer-events: none;  width: 100px" type="button" disabled>Reserve</button>
                                 </span>
+                            {% endif %}
+                            {% comment %}
                             {% else %}
                                 <button type="submit" class="btn btn-primary" style="width: 145px;">Reserve</button>
                             {% endif %}
+                            {% endcomment %}
                         </form>
                     {% endif %}
 
