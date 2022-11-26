@@ -417,10 +417,6 @@ $(document).ready(function () {
         var id = $(this).attr("animalid");
         var date = $("#dates option:selected").text();
         var time = $("#time option:selected").text();
-        console.log("alalala");
-        console.log(date);
-        console.log(time);
-        console.log(id);
 
         $.ajax({
                 type: 'GET',
@@ -432,12 +428,13 @@ $(document).ready(function () {
                 },
                 success: function( data ){
                     console.log(data);
-                    document.write(data);
+                    // document.write(data);
+                    $('#timetab-row').after('<div class="alert alert-success text-center mt-2" role="alert">Your reservation has been sent!</div>');
+                    window.location.href = "/animals";
                 },
                 error: function(){
                     console.log("(ajax func): Error bad response");
                 }
             });
-        });
-
+        });        
 });
