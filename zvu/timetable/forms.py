@@ -38,7 +38,7 @@ class TimetableForm2(forms.ModelForm):
     #     required=False
     #     )
     
-    class Meta:
+    class Meta: 
         model = Timetable
         fields = [
             'reserved_date',
