@@ -14,6 +14,7 @@ from .views import (
     approve_reservation,
     save_walk_time,
 
+
 )
 
 from animals.views import (
@@ -24,17 +25,33 @@ from animals.views import (
     animal_update_view   
 )
 
+from vetrequest.views import (
+    vetrequest_create_view,
+    vetrequest_newcreate_view,  
+    vetrequest_detail_view, 
+    vetrequest_delete_view,
+    vetrequest_list_view,
+    vetrequest_update_view,
+)
+
 app_name = 'caregiver'
 urlpatterns = [
     path('', manage_volunteers_view, name='caregiver'),
     path('manage_volunteers/', manage_volunteers_view, name='manage-volunteers'),
     path('manage_volunteers/verify', verify_volunteers_view, name='verify-volunteers'),
     path('manage_volunteers/unverify', unverify_volunteers_view, name='unverify-volunteers'),
+    
     path('edit_animals/', edit_animals_view, name='edit-animals'),
     path('edit_animals/<int:id>/update', animal_update_view, name='update-animal'),
     path('edit_animals/<int:id>/delete', animal_delete_view, name='delete-animal'),
     path('edit_animals/create', animal_create_view, name='create-animal'),
+    
     path('create_schedules/', create_schedules_view, name='create-schedules'),
+    
+    path('create_vet_request/', create_vet_request_view, name='vet_request'),
+    path('create_vet_request/<int:id>/update', vetrequest_update_view, name='update-vet_request'),
+    path('create_vet_request/<int:id>/delete', vetrequest_delete_view, name='delete-vet_request'),
+    path('create_vet_request/create', vetrequest_newcreate_view, name='create-vet_request'),
 
     path('approve_res/', approve_res_view, name='approve-res'),
     path('approve_res/get_reservations', get_reservations, name='approve-res-list'),

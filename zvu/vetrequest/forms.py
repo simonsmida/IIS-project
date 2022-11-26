@@ -107,7 +107,7 @@ class VetrequestExamForm(forms.ModelForm):
     exam_procedure = forms.ChoiceField(choices=[('vaccination','vaccination'),
                                                 ('regular checkup','regular checkup'),
                                                 ('other','other')])
-    exam_protocol = forms.CharField()
+    exam_protocol = forms.CharField(widget=forms.Textarea(attrs={"cols": "70", "rows": "8"}), required=False)
      
     class Meta:
         model = Vetrequest

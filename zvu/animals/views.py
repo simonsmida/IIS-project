@@ -31,11 +31,11 @@ def animal_update_view(request, id=id):
     context = {
         'form': form
     }
-    return render(request, "animals/animal_create.html", context)
+    return render(request, "animals/animal_update.html", context)
 
 
 def animal_list_view(request):
-    message = None
+    message = None 
     is_search = False
     if request.method == 'POST':
         search_text = request.POST['search']

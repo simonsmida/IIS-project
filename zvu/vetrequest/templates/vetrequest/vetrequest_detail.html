@@ -10,7 +10,7 @@
 
 {% if user|has_group:'vet' and object.state == 'pending'%}
    <form  action='{{object.get_absolute_url}}' method="POST" class="form">
-        <input type="hidden" name="state" value="finished" />
+        <input type="hidden" name="state" value="exam" />
         {% csrf_token %}
         <button type="submit" class="btn btn-primary" style="width: 100px">Create exam</button>
     </form>
@@ -21,19 +21,20 @@
 {% if user|has_group:'caregiver' or user.is_superuser %}
 <h1>Veterinarian: {{ object.vetid.username }}</h1>
 {% endif %}
-<h1>State:       {{ object.state }}</h1>
 <h3> Request: </h3>
 <p>{{ object.content }}</p>
 <p>-------------------------------------------------------------------------------</p>
 {% comment %} not object.exam_time and object.state != 'pending' {% endcomment %}
-{% if user|has_group:'vet' and object.state == 'finished' %}
+{% if user|has_group:'vet' and object.state == 'exam' %}
 <form action='.' method='POST'>{% csrf_token %}
     {{ exam.as_p }}
-    <input type='submit' name='save' value='Save' />
+    <input type='submit' name='save' value='Save' />    
 </form>
-{% elif user|has_group:'vet' and object.state == 'exam' %}
+{% comment %} {% elif user|has_group:'vet' and object.state == 'exam' %}
 <h1>Exam time:        {{ object.exam_time }}</h1>
 <h1>Exam procedure:   {{ object.exam_procedure }}</h1>
+<h3> Exam protocol: </h3>
+<p>{{ object.exam_protocol }}</p> {% endcomment %}
 {% endif %} 
 
 {% endblock %}  

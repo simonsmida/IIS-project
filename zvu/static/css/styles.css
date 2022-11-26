@@ -20,6 +20,7 @@
   overflow-y: auto;
   flex-grow: 1;
 }
+
 #sidebar {
   /* position: fixed; */
   min-width: 300px;

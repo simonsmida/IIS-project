@@ -9,22 +9,69 @@
 {% endif %}
 
 {% if user|has_group:'vet' or user.is_superuser or user|has_group:'caregiver' %}
-
      <h1>Pending</h1>
-     {% for instance in object_list1 %}
-          <p><a href='{{ instance.get_absolute_url }}'>Request for {{ instance.animalid.name }}</a></p>
-     {% endfor %}
+     <div class="requests center-block container text-center">
      
-     <h1>Ready for Exam</h1>
-     {% for instance in object_list2 %}
-          <p><a href='{{ instance.get_absolute_url }}'>Request for {{ instance.animalid.name }}</a></p>
-     {% endfor %}
-
+          <table class="table">
+               <thead>
+               <tr>
+               <th scope="col">For animal</th>
+               <th scope="col">From</th>
+               <th scope="col">Date</th>
+               <th scope="col"></th>
+               </tr>
+               </thead>
+               <tbody>
+               
+               {% for instance in object_list1  %}
+               <tr>
+                    <th scope="row">{{instance.animalid.name}}</th>
+                    <td>{{instance.caregiverid.username}}</td>
+                    <td>{{instance.creation_date}}</td>
+                    <td>
+                         <a href='{{ instance.get_absolute_url }}'>
+                              <button type="submit" class="btn btn-primary" style="width: 120px">Create exam</button>
+                         </a>
+                    </td>
+               </tr>
+               {% endfor %}
+               </tbody>
+          </table>
+     </div>
+     
      <h1>Exam</h1>
-     {% for instance in object_list3 %}
-          <p><a href='{{ instance.get_absolute_url }}'>Request for {{ instance.animalid.name }}</a></p>
-     {% endfor %}
-
+     <div class="requests center-block container text-center">
+     
+          <table class="table">
+               <thead>
+               <tr>
+               <th scope="col">For animal</th>
+               <th scope="col">Exam procedure</th>
+               <th scope="col">Date of exam</th>
+               <th scope="col"></th>
+               <th scope="col"></th>
+               </tr>
+               </thead>
+               <tbody>
+               
+               {% for instance in object_list2  %}
+               <tr>
+                    <th scope="row">{{instance.animalid.name}}</th>
+                    <td>{{instance.exam_procedure}}</td>
+                    <td>{{instance.exam_time}}</td>
+                    <td>
+                         <a href='{{instance.id}}/delete' >
+                         <button type="submit" class="btn btn-primary" style="width: 100px">Delete</button>
+                         </a>
+                         <a href='{{ instance.get_absolute_url }}'>
+                              <button type="submit" class="btn btn-primary" style="width: 100px">Detail</button>
+                         </a>
+                    </td>
+               </tr>
+               {% endfor %}
+               </tbody>
+          </table>
+     </div>
 {% endif %}
 
 {% endblock %}
