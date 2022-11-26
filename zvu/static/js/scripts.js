@@ -433,7 +433,7 @@ $(document).ready(function () {
                     window.location.href = "/animals";
                 },
                 error: function(){
-                    // display message for 3 seconds
+                    // display message for 2 seconds
                     $('#timetab-row').after('<div class="alert alert-danger text-center mt-2" role="alert">Please select valid date and time</div>');
                     setTimeout(function() {
                         $('.alert').remove();

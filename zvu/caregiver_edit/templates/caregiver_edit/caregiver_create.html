@@ -1,14 +1,17 @@
 {% extends 'shelter/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
-
-<form action='.' method='POST'>{% csrf_token %}
-    {{ form.as_p }}
-    <input type='submit' value='Save' />
-</form>
-
-
-
+<div class="container">
+<div class="form-wrapper" style="padding-top: 50px">
+    <h2 class="mb-5">Create a Caregiver</h2>
+    <form method="POST" action=".">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type='submit' value='Save' class="btn btn-primary"/>
+    </form>
+</div>
+</div>
 
 {% endblock %}
