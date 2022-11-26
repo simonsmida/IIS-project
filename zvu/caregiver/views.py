@@ -185,13 +185,40 @@ def schedule_create(request, myid=id):
     if request.method == "POST":
         print("Spracuvam form")
         animal = Animal.objects.get(id=myid)
+        print(animal)
         form = TimetableForm2(request.POST, instance=animal)     
         if form.is_valid():
             print("Spracuvam valid form")
             print("ID---------", myid)
-            form.save()
-            form = TimetableForm2()
+            reserved_date = form.cleaned_data['reserved_date']
+            reserved_from = form.cleaned_data['reserved_from']
+            reserved_to = form.cleaned_data['reserved_to']
+            # tt = form.save(commit=False)
+            timetable = Timetable(reserved_date=reserved_date,
+                                  reserved_from=reserved_from,
+                                  reserved_to=reserved_to,
+                                  animalid=animal)
+            timetable.save()
         return redirect(f"/caregiver/create_schedules/animal_schedules/{myid}/")
+
+# @login_required(login_url="login")
+# @user_group('caregiver')
+# def schedule_create_form(request):
+#     form = TimetableForm2()     
+#     context = {
+#         'form': form,
+#     }
+#     return render(request, "caregiver/schedule_form_create.html", context)
+
+# @login_required(login_url="login")
+# @user_group('caregiver')
+# def schedule_create(request):
+#     form = TimetableForm2(request.POST or None)     
+#     if form.is_valid():
+#         form.save()
+#         form = TimetableForm2()
+#     return redirect("../")
+
 
 @login_required(login_url="login")
 @user_group('caregiver')
