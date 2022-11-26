@@ -5,6 +5,8 @@ from .views import (
     manage_volunteers_view,
     edit_animals_view,
     create_schedules_view,
+    animal_schedules_list,
+    schedule_update_time,
     register_walks_view,
     create_vet_request_view,
     verify_volunteers_view,
@@ -39,9 +41,13 @@ urlpatterns = [
     path('edit_animals/create_animal', animal_create_view, name='caregiver-create-animal'),
     
     path('edit_animals/<int:id>/update', animal_update_view, name='update-animal'),
-    # path('edit_animals/<int:id>/delete', animal_delete_view, name='delete-animal'),
     path('edit_animals/delete', animal_delete_view, name='delete-animal'),
+    
     path('create_schedules/', create_schedules_view, name='create-schedules'),
+    path('create_schedules/animal_schedules', animal_schedules_list, name='animal-schedules'),
+    path('create_schedules/animal_schedules/create', animal_schedules_list, name='animal-schedules-create'),
+    path('create_schedules/animal_schedules/update', schedule_update_time, name='animal-schedules-update'),
+    path('create_schedules/animal_schedules/delete', animal_schedules_list, name='animal-schedules-delete'),
 
     path('approve_res/', approve_res_view, name='approve-res'),
     path('approve_res/get_reservations', get_reservations, name='approve-res-list'),

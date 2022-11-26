@@ -353,6 +353,97 @@ $(document).ready(function () {
 
 });
 
+// CAREGIVER SCHEDULES
+/**
+ * Function for showing animal timetables
+ */
+ $(document).ready(function () {
+    $(document).on("click","button.show-timetables", function(){
+        //1. Remove currently active class
+        console.log('You clicked button for creating timetable');
+        var animal_id = $(this).attr("animal-id");
+        console.log(animal_id);
+
+        $.ajax({
+            type: 'GET',
+            url: '/caregiver/create_schedules/animal_schedules',
+            data: {
+                "id":animal_id
+            },
+            success: function( data ){
+                console.log(data);
+                $('.timetable-wrap').empty();
+                $('.timetable-wrap').html(data);
+            },
+            error: function(){
+                console.log("Error bad response");
+            }
+        });
+    });
+
+});
+
+/**
+ * Function for updating animal timetables
+ */
+ $(document).ready(function () {
+    $(document).on("click","button.schedule-update-save", function(){
+        //1. Remove currently active class
+        console.log('You clicked button for updating timetable');
+        var id = $(this).attr("settime-id");
+        var date = $("#scheduleDate-"+id).val()
+        var time_from = $("#scheduleStartTime-"+id).val();
+        var time_to = $("#scheduleEndTime-"+id).val();
+        console.log(id);
+        console.log(date);
+        console.log(time_from);
+        console.log(time_to);
+
+        $.ajax({
+            type: 'GET',
+            url: '/caregiver/create_schedules/animal_schedules/update',
+            data: {
+                "id": id,
+                "date": date,
+                "time_from": time_from,
+                "time_to" : time_to
+            },
+            success: function( data ){
+                console.log(data);
+                $('.timetable-wrap').empty();
+                $('.timetable-wrap').html(data);
+            },
+            error: function(){
+                console.log("Error bad response");
+            }
+        });
+    });
+
+});
+
+/**
+ * Function for displaying time edit
+ */
+ $(document).ready(function () {
+    $(document).on("click","button.update-schedule", function(){
+        //1. Remove currently active class
+        console.log('You clicked button for timetable editing time');
+        var id = $(this).attr("time-id");
+        var row_id = "#update-time-"+id+".schedule-new-time";
+        var visibility = $(row_id).attr("style");
+        console.log(id);
+        console.log(visibility);
+        console.log(row_id);
+        if (visibility === "display:none"){
+            $(row_id).attr("style","display:table-row");
+        }
+        else if(visibility === "display:table-row"){
+            $(row_id).attr("style","display:none");
+        }
+
+    });
+
+});
 
 /* Set select option to the default value */
 $(document).ready(function () {
