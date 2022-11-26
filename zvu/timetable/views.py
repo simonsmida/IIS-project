@@ -39,14 +39,13 @@ def timetable_list_view(request):
     queryset1 = []
     if request.POST.get('animalid', False):
         animalid = request.POST['animalid']
-    # animal = get_object_or_404(Animal, id=animalid)
-    # animal_name = animal.name
         queryset = Timetable.objects.filter(animalid=animalid)# list of objects
         queryset1 = queryset.order_by('reserved_from','reserved_to')
+        # Remove Timetable entries that are not free
+        queryset1 = queryset1.exclude(is_free=0)
 
     context = {
         "object_list1": queryset1,
-        # "animal_name": animal_name,
     }
     return render(request, "timetable/timetable_list.html", context)
 
