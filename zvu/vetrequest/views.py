@@ -10,7 +10,6 @@ from reservation.decorators import my_login_required
 @permission_required("shelter.add_vetrequest", login_url="login", raise_exception=True)
 def vetrequest_create_view(request):
     form = VetrequestForm(request.POST or None) 
-                    
     if form.is_valid():
         vetrequest = form.save(commit=False)
         vetrequest.caregiverid = request.user

@@ -13,7 +13,7 @@ def animal_create_view(request):
     if form.is_valid():
         form.save()
         form = AnimalForm()
-        return redirect('../')
+        return redirect('.')
     context = {
         'form': form    
     }
@@ -79,7 +79,7 @@ def animal_delete_view(request, id):
     obj = get_object_or_404(Animal, id=id)
     if request.method == "POST":
         obj.delete()
-        return redirect('../../')
+        return redirect('../')
     context = {
         "object": obj
     }

@@ -5,7 +5,7 @@ from django.conf import settings
 
 class Vetrequest(models.Model):
     id = models.AutoField(primary_key=True)
-    reserved_date = models.DateField()
+    creation_date = models.DateField()
     content = models.CharField(max_length=255)
     state = models.CharField(max_length=255, default='pending')
     caregiverid = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, related_name='caregiver_req',
@@ -22,7 +22,7 @@ class Vetrequest(models.Model):
 
 class Reservation(models.Model):
     id = models.AutoField(primary_key=True)
-    reserved_date = models.DateField()
+    reserved_date = models.DateField()  
     reserved_from = models.TimeField()
     reserved_to = models.TimeField()
     approval = models.IntegerField(default=0)
@@ -59,50 +59,3 @@ class Timetable(models.Model):
     def get_absolute_url(self):
         return reverse("timetable:timetable-update", kwargs={"id": self.id})
 
-# Create your models here.
-# class Volunteer(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     meno = models.CharField(max_length=255)
-#     priezvisko = models.CharField(max_length=255)
-#     datum_narodenia = models.DateField()
-#     doveryhodnost = models.IntegerField()
-    
-#     def get_absolute_url(self):
-#         return reverse("volunteer_edit:volunteer-detail", kwargs={"id": self.id})
-    
-
-# class Caregiver(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     meno = models.CharField(max_length=255)
-#     priezvisko = models.CharField(max_length=255)
-#     datum_narodenia = models.DateField()
-    
-#     def get_absolute_url(self):
-#         return reverse("caregiver_edit:caregiver-detail", kwargs={"id": self.id}) #f"/products/{self.id}/"
-
-
-# class User(models.Model):
-#     id_uzivatel = models.AutoField(primary_key=True)
-#     typ = models.CharField(max_length=11)
-#     email = models.CharField(unique=True, max_length=255, db_collation='utf8mb4_unicode_520_ci')
-#     heslo = models.CharField(max_length=255, db_collation='utf8mb4_unicode_520_ci')
-#     aktivni = models.IntegerField()
-#     zamestnanec_id = models.PositiveIntegerField(blank=True, null=True)
-#     klient_id = models.PositiveIntegerField(blank=True, null=True)
-
-#     class Meta:
-#         managed = False
-#         db_table = 'Uzivatel'
-
-
-# class Walk(models.Model):
-#     id_vencenia = models.AutoField(primary_key=True)
-#     venceny_od = models.DateField()
-#     venceny_do = models.DateField()
-
-
-# class Vet(models.Model):
-#     id_veterinar = models.AutoField(primary_key=True)
-#     meno = models.CharField(max_length=255)
-#     priezvisko = models.CharField(max_length=255)
-#     datum_narodenia = models.DateField()

@@ -1,6 +1,7 @@
 from django import forms
 from shelter.models import Vetrequest, Animal
 from django.contrib.auth.models import User
+import datetime 
 
 class MyModelChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, obj):
@@ -45,7 +46,7 @@ class MyModelChoiceField(forms.ModelChoiceField):
    
     
 class VetrequestForm(forms.ModelForm):
-    creation_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
+    creation_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}), initial=datetime.date.today)
     content = forms.CharField(widget=forms.Textarea(attrs={"cols": "70", "rows": "8"}))
     # state = forms.ChoiceField(choices=[('pending','pending'),
     #                                   ('finished','finished')])
@@ -73,7 +74,8 @@ class VetrequestForm(forms.ModelForm):
 
 
 class VetrequestNewForm(forms.ModelForm):
-    creation_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
+    
+    creation_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}), initial=datetime.date.today)
     content = forms.CharField(widget=forms.Textarea(attrs={"cols": "70", "rows": "8"}))
     # state = forms.ChoiceField(choices=[('pending','pending'),
     #                                   ('finished','finished')])
