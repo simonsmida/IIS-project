@@ -31,12 +31,6 @@ class TimetableForm2(forms.ModelForm):
     reserved_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}), initial=datetime.date.today)
     reserved_from = forms.TimeField(widget=forms.widgets.TimeInput(attrs={'type': 'time'}), initial=datetime.date.today)
     reserved_to = forms.TimeField(widget=forms.widgets.TimeInput(attrs={'type': 'time'}),initial=datetime.date.today)
-    # animalid = MyModelChoiceField(
-    #     queryset=Animal.objects.all(),
-    #     label='Animal',
-    #     widget=forms.HiddenInput(),
-    #     required=False
-    #     )
     
     class Meta: 
         model = Timetable

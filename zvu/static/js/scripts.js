@@ -59,9 +59,7 @@ window.addEventListener('DOMContentLoaded', event => {
  $(document).ready(function () {
     $(document).on("click","button.verify", function(){
         //1. Remove currently active class
-        console.log('You clicked button for verification');
         var id = $(this).attr("id");
-        console.log(id);
         $.ajax({
             type: 'GET',
             url: '/caregiver/manage_volunteers/verify',
@@ -69,14 +67,12 @@ window.addEventListener('DOMContentLoaded', event => {
                 "id" : id
             },
             success: function( data ){
-                console.log(data);
                 $('.volunteer-wrap').empty();
                 $('.volunteer-wrap').html(data);
             },
             error: function(){
                 console.log("Error bad response");
             }
-
         });
     });
 
@@ -89,9 +85,7 @@ window.addEventListener('DOMContentLoaded', event => {
 $(document).ready(function () {
     $(document).on("click","button.unverify", function(){
         //1. Remove currently active class
-        console.log('You clicked button for unverification');
         var id = $(this).attr("id");
-        console.log(id);
         $.ajax({
             type: 'GET',
             url: '/caregiver/manage_volunteers/unverify',
@@ -99,7 +93,6 @@ $(document).ready(function () {
                 "id" : id
             },
             success: function( data ){
-                console.log(data);
                 $('.volunteer-wrap').empty();
                 $('.volunteer-wrap').html(data);
             },
@@ -132,12 +125,6 @@ $(document).ready(function () {
             $(".approve-result").html("<p> No reservations in selected date</p>");
             console.log("error");
         }else{
-            console.log('Sending to server...');
-            console.log(dateFrom);
-            console.log(dateTo);
-            console.log(from);
-            console.log(to);
-            console.log(approval_type);
             $.ajax({
             type: 'GET',
             url: '/caregiver/approve_res/get_reservations',
@@ -147,7 +134,6 @@ $(document).ready(function () {
                 "approval_type": approval_type
             },
             success: function( data ){
-                console.log(data);
                 $('.approve-result').empty();
                 $('.approve-result').html(data);
             },
@@ -167,14 +153,11 @@ $(document).ready(function () {
 $(document).ready(function () {
     $(document).on("click","button.change-approvement", function(){
         //1. Remove currently active class
-        console.log('You clicked button changing approvement');
         var id = $(this).attr("res-id");
         var approve = $(this).attr("approve");
         var from = $('#startDateApprove').val();
         var to = $('#endDateApprove').val();
         var approval_type = $('#approve-type').val();
-        console.log(id);
-        console.log(approve);
         $.ajax({
             type: 'GET',
             url: '/caregiver/approve_res/approve',
@@ -186,7 +169,6 @@ $(document).ready(function () {
                 "approve" : approve
             },
             success: function( data ){
-                console.log(data);
                 $('.approve-result').empty();
                 $('.approve-result').html(data);
             },
@@ -209,13 +191,9 @@ $(document).ready(function () {
  $(document).ready(function () {
     $(document).on("click","button.walk-time-edit", function(){
         //1. Remove currently active class
-        console.log('You clicked button for editing walk time');
         var id = $(this).attr("editrow-id");
         var row_id = "#set-time-"+id+".walk-new-time";
         var visibility = $(row_id).attr("style");
-        console.log(id);
-        console.log(visibility);
-        console.log(row_id);
         if (visibility === "display:none"){
             $(row_id).attr("style","display:table-row");
         }
@@ -233,37 +211,26 @@ $(document).ready(function () {
 $(document).ready(function () {
     $(document).on("click","button.walk-time-save", function(){
         //1. Remove currently active class
-        console.log('You clicked button for saving walk time');
         var id = $(this).attr("settime-id");
         var time_picked = $("#walkStartTime-"+id).val()
         var time_return = $("#walkEndTime-"+id).val()
 
-        console.log(id);
-        console.log(time_picked);
-        console.log(time_return);
-        // if (time_picked > time_return) {
-        //     console.log('Invalid time of return');
-        // } 
-        // else{
-            $.ajax({
-                type: 'GET',
-                url: '/caregiver/register_walks/save',
-                data: {
-                    "id" : id,
-                    "time_picked" : time_picked,
-                    "time_return" : time_return,
-                },
-                success: function( data ){
-                    console.log(data);
-                    $('.walk-table').empty();
-                    $('.walk-table').html(data);
-                },
-                error: function(){
-                    console.log("Error bad response");
-                }
-            });
-        // }
-        
+        $.ajax({
+            type: 'GET',
+            url: '/caregiver/register_walks/save',
+            data: {
+                "id" : id,
+                "time_picked" : time_picked,
+                "time_return" : time_return,
+            },
+            success: function( data ){
+                $('.walk-table').empty();
+                $('.walk-table').html(data);
+            },
+            error: function(){
+                console.log("Error bad response");
+            }
+        });
     });
 
 });
@@ -275,12 +242,10 @@ $(document).ready(function () {
  $(document).ready(function () {
     $(document).on("click","button.create-animal", function(){
         //1. Remove currently active class
-        console.log('You clicked button for creating animal');
         $.ajax({
             type: 'GET',
             url: '/caregiver/edit_animals/create_form',
             success: function( data ){
-                console.log(data);
                 $('.edit-animals-content').empty();
                 $('.edit-animals-content').html(data);
             },
@@ -299,17 +264,10 @@ $(document).ready(function () {
     $(document).on("click","button.update-animal", function(){
         //1. Get animal id
         var animal_id = $(this).attr("animal-id");
-        var form_url = '/caregiver/edit_animals/'+animal_id+'/update';
-
-        console.log(animal_id);
-        console.log(form_url);
-        console.log('You clicked button for updating animal');
-        
         $.ajax({
             type: 'GET',
             url: '/caregiver/edit_animals/'+animal_id+'/update',
             success: function( data ){
-                console.log(data);
                 $('.edit-animals-content').empty();
                 $('.edit-animals-content').html(data);
             },
@@ -327,13 +285,10 @@ $(document).ready(function () {
  $(document).ready(function () {
     $(document).on("click","button.delete-animal", function(){
         //1. Remove currently active class
-        console.log('You clicked button for deleting animal');
         var animal_id = $(this).attr("animal-id");
         if(!confirm("Are you sure you want to delete an animal?")){
             return false;
         };
-        console.log(animal_id);
-
         $.ajax({
             type: 'GET',
             url: '/caregiver/edit_animals/delete',
@@ -341,7 +296,6 @@ $(document).ready(function () {
                 "id":animal_id
             },
             success: function( data ){
-                console.log(data);
                 $('.edit-animals-content').empty();
                 $('.edit-animals-content').html(data);
             },
@@ -360,9 +314,7 @@ $(document).ready(function () {
  $(document).ready(function () {
     $(document).on("click","button.show-timetables", function(){
         //1. Remove currently active class
-        console.log('You clicked button for creating timetable');
         var animal_id = $(this).attr("animal-id");
-        console.log(animal_id);
         window.location.href = '/caregiver/create_schedules/animal_schedules/'+animal_id+'/'
     });
 
@@ -374,16 +326,11 @@ $(document).ready(function () {
  $(document).ready(function () {
     $(document).on("click","button.schedule-update-save", function(){
         //1. Remove currently active class
-        console.log('You clicked button for updating timetable');
         var id = $(this).attr("animal-id");
         var time_table_id = $(this).attr("settime-id");
         var date = $("#scheduleDate-"+time_table_id).val()
         var time_from = $("#scheduleStartTime-"+time_table_id).val();
         var time_to = $("#scheduleEndTime-"+time_table_id).val();
-        console.log(id);
-        console.log(date);
-        console.log(time_from);
-        console.log(time_to);
 
         $.ajax({
             type: 'GET',
@@ -395,7 +342,6 @@ $(document).ready(function () {
                 "time_to" : time_to
             },
             success: function( data ){
-                console.log(data);
                 $('.schedule-animals-list').empty();
                 $('.schedule-animals-list').html(data);
             },
@@ -413,7 +359,6 @@ $(document).ready(function () {
  $(document).ready(function () {
     $(document).on("click","button.create-schedule", function(){
         //1. Remove currently active class
-        console.log('You clicked button for creating schedule');
         var animal_id = $(this).attr("animal-id")
         $.ajax({
             type: 'GET',
@@ -422,12 +367,10 @@ $(document).ready(function () {
                 "id":animal_id
             },
             success: function( data ){
-                console.log(data);
                 $('.caregiver-content').empty();
                 $('.caregiver-content').html(data);
             },
             error: function(){
-                console.log("Error bad response");
             }
         });
     });
@@ -440,14 +383,11 @@ $(document).ready(function () {
  $(document).ready(function () {
     $(document).on("click","button.delete-schedule", function(){
         //1. Remove currently active class
-        console.log('You clicked button for deleting animal');
         var animal_id = $(this).attr("animal-id");
         var timetable_id = $(this).attr("time-id");
         if(!confirm("Are you sure you want to delete an animal?")){
             return false;
         };
-        console.log(animal_id);
-
         $.ajax({
             type: 'GET',
             url: '/caregiver/create_schedules/animal_schedules/'+animal_id+'/delete',
@@ -455,7 +395,6 @@ $(document).ready(function () {
                 "id": timetable_id,
             },
             success: function( data ){
-                console.log(data);
                 $('.schedule-animals-list').empty();
                 $('.schedule-animals-list').html(data);
             },
@@ -474,13 +413,9 @@ $(document).ready(function () {
  $(document).ready(function () {
     $(document).on("click","button.update-schedule", function(){
         //1. Remove currently active class
-        console.log('You clicked button for timetable editing time');
         var id = $(this).attr("time-id");
         var row_id = "#update-time-"+id+".schedule-new-time";
         var visibility = $(row_id).attr("style");
-        console.log(id);
-        console.log(visibility);
-        console.log(row_id);
         if (visibility === "display:none"){
             $(row_id).attr("style","display:table-row");
         }
@@ -555,11 +490,6 @@ $(document).ready(function () {
         var id = $(this).attr("animalid");
         var date = $("#dates option:selected").text();
         var time = $("#time option:selected").text();
-        console.log("alalala");
-        console.log(date);
-        console.log(time);
-        console.log(id);
-
         $.ajax({
                 type: 'GET',
                 url: '/reservation/sent/',
@@ -569,7 +499,6 @@ $(document).ready(function () {
                     "time" : time,
                 },
                 success: function( data ){
-                    console.log(data);
                     document.write(data);
                 },
                 error: function(){

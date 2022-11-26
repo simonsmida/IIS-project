@@ -47,7 +47,6 @@ urlpatterns = [
     path('edit_animals/delete', animal_delete_view, name='delete-animal'),
     
     path('create_schedules/', create_schedules_view, name='create-schedules'),
-    # path('create_schedules/animal_schedules', animal_schedules_list, name='animal-schedules'),
     path('create_schedules/animal_schedules/<int:myid>/', animal_schedules_list, name='animal-schedules'),
     path('create_schedules/animal_schedules/<int:myid>/update', schedule_update_time, name='animal-schedules-update'),
     path('create_schedules/animal_schedules/<int:myid>/delete', schedule_delete_time, name='animal-schedules-delete'),
@@ -64,9 +63,4 @@ urlpatterns = [
 
     path('create_vet_request/', create_vet_request_view, name='create-vet-request'),
     
-    # path('create/', caregiver_create_view, name='caregiver-list'),
-    # path('<int:id>/', caregiver_detail_view, name='caregiver-detail'),
-    # path('<int:id>/update/', caregiver_update_view, name='caregiver-update'),
-    # path('<int:id>/delete/', caregiver_delete_view, name='caregiver-delete'),
-    # path('animals/', animal_list_view, name='animal-list'),
 ]
