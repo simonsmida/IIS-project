@@ -35,9 +35,9 @@
           {% endif %}
           {% if user|has_group:'volunteer' %}
           <li class="nav-item">
-            <a class="nav-link btn btn-info me-2" href="/reservations" style="color: white">My reservations</a>
+            <a class="nav-link btn btn-info me-2" href="/reservation" style="color: white">My reservations</a>
           <li class="nav-item">
-            <a class="nav-link btn btn-info me-2" href="/walks" style="color: white">Walk history</a>
+            <a class="nav-link btn btn-info me-2" href="/reservation/walks" style="color: white">Walk history</a>
           {% endif %}
           {% if user.is_authenticated %}
           <li class="nav-item">

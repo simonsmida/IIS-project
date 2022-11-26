@@ -1,0 +1,54 @@
+{% extends 'shelter/base.html' %}
+
+{% load animals_extras %}
+
+{% block content %}
+
+    <div class="edit-animals-content center-block container text-center">
+        <h1> My walks </h1>
+        <table class="table">
+            <thead>
+                <tr>
+                        <th scope="col">For animal</th>
+                        <th scope="col">Creation date</th>
+                        <th scope="col">From</th>
+                        <th scope="col">To</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for instance in object_list1 %}
+                        <tr>
+                            <th scope="row">{{instance.animalid.name}}</th>
+                            <td>{{instance.reserved_date|date:"d.m.Y"}}</td>
+                            <td>{{instance.reserved_from|date:"H:i"}}</td>
+                            <td>{{instance.reserved_to|date:"H:i"}}</td>
+                            <td> 
+                                <a href='{{ instance.get_absolute_url }}'>
+                                <button type="submit" class="btn btn-primary" style="width: 100px">Detail</button>
+                                </a>
+                            </td>
+                            
+                        </tr>
+                {% endfor %}
+            
+                {% comment %} <h2>Unapproved</h2>
+                {% for instance in object_list2 %}
+                        <tr>
+                            <th scope="row">{{instance.animalid.name}}</th>
+                            <td>{{instance.reserved_date|date:"d.m.Y"}}</td>
+                            <td>{{instance.reserved_from|date:"H:i"}}</td>
+                            <td>{{instance.reserved_to|date:"H:i"}}</td>
+                            <td>{{instance.approval}}</td>
+                            <td> 
+                                <a href='{{ instance.get_absolute_url }}'>
+                                <button type="submit" class="btn btn-primary" style="width: 100px">Detail</button>
+                                </a>
+                            </td>
+                        </tr>
+                {% endfor %}  {% endcomment %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

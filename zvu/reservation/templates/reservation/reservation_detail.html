@@ -2,7 +2,9 @@
 
 {% block content %}
 <p><a href='{{object.get_absolute_url}}delete'>Delete</a></p>
-<p><a href='{{object.get_absolute_url}}update'>Update</a></p>
+{% if object.state == 'pending' %}
+ <p><a href='{{object.get_absolute_url}}update'>Update</a></p>
+ {% endif %}
 
 <h1>From:         {{ object.reserved_from }}</h1>
 <h1>To:           {{ object.reserved_to }}</h1>

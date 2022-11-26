@@ -4,23 +4,75 @@
 
 {% block content %}
 
-<a href="{% url "reservation:reservation-create" %}">New Reservation</a>
+<p><a href="{% url "animals:animal-list" %}">
+     <button type="submit" class="btn btn-primary" style="width: 100px">
+          New reservation
+     </button>
+</a></p>
+     <div class="edit-animals-content center-block container text-center">
+          <h1> Reservations </h1>
+          <table class="table">
+               <thead>
+                    <h2 style="text-align:left;">Approved</h2>
+                    <tr>
+                         <th scope="col">For animal</th>
+                         <th scope="col">Date</th>
+                         <th scope="col">From</th>
+                         <th scope="col">To</th>
+                    </tr>
+               </thead>
+               <tbody>
 
-{% if user|has_group:'caregiver' or user.is_superuser %}
-     <h1>Unapproved</h1>
-     {% for instance in object_list1 %}
-          <p><a href='{{ instance.get_absolute_url }}'>Reservation for {{ instance.animalid.name }}</a></p>
-     {% endfor %}
-   
-     <h1>Approved</h1>
-     {% for instance in object_list2 %}
-          <p><a href='{{ instance.get_absolute_url }}'>Reservation for {{ instance.animalid.name }}</a></p>
-     {% endfor %}
+                    {% for instance in object_list1 %}
+                         <tr>
+                              <th scope="row">{{instance.animalid.name}}</th>
+                              <td>{{instance.reserved_date|date:"d.m.Y"}}</td>
+                              <td>{{instance.reserved_from|date:"H:i"}}</td>
+                              <td>{{instance.reserved_to|date:"H:i"}}</td>
+                              
+                              <td> 
+                                   <a href='{{ instance.get_absolute_url }}'>
+                                   <button type="submit" class="btn btn-primary" style="width: 100px">Detail</button>
+                                   </a>
+                              </td>
+                              
+                         </tr>
+                    {% endfor %}
+               
 
-{% else %}
-     {% for instance in object_list1 %}
-          <p><a href='{{ instance.get_absolute_url }}'>Reservation for {{ instance.animalid.name }}</a></p>
-     {% endfor %}
-{% endif %}
+               </tbody>
+          </table>
+
+          <table class="table">
+               <thead>
+                    <h2 style="text-align:left;">Unapproved</h2>
+                    <tr>
+                         <th scope="col">For animal</th>
+                         <th scope="col">Date</th>
+                         <th scope="col">From</th>
+                         <th scope="col">To</th>
+                    </tr>
+               </thead>
+               <tbody>
+
+                    {% for instance in object_list2 %}
+                         <tr>
+                              <th scope="row">{{instance.animalid.name}}</th>
+                              <td>{{instance.reserved_date|date:"d.m.Y"}}</td>
+                              <td>{{instance.reserved_from|date:"H:i"}}</td>
+                              <td>{{instance.reserved_to|date:"H:i"}}</td>
+                    
+                              <td> 
+                                   <a href='{{ instance.get_absolute_url }}'>
+                                   <button type="submit" class="btn btn-primary" style="width: 100px">Detail</button>
+                                   </a>
+                              </td>
+                              
+                         </tr>
+                    {% endfor %}
+               
+               </tbody>
+          </table>
+     </div>
 
 {% endblock %}

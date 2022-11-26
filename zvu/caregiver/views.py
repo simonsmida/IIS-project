@@ -113,7 +113,7 @@ def approve_res_view(request):
     Returns view for approving reservations
     by caretaker
     '''
-    reservations = Reservation.objects.all()
+    reservations = Reservation.objects.exclude(state="finished")
     context = {
         "content" : "approve_res",
         "reservations" : reservations
@@ -147,6 +147,7 @@ def get_reservations(request):
         # 2. Filter according to reservation approve 
         if approve == 0 or approve == 1:
             reservations = reservations.filter(approval__icontains=approve)
+            
     context = {
         "reservations" : reservations
     }

@@ -1,7 +1,7 @@
     <table class="table walk-table">
         <thead>
           <tr>
-            <th scope="col">Reservation ID</th>
+            <th scope="col">For animal</th>
             <th scope="col">Creation date</th>
             <th scope="col">Volunteer name</th>
             <th scope="col">Time picked</th>
@@ -11,7 +11,7 @@
         <tbody>
             {% for reserve in reservations  %}
             <tr>
-                <th scope="row">{{reserve.id}}</th>
+                <th scope="row">{{reserve.animalid.name}}</th>
                 <td>{{reserve.volunteerid.first_name}} {{reserve.volunteerid.last_name}}</td>
                 <td>{{reserve.reserved_date|date:"d.m.Y"}}</td>
                 <td>
