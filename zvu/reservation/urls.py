@@ -5,6 +5,7 @@ from .views import (
     reservation_delete_view,
     reservation_list_view,
     reservation_update_view,
+    reservation_sent_view
 )
 
 from animals.views import (
@@ -18,5 +19,6 @@ urlpatterns = [
     path('<int:id>/', reservation_detail_view, name='reservation-detail'),
     path('<int:id>/update/', reservation_update_view, name='reservation-update'),
     path('<int:id>/delete/', reservation_delete_view, name='reservation-delete'),
+    path('sent/', reservation_sent_view, name='reservation-sent')
     # path('animals/', animal_list_view, name='animal-list'),
 ] 
