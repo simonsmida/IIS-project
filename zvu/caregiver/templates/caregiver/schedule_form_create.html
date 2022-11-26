@@ -1,0 +1,9 @@
+{% load crispy_forms_tags %}
+<div class="form-wrapper"style="padding-top: 50px">
+    <h2 class="mb-5">Create new schedule</h2>
+    <form action='/caregiver/create_schedules/animal_schedules/{{animal_id}}/create' method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type='submit' name='save' value='Save' class="btn btn-primary"/>
+    </form>
+</div>

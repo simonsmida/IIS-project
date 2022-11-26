@@ -8,7 +8,7 @@
                       <h1>{{animal.name}}'s schedules</h1>
                   </td>
                   <td>
-                      <button type="submit" class="create-animal btn btn-primary" style="width: 100px">New schedule</button>
+                      <button type="submit" class="create-schedule btn btn-primary" animal-id="{{animal.id}}" style="width: 100px">New schedule</button>
                 </td>
               </tr>
           </tbody>
@@ -32,7 +32,7 @@
                 <td>{{timetable.reserved_to|date:"H:i"}}</td>
                 <td>
                       <button id="{{timetable.id}}" type="submit" class="update-schedule btn btn-primary" time-id="{{timetable.id}}" style="width: 100px">Update</button>
-                      <button id="{{timetable.id}}" type="submit" class="delete-schedule btn btn-primary" time-id="{{timetable.id}}" style="width: 100px">Delete</button>
+                      <button id="{{timetable.id}}" type="submit" class="delete-schedule btn btn-primary" time-id="{{timetable.id}}" animal-id="{{animal.id}}" style="width: 100px">Delete</button>
                 </td>
             </tr>
             <tr id="update-time-{{timetable.id}}" class="schedule-new-time" style="display:none">
@@ -58,7 +58,7 @@
                     {% endif %}
                 </td>
                 <td>
-                    <button type="submit" class="schedule-update-save btn btn-primary" settime-id="{{timetable.id}}" style="width:100px">Save</button>  
+                    <button type="submit" class="schedule-update-save btn btn-primary" settime-id="{{timetable.id}}" animal-id="{{animal.id}}" style="width:100px">Save</button>  
                 </td>
             </tr>
             {% endfor %}

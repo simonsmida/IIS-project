@@ -8,6 +8,7 @@ from shelter.models import Reservation, Animal
 from .decorators import user_group
 from datetime import datetime
 from animals.forms import AnimalForm
+from timetable.forms import TimetableForm2
 from shelter.models import Timetable
 
 # Create your views here.
@@ -99,6 +100,11 @@ def edit_animals_view(request):
     }
     return render(request, "caregiver/caregiver.html", context)
 
+
+#################################
+###     SCHEDULE CREATION     ###
+#################################
+
 @login_required(login_url="login")
 @user_group('caregiver','volunteer')
 def create_schedules_view(request):
@@ -109,18 +115,51 @@ def create_schedules_view(request):
     }
     return render(request, "caregiver/caregiver.html", context)
 
-#################################
-###     SCHEDULE CREATION     ###
-#################################
 @login_required(login_url="login")
-@user_group('caregiver','volunteer')
-def animal_schedules_list(request):
+@user_group('caregiver')
+def animal_schedules_list(request, myid=id):
+    animal = Animal.objects.get(id=myid)
+    timetables = Timetable.objects.filter(animalid=myid)
+    print(animal)
+    print(timetables)
+    context = {
+        "content" : "create_schedules",
+        "animal" : animal,
+        "timetables" : timetables,
+        "animal_list": "yes", 
+    }
+    return render(request, "caregiver/caregiver.html", context)
+
+@login_required(login_url="login")
+@user_group('caregiver')
+def schedule_update_time(request, myid=id):
     if request.method == "GET":
-        animal_id = int(request.GET['id'])
-        animal = Animal.objects.get(id=animal_id)
-        timetables = Timetable.objects.filter(animalid=animal_id)
-        print(animal)
-        print(timetables)
+        # 1. Get values from request
+        timetable_id = int(request.GET['tableid'])
+        date = request.GET['date']
+        time_from = request.GET['time_from']
+        time_to = request.GET['time_to']
+        
+        #Set date
+        if date == "":
+            Timetable.objects.filter(id=timetable_id).update(reserved_date=None)
+        else:
+            Timetable.objects.filter(id=timetable_id).update(reserved_date=date)
+        
+        #Set time from
+        if time_from == "":
+            Timetable.objects.filter(id=timetable_id).update(reserved_from=None)
+        else:
+            Timetable.objects.filter(id=timetable_id).update(reserved_from=time_from)
+            
+        #Set time to
+        if time_to == "":
+            Timetable.objects.filter(id=timetable_id).update(reserved_to=None)
+        else:
+            Timetable.objects.filter(id=timetable_id).update(reserved_to=time_to)            
+        
+        animal = Animal.objects.get(id=myid)
+        timetables = Timetable.objects.filter(animalid=myid)
         context = {
             "content" : "create_schedules",
             "animal" : animal,
@@ -130,35 +169,45 @@ def animal_schedules_list(request):
 
 @login_required(login_url="login")
 @user_group('caregiver')
-def schedule_update_time(request):
+def schedule_create_form(request):
     if request.method == "GET":
-        # 1. Get values from request
-        timetable_id = int(request.GET['id'])
-        date = request.GET['date']
-        time_from = request.GET['time_from']
-        time_to = request.GET['time_to']
-        print(timetable_id)
-        print(date)
-        print(time_from)
-        print(time_to)
-        page = animal_schedules_list(request)
-        return page
-        # # 3. Set new values from request
-        # if time_picked == "" and time_return == "":
-        #     Reservation.objects.filter(id=res_id).update(time_picked=None, time_return=None)
-        # elif time_picked == "":
-        #     Reservation.objects.filter(id=res_id).update(time_picked=None,time_return=time_return)
-        # elif time_return == "":
-        #     Reservation.objects.filter(id=res_id).update(time_picked=time_picked,time_return=None)
-        # else:
-        #     Reservation.objects.filter(id=res_id).update(time_picked=time_picked,time_return=time_return)
-            
-        # reservations = Reservation.objects.all()
-        # context = {
-        #     "reservations" : reservations
-        # }
-        # return render(request, "caregiver/walks_register.html", context)
+        animal_id = request.GET["id"]
+        form = TimetableForm2()     
+        context = {
+            'form': form,
+            'animal_id': animal_id
+        }
+        return render(request, "caregiver/schedule_form_create.html", context)
 
+@login_required(login_url="login")
+@user_group('caregiver')
+def schedule_create(request, myid=id):
+    if request.method == "POST":
+        print("Spracuvam form")
+        animal = Animal.objects.get(id=myid)
+        form = TimetableForm2(request.POST, instance=animal)     
+        if form.is_valid():
+            print("Spracuvam valid form")
+            print("ID---------", myid)
+            form.save()
+            form = TimetableForm2()
+        return redirect(f"/caregiver/create_schedules/animal_schedules/{myid}/")
+
+@login_required(login_url="login")
+@user_group('caregiver')
+def schedule_delete_time(request, myid=id):
+    if request.method == "GET":
+        timetable_id = request.GET["id"]
+        delete_animal = Timetable.objects.get(id=timetable_id)
+        delete_animal.delete()
+        animal = Animal.objects.get(id=myid)
+        timetables = Timetable.objects.filter(animalid=myid)
+        context = {
+            "content" : "create_schedules",
+            "animal" : animal,
+            "timetables" : timetables,
+        }
+        return render(request, "caregiver/schedules_animal.html", context)
 
 @login_required(login_url="login")
 @user_group('caregiver')
@@ -217,12 +266,6 @@ def approve_reservation(request):
         approve = int(request.GET['approve'])
         res_id = int(request.GET['id'])
         Reservation.objects.filter(id=res_id).update(approval=approve)
-        
-        # reservation = Reservation.objects.get(id=res_id)
-        # reservation.approval = approve
-        # reservation.save()
-        # To not clear current filter on page, we pass
-        # filter data to get_reservations
         response = get_reservations(request)
         return response
 
@@ -251,16 +294,16 @@ def save_walk_time(request):
         # 3. Set new values from request
         if time_picked == "" and time_return == "":
             Reservation.objects.filter(id=res_id).update(time_picked=None, time_return=None)
-            Reservation.objects.filter(id=res_id).update(status="Pending")
+            Reservation.objects.filter(id=res_id).update(state="Pending")
         elif time_picked == "":
             Reservation.objects.filter(id=res_id).update(time_picked=None,time_return=time_return)
-            Reservation.objects.filter(id=res_id).update(status="Finished")
+            Reservation.objects.filter(id=res_id).update(state="Finished")
         elif time_return == "":
             Reservation.objects.filter(id=res_id).update(time_picked=time_picked,time_return=None)
-            Reservation.objects.filter(id=res_id).update(status="Pending")
+            Reservation.objects.filter(id=res_id).update(state="Pending")
         else:
             Reservation.objects.filter(id=res_id).update(time_picked=time_picked,time_return=time_return)
-            Reservation.objects.filter(id=res_id).update(status="Finished")
+            Reservation.objects.filter(id=res_id).update(state="Finished")
             
             
         reservations = Reservation.objects.all()

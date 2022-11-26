@@ -363,22 +363,7 @@ $(document).ready(function () {
         console.log('You clicked button for creating timetable');
         var animal_id = $(this).attr("animal-id");
         console.log(animal_id);
-
-        $.ajax({
-            type: 'GET',
-            url: '/caregiver/create_schedules/animal_schedules',
-            data: {
-                "id":animal_id
-            },
-            success: function( data ){
-                console.log(data);
-                $('.timetable-wrap').empty();
-                $('.timetable-wrap').html(data);
-            },
-            error: function(){
-                console.log("Error bad response");
-            }
-        });
+        window.location.href = '/caregiver/create_schedules/animal_schedules/'+animal_id+'/'
     });
 
 });
@@ -390,10 +375,11 @@ $(document).ready(function () {
     $(document).on("click","button.schedule-update-save", function(){
         //1. Remove currently active class
         console.log('You clicked button for updating timetable');
-        var id = $(this).attr("settime-id");
-        var date = $("#scheduleDate-"+id).val()
-        var time_from = $("#scheduleStartTime-"+id).val();
-        var time_to = $("#scheduleEndTime-"+id).val();
+        var id = $(this).attr("animal-id");
+        var time_table_id = $(this).attr("settime-id");
+        var date = $("#scheduleDate-"+time_table_id).val()
+        var time_from = $("#scheduleStartTime-"+time_table_id).val();
+        var time_to = $("#scheduleEndTime-"+time_table_id).val();
         console.log(id);
         console.log(date);
         console.log(time_from);
@@ -401,17 +387,17 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'GET',
-            url: '/caregiver/create_schedules/animal_schedules/update',
+            url: '/caregiver/create_schedules/animal_schedules/'+id+'/update',
             data: {
-                "id": id,
+                "tableid": time_table_id,
                 "date": date,
                 "time_from": time_from,
                 "time_to" : time_to
             },
             success: function( data ){
                 console.log(data);
-                $('.timetable-wrap').empty();
-                $('.timetable-wrap').html(data);
+                $('.schedule-animals-list').empty();
+                $('.schedule-animals-list').html(data);
             },
             error: function(){
                 console.log("Error bad response");
@@ -420,6 +406,67 @@ $(document).ready(function () {
     });
 
 });
+
+/**
+ * Function for creating animals
+ */
+ $(document).ready(function () {
+    $(document).on("click","button.create-schedule", function(){
+        //1. Remove currently active class
+        console.log('You clicked button for creating schedule');
+        var animal_id = $(this).attr("animal-id")
+        $.ajax({
+            type: 'GET',
+            url: '/caregiver/create_schedules/animal_schedules/create/form',
+            data :{
+                "id":animal_id
+            },
+            success: function( data ){
+                console.log(data);
+                $('.caregiver-content').empty();
+                $('.caregiver-content').html(data);
+            },
+            error: function(){
+                console.log("Error bad response");
+            }
+        });
+    });
+
+});
+
+/**
+ * Function for deleting schedules
+ */
+ $(document).ready(function () {
+    $(document).on("click","button.delete-schedule", function(){
+        //1. Remove currently active class
+        console.log('You clicked button for deleting animal');
+        var animal_id = $(this).attr("animal-id");
+        var timetable_id = $(this).attr("time-id");
+        if(!confirm("Are you sure you want to delete an animal?")){
+            return false;
+        };
+        console.log(animal_id);
+
+        $.ajax({
+            type: 'GET',
+            url: '/caregiver/create_schedules/animal_schedules/'+animal_id+'/delete',
+            data: {
+                "id": timetable_id,
+            },
+            success: function( data ){
+                console.log(data);
+                $('.schedule-animals-list').empty();
+                $('.schedule-animals-list').html(data);
+            },
+            error: function(){
+                console.log("Error bad response");
+            }
+        });
+    });
+
+});
+
 
 /**
  * Function for displaying time edit
