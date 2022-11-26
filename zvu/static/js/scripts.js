@@ -7,6 +7,11 @@
 // Scripts
 // 
 
+// Endable tooltips
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+
 window.addEventListener('DOMContentLoaded', event => {
 
     // Activate Bootstrap scrollspy on the main nav element
@@ -404,3 +409,35 @@ $(document).ready(function () {
 });
 
 
+/**
+ * Function: sending volunteer's reservation 
+ */
+$(document).ready(function () {
+    $(document).on("click","#reserve-btn", function(){
+        var id = $(this).attr("animalid");
+        var date = $("#dates option:selected").text();
+        var time = $("#time option:selected").text();
+        console.log("alalala");
+        console.log(date);
+        console.log(time);
+        console.log(id);
+
+        $.ajax({
+                type: 'GET',
+                url: '/reservation/sent/',
+                data: {
+                    "id" : id,
+                    "date" : date,
+                    "time" : time,
+                },
+                success: function( data ){
+                    console.log(data);
+                    document.write(data);
+                },
+                error: function(){
+                    console.log("(ajax func): Error bad response");
+                }
+            });
+        });
+
+});

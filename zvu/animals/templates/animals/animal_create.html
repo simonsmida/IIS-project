@@ -1,14 +1,16 @@
 {% extends 'shelter/base.html' %}
+{% load crispy_forms_tags %}
 
 {% load crispy_forms_tags %}
 {% block content %}
 
-<div class="form-wrapper"style="padding-top: 50px">
-    <h2 class="mb-5">Create new animal</h2>
-    <form action='/caregiver/edit_animals' method="POST">
+
+<div class="form-wrapper" style="padding-top: 50px">
+    <h2 class="mb-5">Create new pet</h2>
+    <form method="POST" action=".">
         {% csrf_token %}
         {{ form|crispy }}
-        <input type='submit' name='save' value='Save' class="btn btn-primary"/>
+        <input type='submit' value='Save' class="btn btn-primary"/>
     </form>
 </div>
 
