@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import ReservationForm, ReservationManageForm, ReservationUpdateForm
-from shelter.models import Reservation, Animal
+from shelter.models import Reservation, Animal, Timetable
 from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.http import HttpResponseForbidden   
 from animals.templatetags.animals_extras import has_group
@@ -25,7 +25,7 @@ def reservation_create_view(request):
         reservation.volunteerid = request.user
         reservation.save()
         return redirect('../')
-    
+        
     # zviera = f"{zviera} \"{request.POST.get('zviera', False)}\"" 
     context = {
         'form': form,
@@ -143,6 +143,13 @@ def reservation_sent_view(request):
         reserved_from = time[:5]
         reserved_to = time[-5:]
 
+        timetable_toupdate = Timetable.objects.filter(animalid=animal_id,
+                                                      reserved_date=date,
+                                                      reserved_from=reserved_from,
+                                                      reserved_to=reserved_to)
+        
+        timetable_toupdate.update(is_free=0)
+        
         reservation = Reservation(
             reserved_date=date,
             reserved_from=reserved_from,

@@ -7,6 +7,7 @@ class AnimalForm(forms.ModelForm):
     name = forms.CharField(max_length=255)
     age = forms.IntegerField(min_value=0)
     registration_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}), initial=datetime.date.today)
+    image = forms.URLField(max_length=255, required=False)
     
     class Meta:
         model = Animal
@@ -14,7 +15,8 @@ class AnimalForm(forms.ModelForm):
             'breed',
             'name',
             'age',
-            'registration_date'
+            'registration_date',
+            'image'
         ]
 
 class AnimalHealthForm(forms.ModelForm):

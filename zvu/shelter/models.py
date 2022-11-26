@@ -53,7 +53,7 @@ class Timetable(models.Model):
     reserved_date = models.DateField()
     reserved_from = models.TimeField()
     reserved_to = models.TimeField()
-    is_free = models.PositiveIntegerField()
+    is_free = models.PositiveIntegerField(default=1)
     animalid = models.ForeignKey('Animal', models.CASCADE, db_column='AnimalID')
     
     def get_absolute_url(self):
