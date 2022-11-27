@@ -5,8 +5,8 @@
           <tr>
             <th scope="col">For animal</th>
             <th scope="col">Volunteer</th>
-            <th scope="col">Creation date</th>
-            <th scope="col">State</th>
+            <th scope="col">Date</th>
+            <th scope="col">From - To</th>
             <th scope="col">Approval</th>
           </tr>
         </thead>
@@ -17,7 +17,7 @@
                 <th scope="row">{{reserve.animalid.name}}</th>
                 <td>{{reserve.volunteerid.first_name}} {{reserve.volunteerid.last_name}}</td>
                 <td>{{reserve.reserved_date|date:"d.m.Y"}}</td>
-                <td>{{reserve.state}}</td>
+                <td>{{reserve.reserved_from|date:"H:i"}} - {{reserve.reserved_to|date:"H:i"}}</td>
                 <td>
                 {% if reserve.approval == 0  %}
                     no

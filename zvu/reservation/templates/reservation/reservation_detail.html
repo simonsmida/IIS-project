@@ -6,8 +6,9 @@
  <p><a href='{{object.get_absolute_url}}update'>Update</a></p>
  {% endif %}
 
-<h1>From:         {{ object.reserved_from }}</h1>
-<h1>To:           {{ object.reserved_to }}</h1>
+<h1>Date:         {{ object.reserved_date }}</h1>
+<h1>From:         {{ object.reserved_from|date:"H:i" }}</h1>
+<h1>To:           {{ object.reserved_to|date:"H:i" }}</h1>
 <h1>For Animal:   {{ object.animalid.name }}</h1>
 <h1>State:        {{ object.state }}</h1>
 {% endblock %}

@@ -10,9 +10,9 @@
             <thead>
                 <tr>
                         <th scope="col">For animal</th>
-                        <th scope="col">Creation date</th>
-                        <th scope="col">From</th>
-                        <th scope="col">To</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Picked up at</th>
+                        <th scope="col">Returned at</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,8 +21,8 @@
                         <tr>
                             <th scope="row">{{instance.animalid.name}}</th>
                             <td>{{instance.reserved_date|date:"d.m.Y"}}</td>
-                            <td>{{instance.reserved_from|date:"H:i"}}</td>
-                            <td>{{instance.reserved_to|date:"H:i"}}</td>
+                            <td>{{instance.time_picked|date:"H:i"}}</td>
+                            <td>{{instance.time_return|date:"H:i"}}</td>
                             <td> 
                                 <a href='{{ instance.get_absolute_url }}'>
                                 <button type="submit" class="btn btn-primary" style="width: 100px">Detail</button>
