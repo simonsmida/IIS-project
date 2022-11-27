@@ -32,8 +32,8 @@
                         <a href='{{object.get_absolute_url}}update' class="btn btn-warning float-start m-2" style="width: 145px;">Update {{ object.name }}</a>
                     {% endif %}
                     
-                    <!-- Caregiver & volunteer: reservation for a walk (timetable) -->
-                    {% if user|has_group:'caregiver' or user|has_group:'volunteer' %} 
+                    <!-- volunteer: reservation for a walk (timetable) -->
+                    {% if user|has_group:'volunteer' %} 
                         <form  action="{% url 'timetable:timetable-list'%}" method="POST" class="form">
                             <input type="hidden" name="animalid" value="{{object.id}}" />
                             {% csrf_token %}
@@ -51,20 +51,6 @@
                                     <button class="btn btn-primary" style="pointer-events: none;  width: 100px" type="button" disabled>Reserve</button>
                                 </span>
                             {% endif %}
-                            {% comment %}
-                            {% else %}
-                                <button type="submit" class="btn btn-primary" style="width: 145px;">Reserve</button>
-                            {% endif %}
-                            {% endcomment %}
-                        </form>
-                    {% endif %}
-
-                    {% if user|has_group:'caregiver' %}
-                        <form  action="{% url 'vetrequest:vetrequest-create'%}" method="POST" class="form">
-                            <input type="hidden" name="animalid" value="{{object.id}}" />
-                            <input type="hidden" name="animalname" value="{{object.name}}" />
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-primary float-end m-2" style="width: 145px;">Write Request</button>
                         </form>
                     {% endif %}
                 </div>
