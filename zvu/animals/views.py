@@ -13,7 +13,8 @@ def animal_create_view(request):
     form = AnimalForm(request.POST or None)     
     if form.is_valid():
         form.save()
-        form = AnimalForm()
+        if request.path == '/animals/create/':
+            return redirect('../')
         return redirect('.')
     context = {
         'form': form    
@@ -77,6 +78,7 @@ def animal_list_view(request):
     else:  # No search
         pet_list = Animal.objects.all()
 
+    pet_list = pet_list.order_by('-id')
     p = Paginator(pet_list, 5)
     page = request.GET.get('page')
     animals = p.get_page(page)
@@ -103,7 +105,7 @@ def animal_delete_view(request, id):
     obj = get_object_or_404(Animal, id=id)
     if request.method == "POST":
         obj.delete()
-        return redirect('../')
+        return redirect('../../')
     context = {
         "object": obj
     }
