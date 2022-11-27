@@ -42,7 +42,7 @@ class Animal(models.Model):
     name = models.CharField(max_length=255)
     age = models.PositiveIntegerField()
     registration_date = models.DateField()
-    image = models.CharField(max_length=255, blank=True, null=True)
+    image = models.CharField(max_length=255)
     info = models.CharField(max_length=255)
     
     def get_absolute_url(self):
