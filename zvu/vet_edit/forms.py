@@ -9,6 +9,13 @@ class VetForm(UserCreationForm):
         model = User
         fields = ["username", "first_name", "last_name", "password1", "password2"]
 
+
+class VetChangeForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ["username", "first_name", "last_name"]
+
 # class CaregiverForm(forms.ModelForm):
 #     meno            = forms.CharField()
 #     priezvisko      = forms.CharField()

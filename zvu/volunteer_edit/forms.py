@@ -12,10 +12,9 @@ class VolunteerCreateForm(UserCreationForm):
         model = User
         fields = ["username", "first_name", "last_name", "password1", "password2"]
         
-class VolunteerChangeForm(UserChangeForm):
-    # meno            = forms.CharField()
-    # priezvisko      = forms.CharField()
-    # datum_narodenia = forms.DateField()
+
+class VolunteerChangeForm(forms.ModelForm):
+
     trust = forms.ChoiceField(choices=[('0','unapproved'),('1','approved')],required=False)
     
     class Meta:

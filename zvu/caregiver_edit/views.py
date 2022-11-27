@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .forms import CaregiverForm
+from .forms import CaregiverForm, CaregiverChangeForm
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required, permission_required
@@ -26,7 +26,7 @@ def caregiver_create_view(request):
 @permission_required("auth.change_user", login_url="/login", raise_exception=True)
 def caregiver_update_view(request, id=id):
     obj = get_object_or_404(User, id=id)
-    form = CaregiverForm(request.POST or None, instance=obj)
+    form = CaregiverChangeForm(request.POST or None, instance=obj)
     if form.is_valid():
         form.save()
         return redirect('../')

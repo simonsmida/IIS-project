@@ -9,15 +9,9 @@ class CaregiverForm(UserCreationForm):
         model = User
         fields = ["username", "first_name", "last_name", "password1", "password2"]
 
-# class CaregiverForm(forms.ModelForm):
-#     meno            = forms.CharField()
-#     priezvisko      = forms.CharField()
-#     datum_narodenia = forms.DateField()
+
+class CaregiverChangeForm(forms.ModelForm):
     
-#     class Meta:
-#         model = Caregiver
-#         fields = [
-#             'meno',
-#             'priezvisko',
-#             'datum_narodenia'
-#         ]
+        class Meta:
+            model = User
+            fields = ["username", "first_name", "last_name"]
