@@ -47,7 +47,12 @@
           {% endif %}
           {% if user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link btn btn-outline-secondary" href="/profile" style="color: white;">User: {{user.username}}</a>
+            <a class="nav-link btn btn-outline-secondary" href="/profile" style="color: white;">User: {{user.username}}
+              <!-- if volunteer add blue verified icon -->
+              {% if user|has_group:'volunteer' %} 
+              <i class="bi bi-patch-check ms-1" style="color: #24a0ed"></i> 
+              {% endif %} 
+            </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/logout/">Logout</a>
