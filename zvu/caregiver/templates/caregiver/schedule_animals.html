@@ -1,0 +1,27 @@
+<div>
+    <h1> Create schedules </h1>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Animal ID</th>
+            <th scope="col">Animal name</th>
+            <th scope="col">Breed</th>
+            <th scope="col">Age</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for animal in animals  %}
+            <tr>
+                <th scope="row">{{animal.id}}</th>
+                <td>{{animal.name}}</td>
+                <td>{{animal.breed}}</td>
+                <td>{{animal.age}}</td>
+                <td>
+                    <button res-id="{{animal.id}}" animal-id="{{animal.id}}" type="submit" class="show-timetables btn btn-primary">Timetables</button> 
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    
+</div>

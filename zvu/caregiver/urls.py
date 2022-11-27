@@ -5,6 +5,11 @@ from .views import (
     manage_volunteers_view,
     edit_animals_view,
     create_schedules_view,
+    animal_schedules_list,
+    schedule_update_time,
+    schedule_delete_time,
+    schedule_create_form,
+    schedule_create,
     register_walks_view,
     create_vet_request_view,
     verify_volunteers_view,
@@ -48,14 +53,21 @@ urlpatterns = [
     path('edit_animals/create_animal', animal_create_view, name='caregiver-create-animal'),
     
     path('edit_animals/<int:id>/update', animal_update_view, name='update-animal'),
-    # path('edit_animals/<int:id>/delete', animal_delete_view, name='delete-animal'),
     path('edit_animals/delete', animal_delete_view, name='delete-animal'),
+    
     path('create_schedules/', create_schedules_view, name='create-schedules'),
+
+    path('create_schedules/animal_schedules/<int:myid>/', animal_schedules_list, name='animal-schedules'),
+    path('create_schedules/animal_schedules/<int:myid>/update', schedule_update_time, name='animal-schedules-update'),
+    path('create_schedules/animal_schedules/<int:myid>/delete', schedule_delete_time, name='animal-schedules-delete'),
+    path('create_schedules/animal_schedules/<int:myid>/create', schedule_create, name='animal-schedules-create'),
+    path('create_schedules/animal_schedules/create/form', schedule_create_form, name='schedule-form-create'),
     
     path('create_vet_request/', create_vet_request_view, name='vet_request'),
     path('create_vet_request/<int:id>/update', vetrequest_update_view, name='update-vet_request'),
     path('create_vet_request/<int:id>/delete', vetrequest_delete_view, name='delete-vet_request'),
     path('create_vet_request/create', vetrequest_newcreate_view, name='create-vet_request'),
+
 
     path('approve_res/', approve_res_view, name='approve-res'),
     path('approve_res/get_reservations', get_reservations, name='approve-res-list'),
@@ -67,9 +79,4 @@ urlpatterns = [
 
     path('create_vet_request/', create_vet_request_view, name='create-vet-request'),
     
-    # path('create/', caregiver_create_view, name='caregiver-list'),
-    # path('<int:id>/', caregiver_detail_view, name='caregiver-detail'),
-    # path('<int:id>/update/', caregiver_update_view, name='caregiver-update'),
-    # path('<int:id>/delete/', caregiver_delete_view, name='caregiver-delete'),
-    # path('animals/', animal_list_view, name='animal-list'),
 ]
