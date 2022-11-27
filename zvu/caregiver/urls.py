@@ -32,6 +32,15 @@ from animals.views import (
     # animal_update_view   
 )
 
+from vetrequest.views import (
+    vetrequest_create_view,
+    vetrequest_newcreate_view,  
+    vetrequest_detail_view, 
+    vetrequest_delete_view,
+    vetrequest_list_view,
+    vetrequest_update_view,
+)
+
 app_name = 'caregiver'
 urlpatterns = [
     path('', manage_volunteers_view, name='caregiver'),
@@ -47,11 +56,18 @@ urlpatterns = [
     path('edit_animals/delete', animal_delete_view, name='delete-animal'),
     
     path('create_schedules/', create_schedules_view, name='create-schedules'),
+
     path('create_schedules/animal_schedules/<int:myid>/', animal_schedules_list, name='animal-schedules'),
     path('create_schedules/animal_schedules/<int:myid>/update', schedule_update_time, name='animal-schedules-update'),
     path('create_schedules/animal_schedules/<int:myid>/delete', schedule_delete_time, name='animal-schedules-delete'),
     path('create_schedules/animal_schedules/<int:myid>/create', schedule_create, name='animal-schedules-create'),
     path('create_schedules/animal_schedules/create/form', schedule_create_form, name='schedule-form-create'),
+    
+    path('create_vet_request/', create_vet_request_view, name='vet_request'),
+    path('create_vet_request/<int:id>/update', vetrequest_update_view, name='update-vet_request'),
+    path('create_vet_request/<int:id>/delete', vetrequest_delete_view, name='delete-vet_request'),
+    path('create_vet_request/create', vetrequest_newcreate_view, name='create-vet_request'),
+
 
     path('approve_res/', approve_res_view, name='approve-res'),
     path('approve_res/get_reservations', get_reservations, name='approve-res-list'),

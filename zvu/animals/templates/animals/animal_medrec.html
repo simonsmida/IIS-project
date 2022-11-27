@@ -1,0 +1,39 @@
+{% extends 'shelter/base.html' %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_tags %}
+{% load animals_extras %}
+
+{% block content %}
+
+ 
+<div class="container mt-5">
+<div class="row df-flex justify-content-center">
+<div class="col-md-6">
+    <div class="card">
+        <div class="card-header">
+            <h3><strong>{{object.name}}</strong></h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="text-dark fw-bold">Name: <span class="ms-2 fw-light">{{ object.name }}</span></p>
+                    <p class="text-dark fw-bold">Breed: <span class="ms-2 fw-light">{{ object.breed }}</span></p>
+                    <p class="text-dark fw-bold">Age: <span class="ms-2 fw-light">{{ object.age }}</span></p>
+                    <p class="text-dark fw-bold">Registered: <span class="ms-2 fw-light">{{ object.registration_date }}</span></p>
+                    <p class="text-dark fw-bold">Medical record: <span class="ms-2 fw-light">
+                        <form action='.' method="POST">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <input type='submit' name='save' value='Save' class="btn btn-primary"/></span></p>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+{% endblock %}

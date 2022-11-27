@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import ReservationForm, ReservationManageForm, ReservationUpdateForm
-from shelter.models import Reservation, Animal
+from shelter.models import Reservation, Animal, Timetable
 from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.http import HttpResponseForbidden   
 from animals.templatetags.animals_extras import has_group
@@ -25,7 +25,7 @@ def reservation_create_view(request):
         reservation.volunteerid = request.user
         reservation.save()
         return redirect('../')
-    
+        
     # zviera = f"{zviera} \"{request.POST.get('zviera', False)}\"" 
     context = {
         'form': form,
@@ -60,20 +60,34 @@ def reservation_update_view(request, id=id):
 @login_required(login_url="login")
 @permission_required("shelter.view_reservation", login_url="login", raise_exception=True)
 def reservation_list_view(request):
-    queryset1 = Reservation.objects.filter(volunteerid=request.user) # list of objects
-    queryset2 = []
-    if request.user.is_superuser or has_group(request.user, 'caregiver'):
-        queryset1 = Reservation.objects.filter(approval=0) # list of objects
-        queryset2 = Reservation.objects.filter(approval=1)
-        queryset2 = queryset2.order_by('animalid')
+    queryset = Reservation.objects.filter(volunteerid=request.user)
+    queryset1 = queryset.filter(approval=1,state='pending')   # list of objects
+    queryset2 = queryset.filter(approval=0,state='pending')
+    
+    # if request.user.is_superuser or has_group(request.user, 'caregiver'):
+    #     queryset1 = Reservation.objects.filter(approval=0) # list of objects
+    #     queryset2 = Reservation.objects.filter(approval=1)
         
-    queryset1 = queryset1.order_by('animalid')
+    queryset1 = queryset1.order_by('-reserved_date')
+    queryset2 = queryset2.order_by('-reserved_date')
     
     context = {
         "object_list1": queryset1,
         "object_list2": queryset2   
     }
     return render(request, "reservation/reservation_list.html", context)
+
+@login_required(login_url="login")
+@permission_required("shelter.view_reservation", login_url="login", raise_exception=True)
+def reservation_walklist_view(request):
+    queryset = Reservation.objects.filter(volunteerid=request.user)
+    queryset1 = queryset.filter(state='finished')   # list of objects
+    queryset1 = queryset1.order_by('-reserved_date')
+    
+    context = {
+        "object_list1": queryset1,
+    }
+    return render(request, "reservation/walk_list.html", context)
 
 
 @login_required(login_url="login")
@@ -129,6 +143,13 @@ def reservation_sent_view(request):
         reserved_from = time[:5]
         reserved_to = time[-5:]
 
+        timetable_toupdate = Timetable.objects.filter(animalid=animal_id,
+                                                      reserved_date=date,
+                                                      reserved_from=reserved_from,
+                                                      reserved_to=reserved_to)
+        
+        timetable_toupdate.update(is_free=0)
+        
         reservation = Reservation(
             reserved_date=date,
             reserved_from=reserved_from,

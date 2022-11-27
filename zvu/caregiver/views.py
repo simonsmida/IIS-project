@@ -4,7 +4,7 @@ from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseForbidden
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
-from shelter.models import Reservation, Animal
+from shelter.models import Reservation, Animal, Vetrequest
 from .decorators import user_group
 from datetime import datetime
 from animals.forms import AnimalForm
@@ -213,7 +213,7 @@ def approve_res_view(request):
     Returns view for approving reservations
     by caretaker
     '''
-    reservations = Reservation.objects.all()
+    reservations = Reservation.objects.exclude(state="finished")
     context = {
         "content" : "approve_res",
         "reservations" : reservations
@@ -244,6 +244,7 @@ def get_reservations(request):
         # 2. Filter according to reservation approve 
         if approve == 0 or approve == 1:
             reservations = reservations.filter(approval__icontains=approve)
+            
     context = {
         "reservations" : reservations
     }
@@ -350,7 +351,10 @@ def animal_delete_view(request):
 @login_required(login_url="login")
 @user_group('caregiver')
 def create_vet_request_view(request):
+    queryset = Vetrequest.objects.filter(caregiverid=request.user)
+    queryset = reversed(queryset)
     context = {
-        "content" : "create_vet_request"
+        "content" : "create_vet_request",
+        "requests" : queryset
     }
     return render(request, "caregiver/caregiver.html", context)

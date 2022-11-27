@@ -2,7 +2,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="/home#page-top">Útulok</a>
+      <a class="navbar-brand" href="/home#page-top">Pet Shelter</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -22,10 +22,28 @@
           </li>
         </ul>
         <ul class="navbar-nav">
+          <!-- if superuser, dropdown menu -->
+          {% if user.is_superuser %} 
+          <li class="nav-item">
+            <a class="nav-link btn btn-warning me-1" href="/myadmin" style="color: black;">Manage Shelter</a>
+          </li>
+          {% endif %}
           <!-- if user role is caregiver -->
           {% if user|has_group:'caregiver' %}
           <li class="nav-item">
             <a class="nav-link btn btn-info me-2" href="/caregiver" style="color: white">Caretaker Portal</a>
+          {% endif %}
+          {% if user|has_group:'vet' %}
+          <li class="nav-item">
+            <a class="nav-link btn btn-info me-2" href="/vetrequest" style="color: white">Vetrequests</a>
+          <li class="nav-item">
+            <a class="nav-link btn btn-info me-2" href="/animals/medical_records" style="color: white">Medical records</a>
+          {% endif %}
+          {% if user|has_group:'volunteer' %}
+          <li class="nav-item">
+            <a class="nav-link btn btn-info me-2" href="/reservation" style="color: white">My reservations</a>
+          <li class="nav-item">
+            <a class="nav-link btn btn-info me-2" href="/reservation/walks" style="color: white">Walk history</a>
           {% endif %}
           {% if user.is_authenticated %}
           <li class="nav-item">

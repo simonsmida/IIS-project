@@ -499,12 +499,18 @@ $(document).ready(function () {
                     "time" : time,
                 },
                 success: function( data ){
-                    document.write(data);
+                    // document.write(data);
+                    $('#timetab-row').after('<div class="alert alert-success text-center mt-2" role="alert">Your reservation has been sent!</div>');
+                    window.location.href = "/animals";
                 },
                 error: function(){
+                    // display message for 2 seconds
+                    $('#timetab-row').after('<div class="alert alert-danger text-center mt-2" role="alert">Please select valid date and time</div>');
+                    setTimeout(function() {
+                        $('.alert').remove();
+                    }, 2000);
                     console.log("(ajax func): Error bad response");
                 }
             });
-        });
-
+        });        
 });

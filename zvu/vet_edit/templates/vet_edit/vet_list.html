@@ -2,10 +2,35 @@
 
 {% block content %}
 
-<a href="{% url "vet_edit:vet-create" %}">New Veterinarian</a>
 
-{% for instance in object_list %}
-     <p>{{ instance.id }} - <a href='{{ instance.get_absolute_url }}'>{{ instance.username }}</a></p>
-{% endfor %}
+<div class="container">
+     <div class="row">
+         <div class="col">
+             <div class="page-header mt-4">
+                 <h1>Manage Veterinarians</h1>
+             </div>
+         </div>
+     </div>
+     <hr>
+     <div class="row">
+          <div class="col">
+               <div class="mt-4">
+                    <a class="btn btn-success" href="{% url 'vet_edit:vet-create' %}">New Veterinarian</a>
+               </div>
+         </div>
+     </div>
+     <div class="row mt-5 mb-2">
+          <div class="col">
+               <h3 class="pull-left">Edit Veterinarians</h3>
+          </div>
+     </div>
+     {% for instance in object_list %}
+     <div class="row">
+          <div class="col ms-4">
+               <p>{{ instance.id }} - <a href='{{ instance.get_absolute_url }}'>{{ instance.username }}</a></p>
+          </div>
+     </div>
+     {% endfor %}
+</div>
 
 {% endblock %}

@@ -11,7 +11,7 @@ class TimetableForm(forms.ModelForm):
     reserved_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
     reserved_from = forms.TimeField(widget=forms.widgets.TimeInput(attrs={'type': 'time'}))
     reserved_to = forms.TimeField(widget=forms.widgets.TimeInput(attrs={'type': 'time'}))
-    is_free = forms.ChoiceField(choices=[(0,'free'),(1,'reserved')])
+    is_free = forms.ChoiceField(choices=[(1,'free'),(0,'reserved')])
     animalid = MyModelChoiceField(
         queryset=Animal.objects.all(),
         label='Animal'

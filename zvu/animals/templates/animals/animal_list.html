@@ -39,8 +39,12 @@
         <div class="row g-0" style="padding: 20px;">
             <!-- Image -->
             <div class="col-md-2 position-relative">
-                <img src="https://via.placeholder.com/150" class="card-img fit-cover" alt="placeholder image">
-            </div>
+                {% if animal.image %}
+                    <img src="{{animal.image}}" class="card-img fit-cover" alt="placeholder image">
+                {% else %}
+                    <img src="https://via.placeholder.com/150" class="card-img fit-cover" alt="placeholder image">
+                {% endif %}
+            </div>  
             <!-- Text -->
             <div class="col-md-8" style="padding-left: 20px;">
                 <div class="card-block px-4">

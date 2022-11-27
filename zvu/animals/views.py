@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .forms import AnimalForm
+from .forms import AnimalForm, AnimalHealthForm
 from shelter.models import Animal
 from django.contrib.auth.decorators import login_required, permission_required
 from reservation.views import reservation_create_view
 from django.core.paginator import Paginator
+from caregiver.decorators import user_group
 
 
 @login_required(login_url="login")
@@ -21,6 +22,29 @@ def animal_create_view(request):
 
 
 @login_required(login_url="login")
+@user_group('vet')
+def animal_medrec_detail_view(request, id=id):
+    obj = get_object_or_404(Animal, id=id)
+    form = AnimalHealthForm(request.POST or None, instance=obj)
+    if form.is_valid():
+        form.save()
+        return redirect('../../')
+    context = {
+        'object' : obj,
+        'form': form
+    }
+    return render(request, "animals/animal_medrec.html", context)
+
+@login_required(login_url="login")
+@user_group('vet')
+def animal_medrec_list_view(request):
+    queryset = Animal.objects.all() # list of objects
+    context = {
+        "animals": queryset
+    }
+    return render(request, "animals/medical_records.html", context)
+
+@login_required(login_url="login")
 @permission_required("shelter.change_animal", login_url="/login", raise_exception=True)
 def animal_update_view(request, id=id):
     obj = get_object_or_404(Animal, id=id)
@@ -31,11 +55,11 @@ def animal_update_view(request, id=id):
     context = {
         'form': form
     }
-    return render(request, "animals/animal_create.html", context)
+    return render(request, "animals/animal_update.html", context)
 
 
 def animal_list_view(request):
-    message = None
+    message = None 
     is_search = False
     if request.method == 'POST':
         search_text = request.POST['search']

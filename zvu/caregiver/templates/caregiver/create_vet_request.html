@@ -1,1 +1,52 @@
-<h1> Vet request </h1>
+<div class="approve-result center-block container text-center">
+    <div>
+      <div class="header center-block container text-center">
+        <table class="table">
+          <tbody>
+              <tr>
+                  <td>
+                      <h1>Vet requests</h1>
+                  </td>
+                  <td>
+                    <a href='create' >
+                      <button type="submit" class="btn btn-primary" style="width: 100px">New vetrequest</button>
+                    </a>
+                  </td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">For animal</th>
+            <th scope="col">For vet</th>
+            <th scope="col">Date</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            {% for request in requests  %}
+            <tr>
+                <th scope="row">{{request.animalid.name}}</th>
+                <td>{{request.vetid.username}}</td>
+                <td>{{request.creation_date}}</td>
+                <td>
+                    {% comment %} <button res-id="{{reserve.id}}"  type="submit" class="change-approvement btn btn-primary">Update</button> {% endcomment %}
+                    {% comment %} <button res-id="{{reserve.id}}"  type="submit" class="change-approvement btn btn-primary">Delete</button>   {% endcomment %}
+                    <a href='{{request.id}}/update' >
+                      <button type="submit" class="btn btn-primary" style="width: 100px">Update</button>
+                    </a>
+                    <a href='{{request.id}}/delete' >
+                      <button type="submit" class="btn btn-primary" style="width: 100px">Delete</button>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+        
+    </div>
+  </div>
