@@ -63,7 +63,6 @@ urlpatterns = [
     path('create_schedules/animal_schedules/<int:myid>/create', schedule_create, name='animal-schedules-create'),
     path('create_schedules/animal_schedules/create/form', schedule_create_form, name='schedule-form-create'),
     
-    path('create_vet_request/', create_vet_request_view, name='vet_request'),
     path('create_vet_request/<int:id>/update', vetrequest_update_view, name='update-vet_request'),
     path('create_vet_request/<int:id>/delete', vetrequest_delete_view, name='delete-vet_request'),
     path('create_vet_request/create', vetrequest_newcreate_view, name='create-vet_request'),
@@ -78,5 +77,4 @@ urlpatterns = [
     path('register_walks/save/', save_walk_time, name='save-walk-time'),
 
     path('create_vet_request/', create_vet_request_view, name='create-vet-request'),
-    
 ]

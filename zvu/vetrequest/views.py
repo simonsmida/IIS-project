@@ -30,7 +30,7 @@ def vetrequest_newcreate_view(request):
         vetrequest = form.save(commit=False)
         vetrequest.caregiverid = request.user
         vetrequest.save()
-        return redirect('../')
+        return redirect('.')
     
     context = {
         'form': form
