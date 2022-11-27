@@ -5,11 +5,11 @@
 {% block content %}
 
 {% if user|has_group:'caregiver' or user.is_superuser %}
-     <a href="{% url "vetrequest:vetrequest-newcreate" %}">New Request</a>
+     <a href="{% url 'vetrequest:vetrequest-newcreate' %}">New Request</a>
 {% endif %}
 
 {% if user|has_group:'vet' or user.is_superuser or user|has_group:'caregiver' %}
-     <h1>Pending requests</h1>
+     <h1 class="text-center mt-4 mb-2">Pending requests</h1>
      <div class="requests center-block container text-center">
      
           <table class="table">
@@ -29,9 +29,7 @@
                     <td>{{instance.caregiverid.username}}</td>
                     <td>{{instance.creation_date}}</td>
                     <td>
-                         <a href='{{ instance.get_absolute_url }}'>
-                              <button type="submit" class="btn btn-primary" style="width: 120px">Create exam</button>
-                         </a>
+                         <a href='{{ instance.get_absolute_url }}' type="submit" class="btn btn-primary" style="width: 120px">Create exam</a>
                     </td>
                </tr>
                {% endfor %}
@@ -39,7 +37,7 @@
           </table>
      </div>
      
-     <h1>Exam</h1>
+     <h1 class="text-center mt-5 mb-2">Exam</h1>
      <div class="requests center-block container text-center">
      
           <table class="table">
@@ -60,12 +58,8 @@
                     <td>{{instance.exam_procedure}}</td>
                     <td>{{instance.exam_time}}</td>
                     <td>
-                         <a href='{{instance.id}}/delete' >
-                         <button type="submit" class="btn btn-primary" style="width: 100px">Delete</button>
-                         </a>
-                         <a href='{{ instance.get_absolute_url }}'>
-                              <button type="submit" class="btn btn-primary" style="width: 100px">Detail</button>
-                         </a>
+                         <a href='{{ instance.get_absolute_url }}' type="submit" class="btn btn-primary" style="width: 100px">Detail</a>
+                         <a href='{{instance.id}}/delete' type="submit" class="btn btn-danger" style="width: 100px">Delete</a>
                     </td>
                </tr>
                {% endfor %}
