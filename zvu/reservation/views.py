@@ -109,6 +109,7 @@ def reservation_delete_view(request, id):
     if obj.volunteerid == request.user or request.user.is_superuser or has_group(request.user, 'caregiver'):
         if request.method == "POST":
             obj.delete()
+            print(request.path_info)
             return redirect('../../')
         context = {
             "object": obj

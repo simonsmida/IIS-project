@@ -1,14 +1,30 @@
 {% extends 'shelter/base.html' %}
 
 {% block content %}
-<p><a href='{{object.get_absolute_url}}delete'>Delete</a></p>
-{% if object.state == 'pending' %}
- <p><a href='{{object.get_absolute_url}}update'>Update</a></p>
- {% endif %}
 
-<h1>Date:         {{ object.reserved_date }}</h1>
-<h1>From:         {{ object.reserved_from|date:"H:i" }}</h1>
-<h1>To:           {{ object.reserved_to|date:"H:i" }}</h1>
-<h1>For Animal:   {{ object.animalid.name }}</h1>
-<h1>State:        {{ object.state }}</h1>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h3>Reservation for <strong>{{ object.animalid.name }}</strong></h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="text-dark fw-bold">Date: <span class="ms-2 fw-light"> {{ object.reserved_date }}</span></p>
+                    <p class="text-dark fw-bold">From: <span class="ms-2 fw-light">{{ object.reserved_from|date:"H:i" }}</span></p>
+                    <p class="text-dark fw-bold">To: <span class="ms-2 fw-light">{{ object.reserved_to|date:"H:i" }}</span></p>
+                    <p class="text-dark fw-bold">State: <span class="ms-2 fw-light">{{ object.state }}</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <a href='{{object.get_absolute_url}}delete' class="btn btn-danger float-start m-2" style="width: 145px;">Delete {{ object.name }}</a>
+        </div>
+    </div>
+</div>
 {% endblock %}
+
+

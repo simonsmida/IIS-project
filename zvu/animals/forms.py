@@ -7,6 +7,7 @@ class AnimalForm(forms.ModelForm):
     name = forms.CharField(max_length=255)
     age = forms.IntegerField(min_value=0)
     registration_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}), initial=datetime.date.today)
+    info = forms.CharField(widget=forms.Textarea(attrs={"cols": "70", "rows": "8"}), max_length=255, required=False)
     image = forms.URLField(max_length=255, required=False, widget=forms.TextInput(attrs={'placeholder': 'Image URL'}))
     
     class Meta:
@@ -16,14 +17,15 @@ class AnimalForm(forms.ModelForm):
             'name',
             'age',
             'registration_date',
+            'info',
             'image'
         ]
 
 class AnimalHealthForm(forms.ModelForm):
-    info = forms.CharField(widget=forms.Textarea(attrs={"cols": "70", "rows": "8"}), label='',required=False)
+    health_record = forms.CharField(widget=forms.Textarea(attrs={"cols": "70", "rows": "8"}), label='',required=False)
     
     class Meta:
         model = Animal
         fields = [
-            'info'
+            'health_record'
         ]

@@ -5,7 +5,6 @@
 
 {% block content %}
 
- 
 <div class="container mt-5">
 <div class="row df-flex justify-content-center">
 <div class="col-md-6">
@@ -20,7 +19,9 @@
                     <p class="text-dark fw-bold">Breed: <span class="ms-2 fw-light">{{ object.breed }}</span></p>
                     <p class="text-dark fw-bold">Age: <span class="ms-2 fw-light">{{ object.age }}</span></p>
                     <p class="text-dark fw-bold">Registered: <span class="ms-2 fw-light">{{ object.registration_date }}</span></p>
-                    <p class="text-dark fw-bold">Info: <span class="ms-2 fw-light">{{ object.info }}</span></p>
+                    {% if object.info %}
+                        <p class="text-dark fw-bold">Info: <span class="ms-2 fw-light">{{ object.info }}</span></p>
+                    {% endif %}
                 </div>
             </div>
             <div class="row">

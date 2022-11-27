@@ -42,8 +42,9 @@ class Animal(models.Model):
     name = models.CharField(max_length=255)
     age = models.PositiveIntegerField()
     registration_date = models.DateField()
-    image = models.CharField(max_length=255)
     info = models.CharField(max_length=255)
+    image = models.CharField(max_length=255)
+    health_record = models.CharField(max_length=255)
     
     def get_absolute_url(self):
         return reverse("animals:animal-detail", kwargs={"id": self.id})
