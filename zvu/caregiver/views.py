@@ -292,7 +292,6 @@ def save_walk_time(request):
             Reservation.objects.filter(id=res_id).update(time_picked=time_picked,time_return=None)
             Reservation.objects.filter(id=res_id).update(state="Pending")
         else:
-            Reservation.objects.filter(id=res_id).update(state="Finished")
             Reservation.objects.filter(id=res_id).update(time_picked=time_picked,time_return=time_return)
             Reservation.objects.filter(id=res_id).update(state="Finished")
             
