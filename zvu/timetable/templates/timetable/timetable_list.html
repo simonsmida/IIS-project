@@ -13,6 +13,7 @@
 {% endif %}
 
 {% if user|has_group:'caregiver' %}
+     <div class="container">
      {% if object_list1 %}
      <h3>{{object_list1.0.animalid.name}}'s Timetable</h3>
           {% for instance in object_list1 %}
@@ -24,6 +25,7 @@
      {% else %} 
           <h3>No Timetable available</h3>
      {% endif %}
+     </div>
 
 {% elif object_list1 %}
      <div class="container">
@@ -74,9 +76,11 @@
           </form>
 
      </div>
-     {% else %} 
+{% else %} 
+     <div class="container">
      <div class="row mt-4 text-center">
           <h3>No Timetable available</h3>
+     </div>
      </div>
 {% endif %}  
 
