@@ -70,10 +70,7 @@ def edit_profile_view(request):
     
     if form.is_valid():
         form.save()
-        return redirect("profile")
-    else:
-        print(form.errors.as_data())
-        
+        return redirect("profile")    
     context = {
         'form': form
     }
