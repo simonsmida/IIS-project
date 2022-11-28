@@ -244,7 +244,8 @@ def get_reservations(request):
         # 2. Filter according to reservation approve 
         if approve == 0 or approve == 1:
             reservations = reservations.filter(approval__icontains=approve)
-            
+        
+        reservations = Reservation.objects.exclude(state="finished") 
     context = {
         "reservations" : reservations
     }
@@ -267,7 +268,7 @@ def approve_reservation(request):
 @login_required(login_url="login")
 @user_group('caregiver')
 def register_walks_view(request):
-    reservations = Reservation.objects.all()
+    reservations = Reservation.objects.filter(approval=1)
     context = {
         "content" : "register_walks",
         "reservations" : reservations
@@ -285,19 +286,18 @@ def save_walk_time(request):
         # 3. Set new values from request
         if time_picked == "" and time_return == "":
             Reservation.objects.filter(id=res_id).update(time_picked=None, time_return=None)
-            Reservation.objects.filter(id=res_id).update(state="Pending")
+            Reservation.objects.filter(id=res_id).update(state="pending")
         elif time_picked == "":
             Reservation.objects.filter(id=res_id).update(time_picked=None,time_return=time_return)
-            Reservation.objects.filter(id=res_id).update(state="Finished")
+            Reservation.objects.filter(id=res_id).update(state="finished")
         elif time_return == "":
             Reservation.objects.filter(id=res_id).update(time_picked=time_picked,time_return=None)
-            Reservation.objects.filter(id=res_id).update(state="Pending")
+            Reservation.objects.filter(id=res_id).update(state="pending")
         else:
             Reservation.objects.filter(id=res_id).update(time_picked=time_picked,time_return=time_return)
-            Reservation.objects.filter(id=res_id).update(state="Finished")
-            
-            
-        reservations = Reservation.objects.all()
+            Reservation.objects.filter(id=res_id).update(state="finished")
+             
+        reservations = Reservation.objects.filter(approval=1)
         context = {
             "reservations" : reservations
         }

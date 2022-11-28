@@ -1,6 +1,7 @@
 <div class="reserve-wrap container center-block center-text">
     <!-- Filter for reservation approval -->
-    <div class="container pt-4">
+
+    {% comment %} <div class="container pt-4">
         <div class="row align-items-stretch justify-content-center nowrap">
             <table class="table">
                 <thead>
@@ -38,9 +39,11 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    </div> {% endcomment %}
     <!-- Reservations -->
+    
     <div class="approve-result center-block container text-center">
+        <h1>Register walks</h1>
         {% include "caregiver/walks_register.html" %}
     </div>
 </div>
