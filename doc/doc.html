@@ -59,7 +59,14 @@
 
 <h2>Implementace</h2>
 <p>Stručná dokumentace k implementaci, která popisuje, které části projektu (např. PHP skripty) implementují jednotlivé případy použití.</p>
-
+<p>Projekt je založený na architektonickom vzore MVC, ktorý použitý framwork Django implementuje naturálne. Pojekt je rozložený do viacerých aplikácií,
+    ktoré implementujú dané prípady užití. Aplikácie su rozdelené do súborov models.py, views.py - tu sa deje väčšina logiky projektu, forms.py - vypĺňacie formuláre,
+    url.py - routing.
+</p>
+<p>V hlavnej aplikácii "shelter" sú pomocou tried implementované modely, ktoré využívame v ostatných aplikáciach.
+    Aplikácie medzi sebou komunikujú na základe URL reroutov.<br>
+    Každá aplikácia má priečnok templates, kde sa nachádzaju všetky html súbory korešpondujúce k jednotlivým views.
+</p>
 <h3>Databáze</h3>
 
     <div>
