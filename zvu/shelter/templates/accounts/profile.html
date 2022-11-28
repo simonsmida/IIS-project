@@ -15,27 +15,21 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-3">
-                            <p class="lead text-dark fw-bold">Username: </p>
-                            <p class="lead text-dark fw-bold">First Name: </p>
-                            <p class="lead text-dark fw-bold">Last Name: </p>
-                            <p class="lead text-dark fw-bold">Email: </p>
-                        </div>
-                        <div class="col-md-9">
-                            <p class="text-dark">{{ user.username }}</p>
-                            <p class="text-dark">{{ user.first_name }}</p>
-                            <p class="text-dark">{{ user.last_name }}</p>
-                            <p class="text-dark">{{ user.email }}</p>
+                        <div class="col-md-12">
+                            <p class="text-dark fw-bold">Username: <span class="ms-2 fw-light">{{ user.username }}</span></p>
+                            <p class="text-dark fw-bold">First Name:: <span class="ms-2 fw-light">{{ user.first_name }}</span></p>
+                            <p class="text-dark fw-bold">Last Name: <span class="ms-2 fw-light">{{ user.last_name }}</span></p>
+                            <p class="text-dark fw-bold">Email: <span class="ms-2 fw-light">{{ user.email }}</span></p>
                         </div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-md-6">
-                            <a href="{% url 'edit-profile' %}" class="btn btn-primary">Edit Profile</a>
+                            <a href="{% url 'edit-profile' %}" class="btn btn-outline-dark" style="width: 170px;">Edit Profile</a>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <a href="{% url 'change-password' %}" class="btn btn-primary">Change Password</a>
+                            <a href="{% url 'change-password' %}" class="btn btn-warning" style="width: 170px;">Change Password</a>
                         </div>
                     </div>
                 </div>
