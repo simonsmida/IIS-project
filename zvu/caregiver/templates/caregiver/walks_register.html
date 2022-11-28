@@ -4,6 +4,7 @@
             <th scope="col">For animal</th>
             <th scope="col">Volunteer name</th>
             <th scope="col">Date</th>
+            <th scope="col">Scheduled time</th>
             <th scope="col">Time picked</th>
             <th scope="col">Time returned</th>
           </tr>
@@ -14,6 +15,7 @@
                 <th scope="row">{{reserve.animalid.name}}</th>
                 <td>{{reserve.volunteerid.first_name}} {{reserve.volunteerid.last_name}}</td>
                 <td>{{reserve.reserved_date|date:"d.m.Y"}}</td>
+                <td>{{reserve.reserved_from|date:"H:i"}} - {{reserve.reserved_to|date:"H:i"}}</td>
                 <td>
                     {% if reserve.time_picked == None  %}
                         Not set
