@@ -26,9 +26,8 @@
 
     <!-- print message -->
     {% if message %}
-        <!-- add row with centered element -->
         <div class="row mb-4">
-            <div class="alert alert-success text-center" role="alert">
+            <div class="alert alert-{{color}} text-center" role="alert">
                 {{ message }}
             </div>
          </div>

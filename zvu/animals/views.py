@@ -61,6 +61,7 @@ def animal_update_view(request, id=id):
 
 def animal_list_view(request):
     message = None 
+    color = None
     is_search = False
     if request.method == 'POST':
         search_text = request.POST['search']
@@ -68,12 +69,20 @@ def animal_list_view(request):
                     Animal.objects.filter(breed__icontains=search_text) | \
                     Animal.objects.filter(age__icontains=search_text)
         message = "Search results for: \"" + search_text + "\""
+        color = "success"
         is_search = True
 
         if not pet_list or search_text == '':
             pet_list = Animal.objects.all()
-            message = "No search results found for: \"" + search_text + "\". Showing all pets." if search_text != '' else "Showing all pets."
+            if search_text != '':
+                message = "No search results found for: \"" + search_text + "\". Showing all pets."
+                color = "warning"
+            else:
+                message = "Showing all pets."
+                color = "info"
+            #message = "No search results found for: \"" + search_text + "\". Showing all pets." if search_text != '' else "Showing all pets."
             is_search = False
+            #color = "warning"
 
     else:  # No search
         pet_list = Animal.objects.all()
@@ -86,6 +95,7 @@ def animal_list_view(request):
     context = {
         'animals': animals,
         'message': message,
+        'color': color,
         'is_search': is_search,
     }
     return render(request, "animals/animal_list.html", context)
