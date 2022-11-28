@@ -55,18 +55,24 @@
 
 <h3>Video</h3>
 
-<p>Přiložte odkaz na komentované video demostrující použití informačního systému. Zaměřte se na případy užití definované zadáním (např. registrace uživatele, správa uživatelů a činnosti jednotlivých rolí). Video nahrajte například na VUT Google Drive, kde ho bude možné přímo spustit z odkazu.</p> 
+<dd><a href="https://youtu.be/aNWcCEAlGtU">Video</a></dd> 
 
 <h2>Implementace</h2>
 <p>Stručná dokumentace k implementaci, která popisuje, které části projektu (např. PHP skripty) implementují jednotlivé případy použití.</p>
-<p>Projekt je založený na architektonickom vzore MVC, ktorý použitý framwork Django implementuje naturálne. Pojekt je rozložený do viacerých aplikácií,
-    ktoré implementujú dané prípady užití. Aplikácie su rozdelené do súborov models.py, views.py - tu sa deje väčšina logiky projektu, forms.py - vypĺňacie formuláre,
-    url.py - routing.
+<p>Projekt je založený na architektonickom vzore MVC, ktorý použitý framework Django implementuje naturálne. Pojekt je rozložený do viacerých aplikácií,
+    ktoré implementujú dané prípady užití. Aplikácie su rozdelené do súborov models.py (Model), views.py (Controller) - tu sa deje väčšina logiky projektu, forms.py - vypĺňacie formuláre,
+    url.py - routing, templates/*.html (View).
 </p>
-<p>V hlavnej aplikácii "shelter" sú pomocou tried implementované modely, ktoré využívame v ostatných aplikáciach.
+<p>V hlavnej aplikácii "shelter" sú pomocou tried implementované modely, ktoré využívame v ostatných aplikáciach a všetka funkcionalita prihlasovania, registrácie úpravy účtu.
     Aplikácie medzi sebou komunikujú na základe URL reroutov.<br>
-    Každá aplikácia má priečnok templates, kde sa nachádzaju všetky html súbory korešpondujúce k jednotlivým views.
+    Najväčšia koncentrácia funkcionality je v aplikácii "caregiver", ktorá implementuje tzv. Caregiver portal(pečovateľský portál) - tu sú implementované všetky prípady užitia pečovatela, tj. overovanie dobrovolníkov, evidencia zvierat, vytváranie rozvrhov pre zvieratá, schvalovanie rezervácií, evidencia zapožičania/vrátenia zvieraťa a  písanie požiadavkov na veterinára<br>
+    Aplikácia myadmin implementuje základný pohľad adminovského portálu, avšak funkcionalita je implementovaná v aplikáciách - volunteer_edit, vet_edit, caregiver_edit.<br>
+    Aplikáce "animals", "reservation" a "vetrequest" sú samovysvetľujúce. Deje sa tú všetka manipulácie z danými modelmi - CRUD operácie.
+    Aplikácia "timetable" je určená pre pečovateľa, ktorý ju používa na vytváranie rozvrhov pre zvieratá.
+    Pri prihlásení ako dobrovolník alebo veterinár sa na hornej lište zobrazí navigácia, ktorá implementuje ich prípady užití - rezervácie a história venčení (dobrovolník); čakajúce požiadavky, vyšetrenia a vedenie zdravotných záznamov zvierat (veterinár).
+    Neregistrovaný/neprihlásený užívateľ si môže prezerať web a informácie o zvieratách.
 </p>
+     
 <h3>Databáze</h3>
 
     <div>
